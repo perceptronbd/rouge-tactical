@@ -44,10 +44,14 @@ const userSchema = new Schema({
     enum: ['admin', 'employee'],
     required: true,
   },
-  emergencyContact: [{
-    name: String,
-    phone: String,
-  }],
+  emergencyContact: {
+    name:{
+      type: String,
+      maxlength: 30,
+    },
+    phone:String
+
+  },
   startDate: {
     type: Date,
     required: true,
