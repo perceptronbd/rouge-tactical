@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+
 const app = express();
 const PORT = process.env.BASE_URL;
 const DB_CONNECT_LINK = process.env.DB_URL;
@@ -21,3 +23,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`server running at ${PORT}`);
 });
+
+
