@@ -1,10 +1,10 @@
-import { Input } from "./components";
+import { CheckBox } from "./components";
 
 function App() {
   return (
     <>
       Hello
-      <Input />
+      <CheckBox label={"CheckBox"} />
     </>
   );
 }
