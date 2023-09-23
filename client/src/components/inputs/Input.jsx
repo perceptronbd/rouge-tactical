@@ -1,5 +1,5 @@
 import React from "react";
-import cw from "../../utils/cw";
+import { cw } from "../../utils";
 
 export const Input = (props) => {
   const { id, onChange, className, label, ...inputProps } = props;
