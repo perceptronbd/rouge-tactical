@@ -1,5 +1,12 @@
+import { Input } from "./components";
+
 function App() {
-  return <>Hello</>;
+  return (
+    <>
+      Hello
+      <Input />
+    </>
+  );
 }
 
 export default App;
