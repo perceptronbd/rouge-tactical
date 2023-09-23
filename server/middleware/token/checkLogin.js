@@ -3,6 +3,9 @@ require("dotenv").config();
 
 const checkLogin = (req, res, next) => {
   const { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(401).json({ error: "Authorization header is missing" });
+  }
   // Extract the token from the authorization header
   const accessToken = authorization.split(" ")[1];
 

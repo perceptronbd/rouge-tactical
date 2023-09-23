@@ -5,12 +5,6 @@ const Schema = mongoose.Schema;
 
 // Define the schema for your MongoDB model
 const userSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
-    index: true,
-    unique: true,
-  },
   name: {
     type: String,
     maxlength: 225,
@@ -70,21 +64,21 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) {
+//     return next();
+//   }
 
-  try {
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(this.password, salt);
-    this.password = hashedPassword;
-    next();
-  } catch (error) {
-    return next(error); // Pass any errors to the next middleware or route handler
-  }
-});
+//   try {
+//     // Hash password
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(this.password, salt);
+//     this.password = hashedPassword;
+//     next();
+//   } catch (error) {
+//     return next(error); // Pass any errors to the next middleware or route handler
+//   }
+// });
 
 // Create the MongoDB model using the schema
 const User = mongoose.model("User", userSchema);

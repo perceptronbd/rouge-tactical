@@ -4,12 +4,6 @@ const Schema = mongoose.Schema;
 
 const User = require("./userModel");
 const docSchema = new Schema({
-  docId: {
-    type: Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
-    index: true,
-    unique: true,
-  },
   originalname: {
     type: String,
     required: true,

@@ -2,11 +2,11 @@ const { sign } = require("jsonwebtoken");
 require("dotenv").config();
 
 const createTokens = (user) => {
-  const { email, userId } = user;
-  // console.log("ged" + email);
-  // console.log("ged" + userId);
+  const { email, _id } = user;
+  console.log("ged" + email);
+  console.log("ged" + _id);
   const accessToken = sign(
-    { email: email, userId: userId },
+    { email: email, userId: _id },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
