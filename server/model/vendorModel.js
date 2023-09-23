@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const PurchaseOrder = require("./purchaseOrderSchema"); 
-const Invoice = require("./invoiceSchema");
+const PurchaseOrder = require("./purchaseModel"); 
+const Invoice = require("./invoiceModel");
 const vendorSchema = new Schema({
   name: {
     type: String,
