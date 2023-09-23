@@ -1,7 +1,12 @@
-import "./App.css";
+import { CheckBox } from "./components";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      Hello
+      <CheckBox label={"CheckBox"} />
+    </>
+  );
 }
 
 export default App;
