@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const PurchaseOrder = require("./purchaseOrderSchema"); 
+const Invoice = require("./invoiceSchema");
 const vendorSchema = new Schema({
   name: {
     type: String,
@@ -30,16 +32,16 @@ const vendorSchema = new Schema({
     type: String,
     required: true,
   },
-  po: [
+  purchaseOrders: [
     {
-      number: String,
-      date: Date,
+      type: Schema.Types.ObjectId,
+      ref: PurchaseOrder
     },
   ],
-  invoice: [
+  invoices: [
     {
-      invoiceNumber: String,
-      invoiceDate: Date,
+      type: Schema.Types.ObjectId,
+      ref: Invoice
     },
   ],
   createdAt: {
