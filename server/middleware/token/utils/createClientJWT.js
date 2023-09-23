@@ -8,7 +8,7 @@ const createTokens = (user) => {
   const accessToken = sign(
     { email: email, userId: userId },
     process.env.JWT_SECRET,
-    { expiresIn: "30d" }
+    { expiresIn: "1d" }
   );
 
   return accessToken;
