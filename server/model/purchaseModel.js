@@ -5,6 +5,12 @@ const Vendor = require("./vendorModel");
 const User = require("./userModel");
 
 const purchaseSchema = new Schema({
+  purchaseOrderId: {
+    type: Schema.Types.ObjectId,
+    default: mongoose.Types.ObjectId,
+    index: true,
+    unique: true,
+  },
   orderNumber: {
     type: String,
     required: true,

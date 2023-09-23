@@ -5,9 +5,15 @@ const Schema = mongoose.Schema;
 
 // Define the schema for your MongoDB model
 const userSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    default: mongoose.Types.ObjectId,
+    index: true,
+    unique: true,
+  },
   name: {
     type: String,
-    maxlength: 30,
+    maxlength: 225,
     required: true,
   },
 
