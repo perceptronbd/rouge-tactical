@@ -1,11 +1,11 @@
-import { CheckBox } from "./components";
+import { Route, Routes } from "react-router-dom";
+import { Components } from "./components/Components";
 
 function App() {
   return (
-    <>
-      Hello
-      <CheckBox label={"CheckBox"} />
-    </>
+    <Routes>
+      <Route exact path="/" element={<Components />} />
+    </Routes>
   );
 }
 
