@@ -1,0 +1,53 @@
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+const vendorSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  contact: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Please add a email"],
+    unique: true,
+    trim: true,
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please enter a valid email address",
+    ],
+  },
+
+  address: {
+    type: String,
+    required: true,
+  },
+  po: [
+    {
+      number: String,
+      date: Date,
+    },
+  ],
+  invoice: [
+    {
+      invoiceNumber: String,
+      invoiceDate: Date,
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Vendor = mongoose.model("Vendor", vendorSchema);
+
+module.exports = Vendor;
