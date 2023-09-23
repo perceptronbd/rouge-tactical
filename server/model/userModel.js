@@ -29,7 +29,7 @@ const userSchema = new Schema({
     trim: true,
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please enter a valid emaial",
+      "Please enter a valid email",
     ],
   },
   DOB: {
@@ -41,16 +41,15 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'employee'],
+    enum: ["admin", "employee"],
     required: true,
   },
   emergencyContact: {
-    name:{
+    name: {
       type: String,
       maxlength: 30,
     },
-    phone:String
-
+    phone: String,
   },
   startDate: {
     type: Date,
@@ -59,26 +58,29 @@ const userSchema = new Schema({
   endDate: {
     type: Date,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) {
-      return next();
-    }
-  
-    try {
-      // Hash password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(this.password, salt);
-      this.password = hashedPassword;
-      next();
-    } catch (error) {
-      return next(error); // Pass any errors to the next middleware or route handler
-    }
-  });
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  try {
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    return next(error); // Pass any errors to the next middleware or route handler
+  }
+});
 
 // Create the MongoDB model using the schema
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
