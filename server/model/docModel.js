@@ -16,8 +16,8 @@ const docSchema = new Schema({
     type: String,
     required: true,
   },
- uploadedBy: {
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+  uploadedBy: {
+    userId: { type: Schema.Types.ObjectId, ref: User },
     name: String,
     required: true,
   },
