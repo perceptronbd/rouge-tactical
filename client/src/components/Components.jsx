@@ -12,7 +12,6 @@ export const Components = () => {
   return (
     <Container>
       <Checkbox label="Checkbox" />
-      <Separator direction={"vertical"} />
       <FormInput label="Form Input" id={"form"} />
 
       <Separator />
