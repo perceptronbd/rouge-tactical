@@ -1,9 +1,15 @@
 import React from "react";
-import { Checkbox, FormInput, SearchInput, SelectInput } from "../components";
+import {
+  Checkbox,
+  FormInput,
+  SearchInput,
+  SelectInput,
+  Container,
+} from "../components";
 
 export const Components = () => {
   return (
-    <div className="bg-foreground h-[95vh] flex flex-col gap-5 justify-center items-center m-4 rounded-md p-4">
+    <Container>
       <Checkbox label="Checkbox" />
       <FormInput label="Form Input" id={"form"} />
       <SearchInput label="Search Input" />
@@ -14,6 +20,6 @@ export const Components = () => {
           { id: 2, name: "Option 2" },
         ]}
       />
-    </div>
+    </Container>
   );
 };
