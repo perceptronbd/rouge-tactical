@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CheckBox = (props) => {
+export const Checkbox = (props) => {
   const { id, label, ...inputProps } = props;
 
   return (

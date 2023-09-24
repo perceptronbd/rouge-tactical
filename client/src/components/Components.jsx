@@ -1,10 +1,10 @@
 import React from "react";
-import { CheckBox, FormInput, SearchInput, SelectInput } from "../components";
+import { Checkbox, FormInput, SearchInput, SelectInput } from "../components";
 
 export const Components = () => {
   return (
     <div className="bg-foreground h-[95vh] flex flex-col gap-5 justify-center items-center m-4 rounded-md p-4">
-      <CheckBox label="Checkbox" />
+      <Checkbox label="Checkbox" />
       <FormInput label="Form Input" id={"form"} />
       <SearchInput label="Search Input" />
       <SelectInput
