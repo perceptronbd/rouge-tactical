@@ -5,14 +5,20 @@ import {
   SearchInput,
   SelectInput,
   Container,
+  Separator,
 } from "../components";
 
 export const Components = () => {
   return (
     <Container>
       <Checkbox label="Checkbox" />
+      <Separator direction={"vertical"} />
       <FormInput label="Form Input" id={"form"} />
+
+      <Separator />
       <SearchInput label="Search Input" />
+
+      <Separator />
       <SelectInput
         label="Select Input"
         selectOpts={[
