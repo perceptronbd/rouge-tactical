@@ -5,6 +5,11 @@ const Schema = mongoose.Schema;
 
 // Define the schema for your MongoDB model
 const userSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+    required: true,
+  },
   name: {
     type: String,
     maxlength: 225,

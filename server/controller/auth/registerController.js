@@ -20,7 +20,10 @@ const createUser = async (req, res) => {
       endDate,
     } = req.body;
 
+    // console.log(req.body)
+
     const existingUser = await User.findOne({ email });
+    console.log(existingUser)
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
     var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
     console.log(decryptedPassword);
