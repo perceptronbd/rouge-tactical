@@ -5,14 +5,7 @@ require("dotenv").config();
 
 const checkRolePermission = async (req, res) => {
   try {
-    // const { role } = req.body.role;
-    // res.json({
-    //   code: 200,
 
-    //   data: {
-    //     role: role,
-    //   },
-      // });
       console.log("checking permission")
   } catch (error) {
     console.error(error);
