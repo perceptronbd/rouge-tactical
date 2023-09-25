@@ -3,6 +3,6 @@ const router = express.Router();
 const userController = require ("../../../controller/admin/user/userController")
 const { checkLogin } = require("../../../middleware/token/checkLogin");
 
-router.get("/getAllEmployeeData",checkLogin, userController.getProfileDataOfAllExistingEmployee);
+router.get("/getAllUserData",checkLogin, userController.getProfileDataOfAllExistingUser);
 
 module.exports = router;

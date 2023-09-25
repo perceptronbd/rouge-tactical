@@ -3,13 +3,13 @@ const User = require("../../../model/userModel");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
-const getProfileDataOfAllExistingEmployee = async (req, res) => {
+const getProfileDataOfAllExistingUser = async (req, res) => {
 //   console.log(req.userId);
 //   console.log(req.email);
 //   console.log(req.authenticated);
 
   try {
-    const existingUser = await User.find({ role: "employee" });
+    const existingUser = await User.find();
 
     // console.log(existingUser);
     if (!existingUser) {
@@ -31,7 +31,7 @@ const getProfileDataOfAllExistingEmployee = async (req, res) => {
     res.json({
       code: 200,
       data: {
-        employeeProfileData: formattedUsers,
+        allUserProfileData: formattedUsers,
       },
     });
   } catch (error) {
@@ -40,4 +40,4 @@ const getProfileDataOfAllExistingEmployee = async (req, res) => {
   }
 };
 
-module.exports = { getProfileDataOfAllExistingEmployee };
+module.exports = { getProfileDataOfAllExistingUser };

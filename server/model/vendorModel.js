@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const PurchaseOrder = require("./purchaseModel");
 const Invoice = require("./invoiceModel");
+const Order = require("./orderModel");
+
 const vendorSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
@@ -37,6 +39,12 @@ const vendorSchema = new Schema({
     type: String,
     required: true,
   },
+  orders: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: Order,
+    },
+  ],
   purchaseOrders: [
     {
       type: Schema.Types.ObjectId,
