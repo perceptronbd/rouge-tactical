@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 const Vendor = require("./vendorModel");
 
 const invoiceSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+    required: true,
+  },
   date: {
     type: Date,
     required: true,
