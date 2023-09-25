@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const User = require("./userModel");
 const docSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+    required: true,
+  },
   originalname: {
     type: String,
     required: true,
