@@ -12,20 +12,27 @@ const loginUser = async (req, res) => {
 
     // Decrypt the password from the request body
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
-      var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-      console.log(decryptedPassword)
+    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(decryptedPassword);
 
     const existingUser = await User.findOne({ email });
+
+    console.log(existingUser);
 
     if (!existingUser) {
       res.status(401).json({ error: "User with such email doesn't exist" });
     } else {
       const hashedPassword = existingUser.password;
+      console.log(hashedPassword);
+      console.log(decryptedPassword);
 
       // Compare the decrypted password with the stored hashed password
       bcrypt.compare(decryptedPassword, hashedPassword).then((match) => {
+        console.log(match);
         if (!match) {
-          res.status(400).json({ error: "Wrong Email and Password Combination!" });
+          res
+            .status(400)
+            .json({ error: "Wrong Email and Password Combination!" });
         } else {
           const accessToken = createTokens(existingUser);
 
