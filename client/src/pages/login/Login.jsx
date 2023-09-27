@@ -1,5 +1,5 @@
 import React from "react";
-import { FormInput, Button } from "../../components";
+import { FormInput, Button, LinkText } from "../../components";
 
 export const Login = () => {
   const inputs = [
@@ -41,12 +41,13 @@ export const Login = () => {
         <img
           src="/assets/logo.svg"
           alt="Rouge Tactical"
-          className="w-40 rounded"
+          className="w-72 rounded"
         />
         <form onSubmit={handleSubmit}>
           {inputs.map((input) => (
             <FormInput key={input.id} {...input} />
           ))}
+          <LinkText to={"/forgot-password"}>Forgot password?</LinkText>
           <Button variant={"ghost"} className={"w-full"}>
             Login
           </Button>
