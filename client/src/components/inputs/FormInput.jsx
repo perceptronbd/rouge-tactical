@@ -10,7 +10,7 @@ export const FormInput = (props) => {
         id={id}
         label={label}
         className={cw(
-          "peer block border rounded-lg w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent",
+          "peer block border rounded w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent",
           className
         )}
         onChange={onChange}
