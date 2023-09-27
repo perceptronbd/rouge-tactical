@@ -13,6 +13,7 @@ export const FormInput = (props) => {
           "peer block border rounded-lg w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent",
           className
         )}
+        onChange={onChange}
         {...inputProps}
       />
       {label && (
