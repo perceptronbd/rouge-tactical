@@ -28,7 +28,7 @@ export const Button = ({
           "bg-background text-textColor-secondary cursor-not-allowed":
             variant === "disabled" || disabled,
         },
-        "hover:bg-opacity-80 transition-colors duration-300"
+        "font-medium hover:bg-opacity-80 transition-colors duration-300"
       )}
       disabled={disabled}
       {...props}
