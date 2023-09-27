@@ -6,3 +6,5 @@ export { SelectInput } from "./inputs/SelectInput";
 //views
 export { Container } from "./views/Container";
 export { Separator } from "./views/Separator";
+//buttons
+export { Button } from "./buttons/Button";
