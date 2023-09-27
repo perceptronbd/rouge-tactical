@@ -13,7 +13,7 @@ export const Button = ({
   return (
     <button
       className={cw(
-        `px-4 py-2 rounded m-0 my-6 h-10 ${className}`,
+        `px-4 py-2 rounded m-0 my-4 h-10 ${className}`,
         {
           "bg-accent-tertiary text-white": variant === "default" || !variant,
           "bg-yellow-500 text-black": variant === "warning",
