@@ -5,7 +5,7 @@ export const FormInput = (props) => {
   const { id, label, className, errorMessage, onChange, ...inputProps } = props;
 
   return (
-    <div className="relative my-8">
+    <div className="relative my-6">
       <input
         id={id}
         label={label}
