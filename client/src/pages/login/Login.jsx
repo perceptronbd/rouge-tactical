@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormInput, Button, LinkText } from "../../components";
 
 export const Login = () => {
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
   const inputs = [
     {
       id: "email",
@@ -28,7 +33,14 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log();
+    console.log(values);
+  };
+
+  const handleChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -45,7 +57,7 @@ export const Login = () => {
         />
         <form onSubmit={handleSubmit}>
           {inputs.map((input) => (
-            <FormInput key={input.id} {...input} />
+            <FormInput key={input.id} {...input} onChange={handleChange} />
           ))}
           <LinkText to={"/forgot-password"}>Forgot password?</LinkText>
           <Button variant={"ghost"} className={"w-full"}>
