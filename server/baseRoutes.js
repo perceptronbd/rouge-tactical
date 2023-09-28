@@ -4,33 +4,37 @@ const router = express.Router();
 //import routes for auth
 const registrationRoutes = require("./route/auth/registerRoute");
 const loginRoutes = require("./route/auth/loginRoute");
+
 //import routes for check permission
 const checkPermissionRoutes = require("./route/permission/checkPermissionRoute");
 
 //import routes for employee
 const employeeProfileRoutes = require("./route/employee/profile/profileRoute");
-const employeeOrderRoutes = require("./route/employee/order/employeeOrderRoute")
-const employeeVendorRoutes = require("./route/employee/vendor/employeeVendorRoute")
 
 //import routes for admin
 const userRoutes = require("./route/admin/user/userRoute");
-const adminOrderRoutes = require("./route/admin/order/adminOrderRoute")
-const adminVendorRoutes = require("./route/admin/vendor/adminVendorRoute")
+
+//all routes for vendor
+const vendorRoutes = require("./route/vendor/vendorRoute")
+
+//all routes for order
+const orderRoutes = require("./route/order/orderRoute")
+
 //all routes for authentication only for both admin and employee
 router.use("/employee/auth", registrationRoutes);
 router.use("/employee/auth", loginRoutes);
 
 //all routes for employee
 router.use("/employee/profile", employeeProfileRoutes);
-router.use("/employee/order", employeeOrderRoutes);
-router.use("/employee/vendor", employeeVendorRoutes);
+router.use("/employee/order", orderRoutes);
+router.use("/employee/vendor", vendorRoutes);
 
 //route for permission role
 router.use("/role/", checkPermissionRoutes);
 
 //all routes for admin
 router.use("/admin/user", userRoutes);
-router.use("/admin/order", adminOrderRoutes);
-router.use("/admin/vendor", adminVendorRoutes);
+router.use("/admin/order", orderRoutes);
+router.use("/admin/vendor", vendorRoutes);
 
 module.exports = router;

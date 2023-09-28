@@ -1,5 +1,5 @@
-const Vendor = require("../../../model/vendorModel");
-const User = require("../../../model/userModel");
+const Vendor = require("../../model/vendorModel");
+const User = require("../../model/userModel");
 
 const createVendor = async (req, res) => {
   console.log(req.userId);
@@ -11,6 +11,7 @@ const createVendor = async (req, res) => {
     phone,
     email,
     address,
+    //get id for orders, po and invoices but display name in frontend
     orders,
     purchaseOrders,
     invoices,
@@ -19,7 +20,7 @@ const createVendor = async (req, res) => {
   try {
     const existingUser = await User.findOne({
       _id: req.userId,
-      role: "admin",
+
     });
 
     if (!existingUser) {
@@ -81,7 +82,7 @@ const getAllVendor = async (req, res) => {
   try {
     const existingUser = await User.findOne({
       _id: req.userId,
-      role: "admin",
+ 
     });
     const existingVendor = await Vendor.find().sort({ date: -1 });
     if (!existingUser) {

@@ -1,5 +1,5 @@
-const User = require("../../../model/userModel");
-const Order = require("../../../model/orderModel");
+const User = require("../../model/userModel");
+const Order = require("../../model/orderModel");
 
 const createOrder = async (req, res) => {
   console.log(req.userId);
@@ -12,6 +12,7 @@ const createOrder = async (req, res) => {
     totalAmount,
     depositAmount,
     deliveredItems,
+    //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
     needed,
@@ -20,7 +21,7 @@ const createOrder = async (req, res) => {
   } = req.body;
 
   try {
-    const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
+    const existingUser = await User.findOne({ _id: req.userId });
 
     // console.log(existingUser);
     if (!existingUser) {
@@ -90,15 +91,15 @@ const getAllOrder = async (req, res) => {
   console.log(req.authenticated);
 
   try {
-    const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
-    const existingOrder = await Order.find({ createdBy: req.userId }).sort({
+    const existingUser = await User.findOne({ _id: req.userId });
+    const existingOrder = await Order.find().sort({
       date: -1,
     });
     // console.log(existingUser);
     if (!existingUser) {
       return res
         .status(404)
-        .json({ error: "Admin with such credential doesn't exist!" });
+        .json({ error: "User with such credential doesn't exist!" });
     }
     if (!existingOrder) {
       return res.status(404).json({ error: "No Order available!" });
