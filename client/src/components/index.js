@@ -10,3 +10,5 @@ export { Separator } from "./views/Separator";
 export { Button } from "./buttons/Button";
 //texts
 export { LinkText } from "./texts/LinkText";
+//sidebar
+export { Sidebar } from "./sidebar/Sidebar";
