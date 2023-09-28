@@ -4,7 +4,7 @@ import { Sidebar } from "../../components";
 
 export const Home = () => {
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-[97vh]">
       <Sidebar />
       <Outlet />
     </div>
