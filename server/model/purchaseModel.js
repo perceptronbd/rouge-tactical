@@ -66,6 +66,6 @@ const purchaseSchema = new Schema({
   },
 });
 
-const PurchaseOrder = mongoose.model("Purchase", purchaseSchema);
+const PurchaseOrder = mongoose.model("PurchaseOrder", purchaseSchema);
 
 module.exports = PurchaseOrder;
