@@ -1,7 +1,5 @@
-const CryptoJS = require("crypto-js");
 const User = require("../../../model/userModel");
-const bcrypt = require("bcryptjs");
-require("dotenv").config();
+
 
 const getProfileDataOfLoggedInEmployee = async (req, res) => {
   console.log(req.userId);
