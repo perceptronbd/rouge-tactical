@@ -25,9 +25,9 @@ export const Login = () => {
       type: "password",
       placeholder: "Password",
       required: true,
-      pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[a-zA-Zd]{8,}$",
+      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       errorMessage:
-        "Password must be at least 8 characters long and contain 1 uppercase letter, 1 lowercase letter, and 1 number",
+        "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
     },
   ];
 
@@ -41,6 +41,8 @@ export const Login = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
+
+    console.log(e.target.value);
   };
 
   return (
