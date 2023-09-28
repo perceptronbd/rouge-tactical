@@ -24,7 +24,7 @@ export const FormInput = (props) => {
           {label}
         </label>
       )}
-      <span className="text-red-500 hidden peer-[&:not(:placeholder-shown):not(:focus):invalid]:block text-ellipsis">
+      <span className="text-red-500 hidden peer-[&:not(:placeholder-shown):not(:focus):invalid]:block text-sm text-ellipsis">
         {errorMessage}
       </span>
     </div>
