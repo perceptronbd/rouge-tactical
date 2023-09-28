@@ -27,7 +27,7 @@ export const Text = ({ variant, type, children, className }) => {
 
   // Define a mapping of styles to CSS classes
   const stylesMap = {
-    bold: "font-bold",
+    bold: "font-semibold",
     normal: "font-normal",
     thin: "font-thin",
   };
