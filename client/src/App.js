@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { AddEmployee, EmployeeInfo, Home, Login } from "./pages";
+import { AddEmployee, EditEmployee, EmployeeInfo, Home, Login } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
       >
         <Route path="employee" element={<EmployeeInfo />} />
         <Route path="employee/add" element={<AddEmployee />} />
+        <Route path="employee/edit" element={<EditEmployee />} />
       </Route>
     </Routes>
   );
