@@ -34,9 +34,11 @@ export const Button = ({
       disabled={disabled}
       {...props}
     >
-      <span className="flex justify-center items-center">
-        {Icon && <Icon className="w-5 h-5" />}
-      </span>
+      {Icon && (
+        <span className="flex justify-center items-center">
+          <Icon className="w-5 h-5" />
+        </span>
+      )}
       {children}
     </button>
   );
