@@ -170,7 +170,7 @@ export const AddEmployee = () => {
             ) : input.id === "emergencyContact" ? (
               <div
                 id="emergencyContact"
-                className="relative border rounded px-3 py-1 w-fit"
+                className="border rounded px-3 py-1 w-fit"
               >
                 {input.emergencyContact.map((contact) => (
                   <FormInput
