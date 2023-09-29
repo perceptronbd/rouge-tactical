@@ -4,6 +4,21 @@ import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 
+const userInfo = {
+  name: "Atifulislam Asif",
+  position: "Software Engineer",
+  role: "admin",
+  email: "asif@gmail.com",
+  phone: "1234567890",
+  DOB: "01/01/1990",
+  emergencyContact: {
+    name: "John Doe",
+    phone: "1234567890",
+  },
+  startDate: "01/01/2021",
+  endDate: "01/01/2021",
+};
+
 const usersData = [
   {
     name: "Atifulislam Asif",
@@ -140,10 +155,13 @@ const usersData = [
 export const EmployeeInfo = () => {
   return (
     <Container className={"flex-col justify-start items-start"}>
-      <UserInfo />
-      <section className="w-full">
-        <Table data={usersData} />
-      </section>
+      <UserInfo data={userInfo} />
+
+      {userInfo.role === "admin" && (
+        <section className="w-full">
+          <Table data={usersData} />
+        </section>
+      )}
       <OnboardingDoc />
     </Container>
   );
