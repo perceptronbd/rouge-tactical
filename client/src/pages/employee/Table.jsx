@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-import { SearchInput, Text } from "../../components";
+import { BsPersonFillAdd } from "react-icons/bs";
+import { Button, SearchInput, Text } from "../../components";
 import { useNavigate } from "react-router-dom";
 
 export const Table = ({ data }) => {
@@ -21,13 +22,25 @@ export const Table = ({ data }) => {
     navigate("/employee/edit");
   };
 
+  const addUser = () => {
+    navigate("/employee/add");
+  };
+
   return (
     <>
       {data ? (
         <article className="rounded-lg">
           <div className="flex justify-between mb-2">
             <Text variant={"h3"}>Employee Information</Text>
-            <SearchInput value={searchQuery} onChange={handleSearch} />
+            <div className="flex gap-4 h-10">
+              <Button
+                icon={BsPersonFillAdd}
+                variant={"ghost"}
+                className={"m-0"}
+                onClick={addUser}
+              />
+              <SearchInput value={searchQuery} onChange={handleSearch} />
+            </div>
           </div>
           <div className="max-h-[230px] 3xl:max-h-[500px] overflow-y-auto rounded-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
