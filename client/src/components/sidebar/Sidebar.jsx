@@ -54,7 +54,7 @@ export const Sidebar = () => {
           })}
         </ul>
         <Button
-          className={"m-2"}
+          className={"m-2 w-auto"}
           variant={"ghost"}
           icon={FiLogOut}
           onClick={handleLogout}
