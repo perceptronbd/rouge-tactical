@@ -4,8 +4,15 @@ import { navLinks } from "./navLinks";
 import { Text } from "../texts/Text";
 import { NavLink } from "react-router-dom";
 import { Button } from "../buttons/Button";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Sidebar = () => {
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    logout();
+  };
+
   return (
     <section className="bg-foreground h-[98vh] rounded">
       <div className="w-64 h-full p5 flex flex-col justify-between">
@@ -45,7 +52,12 @@ export const Sidebar = () => {
             );
           })}
         </ul>
-        <Button className={"m-2"} variant={"ghost"} icon={FiLogOut}>
+        <Button
+          className={"m-2"}
+          variant={"ghost"}
+          icon={FiLogOut}
+          onClick={handleLogout}
+        >
           Username
         </Button>
       </div>

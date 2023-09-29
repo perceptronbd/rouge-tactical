@@ -5,17 +5,21 @@ import { useAuth } from "./contexts/AuthContext";
 function App() {
   const { user } = useAuth();
 
+  const isAuthenticated = !!user;
+
   return (
     <Routes>
       <Route
         exact
         path="/login"
-        element={!user ? <Login /> : <Navigate to={"/"} />}
+        element={!isAuthenticated ? <Login /> : <Navigate to={"/"} />}
       />
       <Route
         exact
         path="/"
-        element={user ? <Home /> : <Navigate to={"/login"} replace />}
+        element={
+          isAuthenticated ? <Home /> : <Navigate to={"/login"} replace />
+        }
       >
         <Route path="" element={<EmployeeInfo />} />
       </Route>
