@@ -13,3 +13,5 @@ export { LinkText } from "./texts/LinkText";
 export { Text } from "./texts/Text";
 //sidebar
 export { Sidebar } from "./sidebar/Sidebar";
+//table
+export { Table } from "./table/Table";
