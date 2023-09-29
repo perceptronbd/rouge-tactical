@@ -1,17 +1,17 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { EmployeeInfo, Home, Login } from "./pages";
-import { useState } from "react";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-  const [user, setUser] = useState({
-    id: 1,
-    username: "tanjim",
-    email: "tanjim@gmail.com",
-  });
+  const { user } = useAuth();
 
   return (
     <Routes>
-      <Route exact path="/login" element={<Login />} />
+      <Route
+        exact
+        path="/login"
+        element={!user ? <Login /> : <Navigate to={"/"} />}
+      />
       <Route
         exact
         path="/"
