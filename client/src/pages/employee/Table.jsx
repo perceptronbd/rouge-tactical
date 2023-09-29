@@ -29,7 +29,7 @@ export const Table = ({ data }) => {
             <Text variant={"h3"}>Employee Information</Text>
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
-          <div className="max-h-[220px] 3xl:max-h-[480px] overflow-y-auto rounded-lg bg-accent-tertiary">
+          <div className="max-h-[230px] 3xl:max-h-[500px] overflow-y-auto rounded-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className=" text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
