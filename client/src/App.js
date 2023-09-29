@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { EmployeeInfo, Home, Login } from "./pages";
+import { AddEmployee, EmployeeInfo, Home, Login } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 
 function App() {
@@ -10,18 +10,17 @@ function App() {
   return (
     <Routes>
       <Route
-        exact
-        path="/login"
-        element={!isAuthenticated ? <Login /> : <Navigate to={"/"} />}
+        path="login"
+        element={!isAuthenticated ? <Login /> : <Navigate to={"/employee"} />}
       />
       <Route
-        exact
         path="/"
         element={
           isAuthenticated ? <Home /> : <Navigate to={"/login"} replace />
         }
       >
-        <Route path="" element={<EmployeeInfo />} />
+        <Route path="employee" element={<EmployeeInfo />} />
+        <Route path="employee/add" element={<AddEmployee />} />
       </Route>
     </Routes>
   );
