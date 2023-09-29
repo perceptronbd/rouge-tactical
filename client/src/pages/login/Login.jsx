@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { FormInput, Button, LinkText } from "../../components";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+
+  const { login } = useAuth();
 
   const inputs = [
     {
@@ -34,6 +37,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(values);
+    login(values);
   };
 
   const handleChange = (e) => {
