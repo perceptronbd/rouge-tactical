@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BsPersonFillAdd } from "react-icons/bs";
+import { BiArrowBack } from "react-icons/bi";
 import {
   Button,
   Container,
@@ -7,6 +8,7 @@ import {
   SelectInput,
   Text,
 } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 const inputFields = [
   {
@@ -127,6 +129,7 @@ const inputFields = [
 ];
 
 export const AddEmployee = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -154,15 +157,24 @@ export const AddEmployee = () => {
     console.log(values);
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
       <form
         onSubmit={onSubmit}
         className="h-full w-full flex flex-col justify-between"
       >
-        <Text variant={"h3"} type={"bold"}>
-          Add Employee
-        </Text>
+        <section className="flex h-10 justify-between items-center">
+          <Text variant={"h3"} type={"bold"}>
+            Add Employee
+          </Text>
+          <Button onClick={goBack} icon={BiArrowBack} className={"w-fit"}>
+            Back
+          </Button>
+        </section>
         <div className="grid grid-cols-2 my-6 3xl:mb-52 mb-32">
           {inputFields.map((input) => {
             return input.id === "role" ? (
