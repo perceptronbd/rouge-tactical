@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 export const Table = ({ data }) => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -12,6 +14,11 @@ export const Table = ({ data }) => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const editUser = (e) => {
+    console.log(e.target.value);
+    navigate("/employee/edit");
   };
 
   return (
@@ -57,9 +64,9 @@ export const Table = ({ data }) => {
               </thead>
               <tbody>
                 {filteredData.length === 0 ? (
-                  <tr>
+                  <tr className="text-center">
                     <td colSpan="9">
-                      <div className="font-bold text-xl text-textColor-light my-8">
+                      <div className="font-bold text-xl text-foreground my-8 opacity-80">
                         No Data
                       </div>
                     </td>
@@ -96,7 +103,7 @@ export const Table = ({ data }) => {
                         {item.endDate}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
-                        <button>
+                        <button onClick={editUser}>
                           <BiSolidMessageSquareEdit size={"1.5rem"} />
                         </button>
                       </td>
