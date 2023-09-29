@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "../../components";
 import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
+import { OnboardingDoc } from "./OnboardingDoc";
 
 const usersData = [
   {
@@ -143,7 +144,7 @@ export const EmployeeInfo = () => {
       <section className="w-full">
         <Table data={usersData} />
       </section>
-      <section>Onboarding Documents</section>
+      <OnboardingDoc />
     </Container>
   );
 };
