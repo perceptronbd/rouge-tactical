@@ -12,7 +12,7 @@ import {
 } from "react-icons/md";
 
 export const navLinks = [
-  { title: "Home", path: "/", Icon: TbHome2 },
+  { title: "Home", path: "/employee", Icon: TbHome2 },
   { title: "Orders", path: "/orders", Icon: TbPackage },
   { title: "Invoice", path: "/invoice", Icon: TbFileInvoice },
   { title: "Purchase", path: "/purchase", Icon: MdOutlineSell },

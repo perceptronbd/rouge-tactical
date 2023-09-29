@@ -1,23 +1,27 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { EmployeeInfo, Home, Login } from "./pages";
-import { useState } from "react";
+import { AddEmployee, EditEmployee, EmployeeInfo, Home, Login } from "./pages";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-  const [user, setUser] = useState({
-    id: 1,
-    username: "tanjim",
-    email: "tanjim@gmail.com",
-  });
+  const { user } = useAuth();
+
+  const isAuthenticated = !!user;
 
   return (
     <Routes>
-      <Route exact path="/login" element={<Login />} />
       <Route
-        exact
+        path="login"
+        element={!isAuthenticated ? <Login /> : <Navigate to={"/employee"} />}
+      />
+      <Route
         path="/"
-        element={user ? <Home /> : <Navigate to={"/login"} replace />}
+        element={
+          isAuthenticated ? <Home /> : <Navigate to={"/login"} replace />
+        }
       >
-        <Route path="" element={<EmployeeInfo />} />
+        <Route path="employee" element={<EmployeeInfo />} />
+        <Route path="employee/add" element={<AddEmployee />} />
+        <Route path="employee/edit" element={<EditEmployee />} />
       </Route>
     </Routes>
   );

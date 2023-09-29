@@ -4,8 +4,16 @@ import { navLinks } from "./navLinks";
 import { Text } from "../texts/Text";
 import { NavLink } from "react-router-dom";
 import { Button } from "../buttons/Button";
+import { useAuth } from "../../contexts/AuthContext";
+import { capitalizeFirstWord } from "../../utils";
 
 export const Sidebar = () => {
+  const { logout, user } = useAuth();
+
+  const handleLogout = async () => {
+    logout();
+  };
+
   return (
     <section className="bg-foreground h-[98vh] rounded">
       <div className="w-64 h-full p5 flex flex-col justify-between">
@@ -28,15 +36,15 @@ export const Sidebar = () => {
                   isPending
                     ? "pending"
                     : isActive
-                    ? "flex m-2 text-accent-primary bg-accent-secondary hover:bg-opacity-80 rounded-md px-2 py-1 cursor-pointer items-center transition-all duration-200 "
+                    ? "flex m-2 text-accent-primary bg-accent-secondary hover:bg-opacity-80 rounded-md px-2 py-1.5 cursor-pointer items-center transition-all duration-200 "
                     : "flex m-2 font-semibold text-lg text-textColor hover:bg-accent-primary hover:text-accent-secondary rounded-md px-2 py-1 cursor-pointer items-center transition-all duration-200"
                 }
                 to={link.path}
                 key={index}
                 title={link.title}
               >
-                <li className={`flex gap-x-4`}>
-                  {<link.Icon size={"1.5rem"} />}
+                <li className={`flex gap-x-4 items-center w-full px-6`}>
+                  <link.Icon size={"1.5rem"} />
                   <Text variant="h5" type="bold">
                     {link.title}
                   </Text>
@@ -45,8 +53,13 @@ export const Sidebar = () => {
             );
           })}
         </ul>
-        <Button className={"m-2"} variant={"ghost"} icon={FiLogOut}>
-          Username
+        <Button
+          className={"m-2 w-auto"}
+          variant={"ghost"}
+          icon={FiLogOut}
+          onClick={handleLogout}
+        >
+          {capitalizeFirstWord(user?.email)}
         </Button>
       </div>
     </section>
