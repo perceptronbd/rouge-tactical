@@ -59,12 +59,12 @@ export const UserInfo = ({ data }) => {
         </section>
         <section className="flex flex-col gap-1">
           <div className="bg-red-100 p-0.5 text-center rounded">
-            <Text type={"bold"} className={"text-red-800"}>
+            <Text type={"bold"} className={"text-grenn-800"}>
               Start Date : {data.startDate}
             </Text>
           </div>
           <div className="bg-green-100 p-0.5 text-center rounded">
-            <Text type={"bold"} className={"text-green-800"}>
+            <Text type={"bold"} className={"text-red-800"}>
               End Date : {data.endDate}
             </Text>
           </div>
