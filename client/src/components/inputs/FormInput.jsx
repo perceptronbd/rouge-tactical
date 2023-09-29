@@ -5,15 +5,14 @@ export const FormInput = (props) => {
   const { id, onChange, className, errorMessage, label, ...inputProps } = props;
 
   return (
-    <div className="relative my-6 w-72">
+    <div className={cw("relative my-6 w-72", className)}>
       <input
         id={id}
         autoComplete="off"
         {...inputProps}
         onChange={onChange}
         className={cw(
-          "peer block border rounded-lg w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent",
-          className
+          "peer block border rounded-lg w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent"
         )}
       />
       {label && (
