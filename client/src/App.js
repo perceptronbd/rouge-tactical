@@ -22,6 +22,13 @@ function App() {
         <Route path="employee" element={<EmployeeInfo />} />
         <Route path="employee/add" element={<AddEmployee />} />
         <Route path="employee/edit" element={<EditEmployee />} />
+        <Route path="orders" element={<div>Orders</div>} />
+        <Route path="invoice" element={<div>Invoice</div>} />
+        <Route path="purchase" element={<div>Purchase</div>} />
+        <Route path="permits" element={<div>Permits</div>} />
+        <Route path="payments" element={<div>Payments</div>} />
+        <Route path="production" element={<div>Production</div>} />
+        <Route path="maintenance" element={<div>Maintenance</div>} />
       </Route>
     </Routes>
   );
