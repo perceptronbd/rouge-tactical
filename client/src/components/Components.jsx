@@ -6,6 +6,7 @@ import {
   SelectInput,
   Container,
   Separator,
+  IncDecNum,
 } from "../components";
 import { Dropdown } from "./inputs/Dropdown";
 
@@ -17,6 +18,11 @@ const options = [
 
 export const Components = () => {
   const [selectedOption, setSelectedOption] = useState("");
+  const [value, setValue] = useState(0);
+
+  const changeQuantity = (newValue) => {
+    setValue(newValue);
+  };
 
   const handleDropdownChange = (value) => {
     setSelectedOption(value);
@@ -48,6 +54,7 @@ export const Components = () => {
         className="my-3"
         errorMessage="Please select an option"
       />
+      <IncDecNum value={value} onChange={changeQuantity} />
     </Container>
   );
 };
