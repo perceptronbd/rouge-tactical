@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Checkbox,
   FormInput,
@@ -7,8 +7,21 @@ import {
   Container,
   Separator,
 } from "../components";
+import { Dropdown } from "./inputs/Dropdown";
+
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+];
 
 export const Components = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleDropdownChange = (value) => {
+    setSelectedOption(value);
+  };
+
   return (
     <Container>
       <Checkbox label="Checkbox" />
@@ -24,6 +37,16 @@ export const Components = () => {
           { id: 1, name: "Option 1" },
           { id: 2, name: "Option 2" },
         ]}
+      />
+      <Dropdown
+        id="customDropdown"
+        name="customDropdown"
+        label="Custom Dropdown"
+        options={options}
+        selectedValue={selectedOption}
+        onChange={handleDropdownChange}
+        className="my-3"
+        errorMessage="Please select an option"
       />
     </Container>
   );
