@@ -26,7 +26,7 @@ export const Button = ({
           "text-accent-secondary border border-accent-secondary hover:bg-accent-secondary hover:text-accent-primary":
             variant === "ghost",
 
-          "bg-background text-textColor-secondary cursor-not-allowed":
+          "bg-background text-textColor-secondary cursor-not-allowed border-none text-textColor-light hover:bg-background hover:text-textColor-secondary":
             variant === "disabled" || disabled,
         },
         "font-medium hover:bg-opacity-80 transition-colors duration-300",
