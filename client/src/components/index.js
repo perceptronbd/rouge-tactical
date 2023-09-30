@@ -17,3 +17,5 @@ export { Text } from "./texts/Text";
 export { Sidebar } from "./sidebar/Sidebar";
 //table
 export { Table } from "./table/Table";
+//modals
+export { Modal } from "./modals/Modal";
