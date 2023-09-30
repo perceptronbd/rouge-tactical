@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   FormInput,
+  Modal,
   SelectInput,
   Text,
 } from "../../components";
@@ -131,6 +132,9 @@ const inputFields = [
 
 export const EditEmployee = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -155,6 +159,9 @@ export const EditEmployee = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setShowModal(true);
+    setModalMessage("Employee added successfully!");
+    setIsError(true);
     console.log(values);
   };
 
@@ -216,6 +223,12 @@ export const EditEmployee = () => {
             Delete
           </Button>
         </section>
+        <Modal
+          isOpen={showModal}
+          setShowModal={setShowModal}
+          modalMessage={modalMessage}
+          isError={isError}
+        />
       </form>
     </Container>
   );
