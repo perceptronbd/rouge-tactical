@@ -27,7 +27,6 @@ export const SelectInput = (props) => {
       >
         <optgroup label={label} className="font-semibold text-sm">
           <option
-            value=""
             key="select-option"
             className="bg-background text-textColor-light"
             disabled
@@ -36,7 +35,7 @@ export const SelectInput = (props) => {
             {label}
           </option>
           {selectOpts.map((opt) => (
-            <option value={opt.name} key={opt.id} className="bg-background">
+            <option value={opt.value} key={opt.id} className="bg-background">
               {opt.name}
             </option>
           ))}
