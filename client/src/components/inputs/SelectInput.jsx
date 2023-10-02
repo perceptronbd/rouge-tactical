@@ -33,7 +33,7 @@ export const SelectInput = (props) => {
             disabled
             selected
           >
-            Select {label}
+            {label}
           </option>
           {selectOpts.map((opt) => (
             <option value={opt.name} key={opt.id} className="bg-background">
