@@ -6,3 +6,5 @@ export { Home } from "./home/Home";
 export { EmployeeInfo } from "./employee/EmployeeInfo";
 export { AddEmployee } from "./employee/AddEmployee";
 export { EditEmployee } from "./employee/EditEmployee";
+//Orders
+export { Orders } from "./orders/Orders";

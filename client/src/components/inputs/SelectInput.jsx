@@ -25,23 +25,19 @@ export const SelectInput = (props) => {
           className
         )}
       >
-        <optgroup label={label} className="font-semibold text-sm">
-          <option
-            value=""
-            key="select-option"
-            className="bg-background text-textColor-light"
-            disabled
-            selected
-          >
-            Select {label}
-          </option>
+        <optgroup label={label} className="font-semibold">
           {selectOpts.map((opt) => (
-            <option value={opt.name} key={opt.id} className="bg-background">
+            <option
+              value={opt.value}
+              key={opt.value}
+              className="text-textColor hover:text-accent-tertiary"
+            >
               {opt.name}
             </option>
           ))}
         </optgroup>
       </select>
+
       {label && (
         <label
           htmlFor={id}

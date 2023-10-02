@@ -1,5 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { AddEmployee, EditEmployee, EmployeeInfo, Home, Login } from "./pages";
+import {
+  AddEmployee,
+  EditEmployee,
+  EmployeeInfo,
+  Home,
+  Login,
+  Orders,
+} from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 import { Components } from "./components/Components";
 
@@ -24,7 +31,7 @@ function App() {
         <Route path="employee/add" element={<AddEmployee />} />
         <Route path="employee/edit" element={<EditEmployee />} />
         <Route path="components" element={<Components />} />
-        <Route path="orders" element={<div>Orders</div>} />
+        <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<div>Invoice</div>} />
         <Route path="purchase" element={<div>Purchase</div>} />
         <Route path="permits" element={<div>Permits</div>} />
