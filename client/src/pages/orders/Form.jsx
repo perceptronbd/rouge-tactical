@@ -163,7 +163,7 @@ export const Form = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded-tl"
+      className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded"
     >
       <div className="grid grid-cols-2 my-6 3xl:mb-52 mb-32">
         {inputFields.map((input) => {
