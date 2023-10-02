@@ -19,3 +19,5 @@ export { Sidebar } from "./sidebar/Sidebar";
 export { Table } from "./table/Table";
 //modals
 export { Modal } from "./modals/Modal";
+//Tabs
+export { Tabs } from "./tabs/Tabs";
