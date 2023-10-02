@@ -8,7 +8,6 @@ import {
   Separator,
   IncDecNum,
 } from "../components";
-import { Dropdown } from "./inputs/Dropdown";
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -44,16 +43,7 @@ export const Components = () => {
           { id: 2, name: "Option 2" },
         ]}
       />
-      <Dropdown
-        id="customDropdown"
-        name="customDropdown"
-        label="Custom Dropdown"
-        options={options}
-        selectedValue={selectedOption}
-        onChange={handleDropdownChange}
-        className="my-3"
-        errorMessage="Please select an option"
-      />
+
       <IncDecNum value={value} onChange={changeQuantity} />
     </Container>
   );
