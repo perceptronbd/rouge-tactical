@@ -48,4 +48,9 @@ const permitSchema = new mongoose.Schema({
     },
   });
   
-  module.exports = mongoose.model('Permit', permitSchema);
+  const permit = mongoose.model("permit", permitSchema);
+
+  module.exports = permit;
+  
+
+ 
