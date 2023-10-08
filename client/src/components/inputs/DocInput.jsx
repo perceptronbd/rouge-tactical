@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiImageAlt } from "react-icons/bi";
+import { BsFiletypeDoc } from "react-icons/bs";
 import { Text } from "../texts/Text";
 
 export const DocInput = (props) => {
@@ -52,7 +52,7 @@ export const DocInput = (props) => {
             </section>
           ) : (
             <>
-              <BiImageAlt className="w-[126px] h-[126px] 3xl:w-[50px] 3xl:h-[50px]" />
+              <BsFiletypeDoc className="w-[110px] h-[120px] 3xl:w-[50px] 3xl:h-[50px]" />
               Upload Document
             </>
           )}

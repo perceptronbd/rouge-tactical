@@ -16,7 +16,7 @@ module.exports = {
           tertiary: {
             DEFAULT: "#961a23",
             light: "#d42127",
-            hover: "#d42127",
+            hover: "#ff272e",
           },
         },
       },
