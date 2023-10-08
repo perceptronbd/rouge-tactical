@@ -59,7 +59,7 @@ export const Sidebar = () => {
           icon={FiLogOut}
           onClick={handleLogout}
         >
-          {capitalizeFirstWord(user?.email)}
+          Log Out
         </Button>
       </div>
     </section>
