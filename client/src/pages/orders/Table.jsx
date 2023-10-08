@@ -84,7 +84,7 @@ export const Table = ({ data, approved, role, handleApprove }) => {
                   )}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-white">
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="11">
