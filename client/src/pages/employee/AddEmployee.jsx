@@ -33,11 +33,21 @@ const inputFields = [
     errorMessage: "Please enter a valid phone number",
   },
   {
-    id: "email",
-    name: "email",
-    label: "E-mail",
+    id: "work-email",
+    name: "work-email",
+    label: "Work E-mail",
     type: "email",
-    placeholder: "E-mail",
+    placeholder: "Work E-mail",
+    required: true,
+    pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
+    errorMessage: "Please enter a valid email",
+  },
+  {
+    id: "personal-email",
+    name: "personal-email",
+    label: "Personal E-mail",
+    type: "email",
+    placeholder: "Personal E-mail",
     required: true,
     pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
     errorMessage: "Please enter a valid email",
@@ -52,6 +62,16 @@ const inputFields = [
     pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
     errorMessage:
       "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
+  },
+  {
+    id: "address",
+    name: "address",
+    label: "Address",
+    type: "text",
+    placeholder: "Address",
+    required: true,
+    pattern: "[a-zA-Z0-9 ]{2,30}",
+    errorMessage: "Please enter a valid address",
   },
   {
     id: "DOB",
@@ -137,8 +157,10 @@ export const AddEmployee = () => {
   const [values, setValues] = useState({
     name: "",
     phone: "",
-    email: "",
+    workEmail: "",
+    personalEmail: "",
     password: "",
+    address: "",
     DOB: "",
     role: "",
     position: "",
@@ -182,7 +204,7 @@ export const AddEmployee = () => {
             Back
           </Button>
         </section>
-        <div className="grid grid-cols-2 my-6 3xl:mb-52 mb-32">
+        <div className="grid grid-cols-2 my-3 3xl:mb-52 mb-20">
           {inputFields.map((input) => {
             return input.id === "role" ? (
               <SelectInput {...input} key={input.id} onChange={handleChange} />
