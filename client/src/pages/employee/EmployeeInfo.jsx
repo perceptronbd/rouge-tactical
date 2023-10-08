@@ -162,7 +162,7 @@ export const EmployeeInfo = () => {
           <Table data={usersData} />
         </section>
       )}
-      <OnboardingDoc />
+      <OnboardingDoc data={userInfo} />
     </Container>
   );
 };
