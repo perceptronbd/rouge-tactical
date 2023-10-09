@@ -59,7 +59,7 @@ const addEmployee = async (req, res) => {
 
     const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
     const existingEmployee = await User.findOne({
-      $or: [{ email : workEmail }, { personal_email : personalEmail }],
+      $or: [{ email : workEmail }, { personalEmail : personalEmail }],
     });
 
     console.log(existingUser);
@@ -71,7 +71,7 @@ const addEmployee = async (req, res) => {
           message:
             "Employee with such Organization email already exists! Please try with different Organization email",
         });
-      } else if (existingEmployee.personal_email === personalEmail) {
+      } else if (existingEmployee.personalEmail === personalEmail) {
         res.status(400).json({
           message:
             "Employee with such Personal email already exists! Please try with different Personal email",
@@ -92,7 +92,7 @@ const addEmployee = async (req, res) => {
       const newEmployee = new User({
         name: name,
         email: workEmail,
-        personal_email: personalEmail,
+        personalEmail: personalEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
@@ -114,7 +114,7 @@ const addEmployee = async (req, res) => {
           userId: newEmployee._id,
           name: newEmployee.name,
           workEmail: newEmployee.email,
-          personalEmail: newEmployee.personal_email,
+          personalEmail: newEmployee.personalEmail,
           phone: newEmployee.phone,
           DOB: newEmployee.DOB,
           position: newEmployee.position,

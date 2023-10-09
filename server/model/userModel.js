@@ -37,7 +37,7 @@ const userSchema = new Schema({
       "Please enter a valid email",
     ],
   },
-  personal_email: {
+  personalEmail: {
     type: String,
     // required: [true, "Please add a personal email"],
     unique: true,
