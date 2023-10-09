@@ -37,6 +37,16 @@ const userSchema = new Schema({
       "Please enter a valid email",
     ],
   },
+  personal_email: {
+    type: String,
+    // required: [true, "Please add a personal email"],
+    unique: true,
+    trim: true,
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please enter a valid email",
+    ],
+  },
   DOB: {
     type: Date,
     required: true,
@@ -68,22 +78,6 @@ const userSchema = new Schema({
     default: Date.now,
   },
 });
-
-// userSchema.pre("save", async function (next) {
-//   if (!this.isModified("password")) {
-//     return next();
-//   }
-
-//   try {
-//     // Hash password
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(this.password, salt);
-//     this.password = hashedPassword;
-//     next();
-//   } catch (error) {
-//     return next(error); // Pass any errors to the next middleware or route handler
-//   }
-// });
 
 // Create the MongoDB model using the schema
 const User = mongoose.model("User", userSchema);
