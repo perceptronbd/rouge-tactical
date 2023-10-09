@@ -11,6 +11,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 1",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "2",
@@ -24,6 +25,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 2",
     needed: "Urgent",
     approved: false,
+    requested: false,
   },
   {
     id: "3",
@@ -37,6 +39,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 3",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "4",
@@ -50,6 +53,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 4",
     needed: "Soon",
     approved: true,
+    requested: false,
   },
   {
     id: "5",
@@ -63,6 +67,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 1",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "6",
@@ -76,6 +81,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 2",
     needed: "Urgent",
     approved: false,
+    requested: false,
   },
   {
     id: "7",
@@ -89,6 +95,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 3",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "8",
@@ -102,6 +109,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 4",
     needed: "Soon",
     approved: true,
+    requested: false,
   },
   {
     id: "9",
@@ -115,6 +123,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 1",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "10",
@@ -128,6 +137,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 2",
     needed: "Urgent",
     approved: false,
+    requested: false,
   },
   {
     id: "11",
@@ -141,6 +151,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 3",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "12",
@@ -154,6 +165,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 4",
     needed: "Soon",
     approved: true,
+    requested: false,
   },
   {
     id: "13",
@@ -167,6 +179,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 1",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "14",
@@ -180,6 +193,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 2",
     needed: "Urgent",
     approved: false,
+    requested: false,
   },
   {
     id: "15",
@@ -193,6 +207,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 3",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "16",
@@ -206,6 +221,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 4",
     needed: "Soon",
     approved: true,
+    requested: false,
   },
   {
     id: "17",
@@ -219,6 +235,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 1",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "18",
@@ -232,6 +249,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 2",
     needed: "Urgent",
     approved: false,
+    requested: false,
   },
   {
     id: "19",
@@ -245,6 +263,7 @@ export const historyData = [
     substituteVendor: "substitute vendor 3",
     needed: "ASAP",
     approved: true,
+    requested: true,
   },
   {
     id: "20",
@@ -258,5 +277,6 @@ export const historyData = [
     substituteVendor: "substitute vendor 4",
     needed: "Soon",
     approved: true,
+    requested: false,
   },
 ];
