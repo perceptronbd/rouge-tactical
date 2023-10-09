@@ -53,4 +53,3 @@ const permitSchema = new mongoose.Schema({
   module.exports = permit;
   
 
- 

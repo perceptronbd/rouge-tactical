@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const baseRoutes = require("./baseRoutes");
+const errorHandler = require("./middleware/error/errorMiddleware")
+
 dotenv.config();
 
 const app = express();
@@ -27,6 +29,9 @@ app.use("/api/v1", baseRoutes)
 app.get("/", (req, res) => {
   res.send(":)");
 });
+
+//error middleware
+app.use(errorHandler)
 
 mongoose
   .connect(process.env.MONGO_URI, {
