@@ -66,6 +66,9 @@ const userSchema = new Schema({
     },
     phone: String,
   },
+   address: {
+    type: String,
+  },
   startDate: {
     type: Date,
     required: true,

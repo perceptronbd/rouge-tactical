@@ -15,7 +15,7 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
     const formattedUsers = existingUser.map((data) => ({
       userId: data._id,
       name: data.name,
-      email: data.email,
+      workEmail: data.email,
       phone: data.phone,
       DOB: data.DOB,
       position: data.position,
@@ -43,13 +43,14 @@ const addEmployee = async (req, res) => {
     const {
       name,
       phone,
-      email,
-      personal_email,
+      workEmail,
+      personalEmail,
       password,
       DOB,
       position,
       role,
       emergencyContact,
+      address,
       startDate,
       endDate,
     } = req.body;
@@ -58,19 +59,19 @@ const addEmployee = async (req, res) => {
 
     const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
     const existingEmployee = await User.findOne({
-      $or: [{ email }, { personal_email }],
+      $or: [{ email : workEmail }, { personal_email : personalEmail }],
     });
 
     console.log(existingUser);
     console.log(existingEmployee);
 
     if (existingEmployee) {
-      if (existingEmployee.email === email) {
+      if (existingEmployee.email === workEmail) {
         res.status(400).json({
           message:
             "Employee with such Organization email already exists! Please try with different Organization email",
         });
-      } else if (existingEmployee.personal_email === personal_email) {
+      } else if (existingEmployee.personal_email === personalEmail) {
         res.status(400).json({
           message:
             "Employee with such Personal email already exists! Please try with different Personal email",
@@ -90,14 +91,15 @@ const addEmployee = async (req, res) => {
       const hashedPassword = await bcrypt.hash(decryptedPassword, 10);
       const newEmployee = new User({
         name: name,
-        email: email,
-        personal_email: personal_email,
+        email: workEmail,
+        personal_email: personalEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
         position: position,
         role: role,
         emergencyContact: emergencyContact,
+        address :address,
         startDate: startDate,
         endDate: endDate,
       });
@@ -111,13 +113,14 @@ const addEmployee = async (req, res) => {
         data: {
           userId: newEmployee._id,
           name: newEmployee.name,
-          email: newEmployee.email,
-          personal_email: newEmployee.personal_email,
+          workEmail: newEmployee.email,
+          personalEmail: newEmployee.personal_email,
           phone: newEmployee.phone,
           DOB: newEmployee.DOB,
           position: newEmployee.position,
           role: newEmployee.role,
           emergencyContact: newEmployee.emergencyContact,
+          address: address,
           startDate: newEmployee.startDate,
           endDate: newEmployee.endDate,
         },

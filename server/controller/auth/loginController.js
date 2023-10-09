@@ -37,7 +37,7 @@ const loginUser = async (req, res) => {
             token: accessToken,
             data: {
               userId: existingUser._id,
-              email: existingUser.email,
+              workEmail: existingUser.email,
               name: existingUser.name,
             },
             message: "User logged In successfully",
