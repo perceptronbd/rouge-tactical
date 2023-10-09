@@ -36,7 +36,7 @@ export const Table = ({ data }) => {
               <Button
                 icon={BsPersonFillAdd}
                 variant={"ghost"}
-                className={"m-0"}
+                className={"m-0 w-10"}
                 onClick={addUser}
               />
               <SearchInput value={searchQuery} onChange={handleSearch} />

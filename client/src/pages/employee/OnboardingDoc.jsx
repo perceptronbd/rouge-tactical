@@ -64,7 +64,7 @@ export const OnboardingDoc = ({ data }) => {
         </Button>
         {data.role === "admin" && (
           <Button
-            className={"mb-0"}
+            className={"mb-0 w-10"}
             variant={"highlight"}
             onClick={handleAddDoc}
           >
