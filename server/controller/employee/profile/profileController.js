@@ -19,7 +19,7 @@ const getProfileDataOfLoggedInEmployee = async (req, res) => {
     const formattedUsers = existingUser.map((data) => ({
       userId: data._id,
       name: data.name,
-      email: data.email,
+      workEmail: data.email,
       phone: data.phone,
       DOB: data.DOB,
       position: data.position,

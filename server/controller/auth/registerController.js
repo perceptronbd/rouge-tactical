@@ -58,7 +58,7 @@ const createUser = async (req, res) => {
           data: {
           userId: newUser._id,
           name: newUser.name,
-          email: newUser.email,
+          workEmail: newUser.email,
           phone: newUser.phone,
           DOB: newUser.DOB,
           position: newUser.position,
