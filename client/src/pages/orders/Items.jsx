@@ -76,9 +76,7 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Price
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Delivered Items
-                  </th>
+
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Vendor
                   </th>
@@ -128,9 +126,7 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.price}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.deliveredItems}
-                      </td>
+
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}
                       </td>
@@ -224,7 +220,7 @@ export const Items = () => {
     <section className="bg-foreground w-full h-full p-4 rounded rounded-tl-none">
       <Table
         data={data}
-        role={"emp"}
+        role={"employee"}
         handleApprove={handleApprove}
         handleRequest={handleRequest}
       />
