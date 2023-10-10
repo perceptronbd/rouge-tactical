@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
@@ -32,10 +33,12 @@ const Checkbox = (props) => {
 
 export const Table = ({
   data,
-  approved,
   role,
   handleApprove,
   handleRequest,
+  handleNeededToggle,
+  handleEdit,
+  handleQuantityEdit,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
@@ -120,8 +123,24 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.size}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.quantity}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 flex items-center justify-center 3xl:gap-1">
+                        {item.isEditing ? (
+                          <input
+                            type="text"
+                            className="border rounded-md p-1 w-10 text-center text-black"
+                            value={item.quantity}
+                            onChange={(e) =>
+                              handleQuantityEdit(item.id, e.target.value)
+                            }
+                          />
+                        ) : (
+                          item.quantity
+                        )}
+                        <Button
+                          onClick={() => handleEdit(item.id)}
+                          icon={BiSolidMessageSquareEdit}
+                          className={"w-4 h-4 bg-transparent"}
+                        />
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.price}
@@ -133,9 +152,20 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.needed}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left transition-all ease-in-out duration-300">
+                        <div
+                          className={cw(
+                            ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
+                            item.needed === "Urgent"
+                              ? "text-yellow-500"
+                              : "text-green-500"
+                          )}
+                          onClick={() => handleNeededToggle(item.id)}
+                        >
+                          {item.needed}
+                        </div>
                       </td>
+
                       <td className="px-6 py-4 3xl:p-4 3xl:py-2 text-center">
                         <Checkbox
                           id={`request_${item.id}`}
@@ -181,39 +211,137 @@ export const Table = ({
 export const Items = () => {
   const [data, setData] = useState(initialData);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
+  const [modifiedData, setModifiedData] = useState([]);
 
-  const handleApprove = (id) => {
+  const handleEdit = (id) => {
     setData((prevData) =>
-      prevData.map((item) => {
-        return item.id === id ? { ...item, approved: !item.approved } : item;
-      })
+      prevData.map((item) =>
+        item.id === id ? { ...item, isEditing: !item.isEditing } : item
+      )
     );
   };
 
+  const handleApprove = (id) => {
+    const updatedData = data.map((item) =>
+      item.id === id ? { ...item, approved: !item.approved } : item
+    );
+
+    setData(updatedData);
+
+    setModifiedData((prevModifiedData) => {
+      const updatedItemIndex = prevModifiedData.findIndex(
+        (item) => item.id === id
+      );
+
+      if (updatedItemIndex !== -1) {
+        // If the item is already in modifiedData, replace it with the updated version
+        const newModifiedData = [...prevModifiedData];
+        newModifiedData[updatedItemIndex] = updatedData.find(
+          (item) => item.id === id
+        );
+        return newModifiedData;
+      }
+
+      return [
+        ...prevModifiedData,
+        ...updatedData.filter((item) => item.id === id),
+      ];
+    });
+  };
+
   const handleRequest = (id) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        const updatedItem = { ...item, requested: !item.requested };
+        setIsDataUpdated(true);
+        return updatedItem;
+      }
+      return item;
+    });
+
+    setData(updatedData);
+    setModifiedData((prevModifiedData) => {
+      const updatedItemIndex = prevModifiedData.findIndex(
+        (item) => item.id === id
+      );
+      if (updatedItemIndex !== -1) {
+        // If the item is already in modifiedData, replace it with the updated version
+        const newModifiedData = [...prevModifiedData];
+        newModifiedData[updatedItemIndex] = updatedData.find(
+          (item) => item.id === id
+        );
+        return newModifiedData;
+      }
+      return [
+        ...prevModifiedData,
+        ...updatedData.filter((item) => item.id === id),
+      ];
+    });
+  };
+
+  const handleNeededToggle = (id) => {
     setData((prevData) => {
       const updatedData = prevData.map((item) => {
         if (item.id === id) {
-          const updatedItem = { ...item, requested: !item.requested };
+          const updatedItem = {
+            ...item,
+            needed: item.needed === "Urgent" ? "Soon" : "Urgent",
+          };
           setIsDataUpdated(true);
           return updatedItem;
         }
         return item;
       });
+      setModifiedData([
+        ...modifiedData,
+        ...updatedData.filter((item) => item.id === id),
+      ]);
       return updatedData;
     });
   };
 
-  const requestOrders = () => {
-    // Filter and select only the data with updated requested status
-    const updatedData = data.filter((item) => item.requested);
+  const handleQuantityEdit = (id, newQuantity) => {
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      })
+    );
 
-    if (updatedData.length === 0) {
-      // If no data is updated, do not make the API call
+    setModifiedData((prevModifiedData) => {
+      const updatedItemIndex = prevModifiedData.findIndex(
+        (item) => item.id === id
+      );
+
+      if (updatedItemIndex !== -1) {
+        // If the item is already in modifiedData, replace it with the updated version
+        const newModifiedData = [...prevModifiedData];
+        newModifiedData[updatedItemIndex] = {
+          ...prevModifiedData[updatedItemIndex],
+          quantity: newQuantity,
+        };
+        return newModifiedData;
+      }
+      return [...prevModifiedData, { id, quantity: newQuantity }];
+    });
+  };
+
+  const requestOrders = () => {
+    if (modifiedData.length === 0) {
+      // If no data is modified, do not make the API call
+      setIsDataUpdated(false);
       return;
     }
 
+    console.log(modifiedData);
+
+    // Make the API call with the modifiedData
+    // ...
+    // After the API call is successful, you can reset modifiedData if needed
     setIsDataUpdated(false);
+    setModifiedData([]);
   };
 
   return (
@@ -223,6 +351,9 @@ export const Items = () => {
         role={"employee"}
         handleApprove={handleApprove}
         handleRequest={handleRequest}
+        handleNeededToggle={handleNeededToggle}
+        handleEdit={handleEdit}
+        handleQuantityEdit={handleQuantityEdit}
       />
       <Button
         disabled={!isDataUpdated}
