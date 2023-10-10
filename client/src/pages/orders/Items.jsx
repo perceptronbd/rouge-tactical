@@ -56,11 +56,11 @@ export const Table = ({
       {data ? (
         <article className="rounded-lg">
           <div className="flex justify-between">
-            <div className="flex gap-4 h-10">
+            <div className="flex gap-4 h-10 mb-2">
               <SearchInput value={searchQuery} onChange={handleSearch} />
             </div>
           </div>
-          <div className="max-h-[510px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary">
+          <div className="max-h-[500px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
