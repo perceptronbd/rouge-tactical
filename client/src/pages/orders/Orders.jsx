@@ -14,7 +14,7 @@ export const tabs = [
     icon: BsListCheck,
   },
   {
-    label: "Request Form",
+    label: "New Item Request",
     content: <Form />,
     icon: MdFormatListBulletedAdd,
   },
