@@ -13,6 +13,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username1",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "2",
@@ -28,6 +30,8 @@ export const historyData = [
     approved: false,
     requested: false,
     orderedBy: "username2",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "3",
@@ -43,6 +47,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username3",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "4",
@@ -58,6 +64,8 @@ export const historyData = [
     approved: true,
     requested: false,
     orderedBy: "username4",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "5",
@@ -73,6 +81,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username5",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "6",
@@ -88,6 +98,8 @@ export const historyData = [
     approved: false,
     requested: false,
     orderedBy: "username6",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "7",
@@ -103,6 +115,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username7",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "8",
@@ -118,6 +132,8 @@ export const historyData = [
     approved: true,
     requested: false,
     orderedBy: "username8",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "9",
@@ -133,6 +149,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username9",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "10",
@@ -148,6 +166,8 @@ export const historyData = [
     approved: false,
     requested: false,
     orderedBy: "username10",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "11",
@@ -163,6 +183,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username11",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "12",
@@ -178,6 +200,8 @@ export const historyData = [
     approved: true,
     requested: false,
     orderedBy: "username12",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "13",
@@ -193,6 +217,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username13",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "14",
@@ -208,6 +234,8 @@ export const historyData = [
     approved: false,
     requested: false,
     orderedBy: "username14",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "15",
@@ -223,6 +251,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username15",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "16",
@@ -238,6 +268,8 @@ export const historyData = [
     approved: true,
     requested: false,
     orderedBy: "username16",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "17",
@@ -253,6 +285,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username17",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "18",
@@ -268,6 +302,8 @@ export const historyData = [
     approved: false,
     requested: false,
     orderedBy: "username18",
+    ordered: false,
+    approvedRequest: false,
   },
   {
     id: "19",
@@ -283,6 +319,8 @@ export const historyData = [
     approved: true,
     requested: true,
     orderedBy: "username19",
+    ordered: true,
+    approvedRequest: true,
   },
   {
     id: "20",
@@ -298,5 +336,7 @@ export const historyData = [
     approved: true,
     requested: false,
     orderedBy: "username20",
+    ordered: false,
+    approvedRequest: false,
   },
 ];
