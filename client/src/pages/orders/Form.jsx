@@ -184,7 +184,7 @@ export const Form = () => {
         })}
       </div>
       <Button icon={MdOutlinePlaylistAdd} className={"w-48 m-0"}>
-        Request Order
+        Submit Request
       </Button>
       <Modal
         isOpen={showModal}
