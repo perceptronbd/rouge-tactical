@@ -352,7 +352,7 @@ export const Items = () => {
     <section className="bg-foreground w-full h-full p-4 rounded rounded-tl-none">
       <Table
         data={data}
-        role={"employee"}
+        role={"admin"}
         handleApprove={handleApprove}
         handleRequest={handleRequest}
         handleNeededToggle={handleNeededToggle}
