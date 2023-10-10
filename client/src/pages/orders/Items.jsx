@@ -212,6 +212,7 @@ export const Items = () => {
   const [data, setData] = useState(initialData);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [modifiedData, setModifiedData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEdit = (id) => {
     setData((prevData) =>
@@ -304,8 +305,10 @@ export const Items = () => {
     setData((prevData) =>
       prevData.map((item) => {
         if (item.id === id) {
+          setIsDataUpdated(true);
           return { ...item, quantity: newQuantity };
         }
+
         return item;
       })
     );
@@ -337,10 +340,12 @@ export const Items = () => {
 
     console.log(modifiedData);
 
-    // Make the API call with the modifiedData
-    // ...
-    // After the API call is successful, you can reset modifiedData if needed
-    setIsDataUpdated(false);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsDataUpdated(false);
+    }, 2000);
+
     setModifiedData([]);
   };
 
@@ -359,6 +364,7 @@ export const Items = () => {
         disabled={!isDataUpdated}
         onClick={requestOrders}
         icon={MdOutlinePlaylistAdd}
+        loading={isLoading}
       >
         Request Order
       </Button>
