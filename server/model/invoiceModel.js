@@ -39,14 +39,17 @@ const invoiceSchema = new Schema({
     required: true,
   },
   delivered: {
-    type: Boolean,
-    default: true,
+    type: String,
   },
   status: {
-    type: Boolean,
-    required: true,
+    type: String,
+    enum: ["open", "close"],
   },
   createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     default: Date.now,
   },
