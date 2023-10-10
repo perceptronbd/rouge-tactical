@@ -55,7 +55,7 @@ export const Table = ({
     <>
       {data ? (
         <article className="rounded-lg">
-          <div className="flex justify-between mb-2">
+          <div className="flex justify-between">
             <div className="flex gap-4 h-10">
               <SearchInput value={searchQuery} onChange={handleSearch} />
             </div>
