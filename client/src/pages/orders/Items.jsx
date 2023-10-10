@@ -308,7 +308,6 @@ export const Items = () => {
           setIsDataUpdated(true);
           return { ...item, quantity: newQuantity };
         }
-
         return item;
       })
     );
@@ -327,7 +326,7 @@ export const Items = () => {
         };
         return newModifiedData;
       }
-      return [...prevModifiedData, { id, quantity: newQuantity }];
+      return [...prevModifiedData];
     });
   };
 
