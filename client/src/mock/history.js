@@ -12,6 +12,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username1",
   },
   {
     id: "2",
@@ -26,6 +27,7 @@ export const historyData = [
     needed: "Urgent",
     approved: false,
     requested: false,
+    orderedBy: "username2",
   },
   {
     id: "3",
@@ -40,6 +42,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username3",
   },
   {
     id: "4",
@@ -54,6 +57,7 @@ export const historyData = [
     needed: "Soon",
     approved: true,
     requested: false,
+    orderedBy: "username4",
   },
   {
     id: "5",
@@ -68,6 +72,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username5",
   },
   {
     id: "6",
@@ -82,6 +87,7 @@ export const historyData = [
     needed: "Urgent",
     approved: false,
     requested: false,
+    orderedBy: "username6",
   },
   {
     id: "7",
@@ -96,6 +102,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username7",
   },
   {
     id: "8",
@@ -110,6 +117,7 @@ export const historyData = [
     needed: "Soon",
     approved: true,
     requested: false,
+    orderedBy: "username8",
   },
   {
     id: "9",
@@ -124,6 +132,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username9",
   },
   {
     id: "10",
@@ -138,6 +147,7 @@ export const historyData = [
     needed: "Urgent",
     approved: false,
     requested: false,
+    orderedBy: "username10",
   },
   {
     id: "11",
@@ -152,6 +162,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username11",
   },
   {
     id: "12",
@@ -166,6 +177,7 @@ export const historyData = [
     needed: "Soon",
     approved: true,
     requested: false,
+    orderedBy: "username12",
   },
   {
     id: "13",
@@ -180,6 +192,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username13",
   },
   {
     id: "14",
@@ -194,6 +207,7 @@ export const historyData = [
     needed: "Urgent",
     approved: false,
     requested: false,
+    orderedBy: "username14",
   },
   {
     id: "15",
@@ -208,6 +222,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username15",
   },
   {
     id: "16",
@@ -222,6 +237,7 @@ export const historyData = [
     needed: "Soon",
     approved: true,
     requested: false,
+    orderedBy: "username16",
   },
   {
     id: "17",
@@ -236,6 +252,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username17",
   },
   {
     id: "18",
@@ -250,6 +267,7 @@ export const historyData = [
     needed: "Urgent",
     approved: false,
     requested: false,
+    orderedBy: "username18",
   },
   {
     id: "19",
@@ -264,6 +282,7 @@ export const historyData = [
     needed: "ASAP",
     approved: true,
     requested: true,
+    orderedBy: "username19",
   },
   {
     id: "20",
@@ -278,5 +297,6 @@ export const historyData = [
     needed: "Soon",
     approved: true,
     requested: false,
+    orderedBy: "username20",
   },
 ];
