@@ -210,8 +210,8 @@ export const Table = ({
 
 export const Items = () => {
   const [data, setData] = useState(initialData);
+  const [updatedItems, setUpdatedItems] = useState([]);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
-  const [modifiedData, setModifiedData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleEdit = (id) => {
@@ -220,6 +220,7 @@ export const Items = () => {
         item.id === id ? { ...item, isEditing: !item.isEditing } : item
       )
     );
+    setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
   const handleApprove = (id) => {
@@ -227,27 +228,9 @@ export const Items = () => {
       item.id === id ? { ...item, approved: !item.approved } : item
     );
 
+    setIsDataUpdated(true);
     setData(updatedData);
-
-    setModifiedData((prevModifiedData) => {
-      const updatedItemIndex = prevModifiedData.findIndex(
-        (item) => item.id === id
-      );
-
-      if (updatedItemIndex !== -1) {
-        // If the item is already in modifiedData, replace it with the updated version
-        const newModifiedData = [...prevModifiedData];
-        newModifiedData[updatedItemIndex] = updatedData.find(
-          (item) => item.id === id
-        );
-        return newModifiedData;
-      }
-
-      return [
-        ...prevModifiedData,
-        ...updatedData.filter((item) => item.id === id),
-      ];
-    });
+    setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
   const handleRequest = (id) => {
@@ -260,24 +243,8 @@ export const Items = () => {
       return item;
     });
 
+    setUpdatedItems((prevItems) => [...prevItems, id]);
     setData(updatedData);
-    setModifiedData((prevModifiedData) => {
-      const updatedItemIndex = prevModifiedData.findIndex(
-        (item) => item.id === id
-      );
-      if (updatedItemIndex !== -1) {
-        // If the item is already in modifiedData, replace it with the updated version
-        const newModifiedData = [...prevModifiedData];
-        newModifiedData[updatedItemIndex] = updatedData.find(
-          (item) => item.id === id
-        );
-        return newModifiedData;
-      }
-      return [
-        ...prevModifiedData,
-        ...updatedData.filter((item) => item.id === id),
-      ];
-    });
   };
 
   const handleNeededToggle = (id) => {
@@ -293,10 +260,8 @@ export const Items = () => {
         }
         return item;
       });
-      setModifiedData([
-        ...modifiedData,
-        ...updatedData.filter((item) => item.id === id),
-      ]);
+
+      setUpdatedItems((prevItems) => [...prevItems, id]);
       return updatedData;
     });
   };
@@ -311,41 +276,22 @@ export const Items = () => {
         return item;
       })
     );
-
-    setModifiedData((prevModifiedData) => {
-      const updatedItemIndex = prevModifiedData.findIndex(
-        (item) => item.id === id
-      );
-
-      if (updatedItemIndex !== -1) {
-        // If the item is already in modifiedData, replace it with the updated version
-        const newModifiedData = [...prevModifiedData];
-        newModifiedData[updatedItemIndex] = {
-          ...prevModifiedData[updatedItemIndex],
-          quantity: newQuantity,
-        };
-        return newModifiedData;
-      }
-      return [...prevModifiedData];
-    });
+    setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
   const requestOrders = () => {
-    if (modifiedData.length === 0) {
-      // If no data is modified, do not make the API call
-      setIsDataUpdated(false);
-      return;
-    }
+    if (updatedItems.length === 0) return;
 
-    console.log(modifiedData);
+    const updatedData = data.filter((item) => updatedItems.includes(item.id));
+    console.log(updatedData);
+
+    console.log(data);
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
       setIsDataUpdated(false);
     }, 2000);
-
-    setModifiedData([]);
   };
 
   return (
