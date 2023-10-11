@@ -20,7 +20,7 @@ export const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "closed",
+    status: "close",
     updatedAt: "05/01/2022",
   },
   {
@@ -128,8 +128,8 @@ export const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "open",
-    updatedAt: "NaN/NaN/NaN",
+    status: "close",
+    updatedAt: "24/12/2021",
   },
   {
     id: 12,

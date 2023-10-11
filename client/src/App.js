@@ -4,6 +4,7 @@ import {
   EditEmployee,
   EmployeeInfo,
   Home,
+  Invoice,
   Login,
   Orders,
 } from "./pages";
@@ -32,7 +33,7 @@ function App() {
         <Route path="employee/edit" element={<EditEmployee />} />
         <Route path="components" element={<Components />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="invoice" element={<div>Invoice</div>} />
+        <Route path="invoice" element={<Invoice />} />
         <Route path="purchase" element={<div>Purchase</div>} />
         <Route path="permits" element={<div>Permits</div>} />
         <Route path="payments" element={<div>Payments</div>} />
