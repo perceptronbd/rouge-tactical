@@ -1,4 +1,4 @@
-const data = [
+export const data = [
   {
     id: 1,
     date: "01/12/2021",
@@ -8,7 +8,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -20,7 +20,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "closed",
     updatedAt: "05/01/2022",
   },
   {
@@ -32,7 +32,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -44,7 +44,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -56,7 +56,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -68,7 +68,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -80,7 +80,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -92,7 +92,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -104,7 +104,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -116,7 +116,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -128,7 +128,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -140,7 +140,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -152,7 +152,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -164,7 +164,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -176,7 +176,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -188,7 +188,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -200,7 +200,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -212,7 +212,7 @@ const data = [
     quantity: "20",
     totalAmount: "400",
     depositedAmount: "200",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -224,7 +224,7 @@ const data = [
     quantity: "10",
     totalAmount: "200",
     depositedAmount: "100",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
   {
@@ -236,7 +236,7 @@ const data = [
     quantity: "5",
     totalAmount: "100",
     depositedAmount: "50",
-    status: "Open",
+    status: "open",
     updatedAt: "NaN/NaN/NaN",
   },
 ];
