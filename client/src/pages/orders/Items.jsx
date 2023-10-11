@@ -291,6 +291,7 @@ export const Items = () => {
     setTimeout(() => {
       setIsLoading(false);
       setIsDataUpdated(false);
+      setUpdatedItems([]);
     }, 2000);
   };
 

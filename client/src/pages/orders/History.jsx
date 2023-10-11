@@ -27,7 +27,7 @@ const Checkbox = (props) => {
   );
 };
 
-export const Table = ({ data, approved, role, handleApprove }) => {
+export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -143,9 +143,9 @@ export const Table = ({ data, approved, role, handleApprove }) => {
                         {role === "admin" ? (
                           <Checkbox
                             id={item.id}
-                            label={item.approved ? "Yes" : "No"}
-                            checked={approved}
-                            onClick={handleApprove}
+                            label={item.ordered ? "Yes" : "No"}
+                            checked={item.ordered}
+                            onClick={() => handleOrdered(item.id)}
                             className={
                               "bg-foreground flex justify-center items-center rounded-md"
                             }
@@ -160,9 +160,9 @@ export const Table = ({ data, approved, role, handleApprove }) => {
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           <Checkbox
                             id={item.id}
-                            label={item.approved ? "Yes" : "No"}
-                            checked={approved}
-                            onClick={handleApprove}
+                            label={item.approvedRequest ? "Yes" : "No"}
+                            checked={item.approvedRequest}
+                            onClick={() => handleApproveRequest(item.id)}
                             className={
                               "bg-foreground flex justify-center items-center rounded-md"
                             }
@@ -189,60 +189,57 @@ export const Table = ({ data, approved, role, handleApprove }) => {
 
 export const History = () => {
   const [data, setData] = useState(historyData);
+  const [updatedItems, setUpdatedItems] = useState([]);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
-  const [modifiedData, setModifiedData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [role, setRole] = useState("admin");
+  const role = "admin";
 
-  const handleApprove = (id) => {
+  const handleApproveRequest = (id) => {
     const updatedData = data.map((item) =>
-      item.id === id ? { ...item, approved: !item.approvedRequest } : item
+      item.id === id
+        ? { ...item, approvedRequest: !item.approvedRequest }
+        : item
     );
 
+    setIsDataUpdated(true);
     setData(updatedData);
+    setUpdatedItems((prevItems) => [...prevItems, id]);
+  };
 
-    setModifiedData((prevModifiedData) => {
-      const updatedItemIndex = prevModifiedData.findIndex(
-        (item) => item.id === id
-      );
+  const handleOrdered = (id) => {
+    const updatedData = data.map((item) =>
+      item.id === id ? { ...item, ordered: !item.ordered } : item
+    );
 
-      if (updatedItemIndex !== -1) {
-        // If the item is already in modifiedData, replace it with the updated version
-        const newModifiedData = [...prevModifiedData];
-        newModifiedData[updatedItemIndex] = updatedData.find(
-          (item) => item.id === id
-        );
-        return newModifiedData;
-      }
-
-      return [
-        ...prevModifiedData,
-        ...updatedData.filter((item) => item.id === id),
-      ];
-    });
+    setIsDataUpdated(true);
+    setData(updatedData);
+    setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
   const requestOrders = () => {
-    if (modifiedData.length === 0) {
-      // If no data is modified, do not make the API call
-      setIsDataUpdated(false);
-      return;
-    }
+    if (updatedItems.length === 0) return;
 
-    console.log(modifiedData);
+    const updatedData = data.filter((item) => updatedItems.includes(item.id));
+    console.log(updatedData);
+
+    console.log(data);
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
       setIsDataUpdated(false);
+      setUpdatedItems([]);
     }, 2000);
-
-    setModifiedData([]);
   };
 
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
-      <Table role={role} data={data} handleApprove={handleApprove} />
+      <Table
+        data={data}
+        role={role}
+        handleApproveRequest={handleApproveRequest}
+        handleOrdered={handleOrdered}
+      />
       {role === "admin" && (
         <Button
           disabled={!isDataUpdated}
