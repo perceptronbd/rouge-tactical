@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { cw } from "../../utils";
 
 export const Button = ({
@@ -9,12 +10,13 @@ export const Button = ({
   rounded,
   disabled = false,
   icon: Icon,
+  loading = false,
   ...props
 }) => {
   return (
     <button
       className={cw(
-        `flex justify-center items-center gap-x-2 px-4 py-2 3xl:p-1 rounded m-0 my-4 h-10 w-10`,
+        `flex justify-center items-center gap-x-2 px-4 py-2 3xl:p-1 rounded m-0 my-4 h-10 w-48 font-medium hover:bg-opacity-80 transition-colors duration-300`,
         {
           "bg-accent-tertiary text-white": variant === "default" || !variant,
           "bg-yellow-500 text-black": variant === "warning",
@@ -29,16 +31,24 @@ export const Button = ({
           "bg-background text-textColor-secondary cursor-not-allowed border-none text-textColor-light hover:bg-background hover:text-textColor-secondary":
             variant === "disabled" || disabled,
         },
-        "font-medium hover:bg-opacity-80 transition-colors duration-300",
+        {
+          "bg-opacity-60 hover:bg-opacity-60 cursor-not-allowed": loading,
+        },
         className
       )}
-      disabled={disabled}
+      disabled={disabled || loading}
       {...props}
     >
-      {Icon && (
-        <span className="flex justify-center items-center">
-          <Icon className="w-5 h-5" />
-        </span>
+      {loading ? (
+        <div className="w-5 h-5 rounded-full flex justify-center items-center animate-spin">
+          <AiOutlineLoading3Quarters />
+        </div>
+      ) : (
+        Icon && (
+          <span className="flex justify-center items-center">
+            <Icon className="w-5 h-5" />
+          </span>
+        )
       )}
       {children}
     </button>

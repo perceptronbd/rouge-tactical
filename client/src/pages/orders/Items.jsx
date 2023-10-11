@@ -1,283 +1,319 @@
 import React, { useState } from "react";
-import { Table } from "./Table";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { historyData as initialData } from "../../mock/history";
+import { Button, SearchInput, Text } from "../../components";
+import { cw } from "../../utils";
 
-const initialData = [
-  {
-    id: "1",
-    date: "01/01/2021",
-    item: "Glove Refill (Black)",
-    size: "XL",
-    quantity: "10",
-    price: "200",
-    deliveredItems: "2",
-    vendor: "vendor 1",
-    substituteVendor: "substitute vendor 1",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "2",
-    date: "02/01/2021",
-    item: "Glove Refill (Blue)",
-    size: "L",
-    quantity: "5",
-    price: "100",
-    deliveredItems: "1",
-    vendor: "vendor 2",
-    substituteVendor: "substitute vendor 2",
-    needed: "Urgent",
-    approved: false,
-  },
-  {
-    id: "3",
-    date: "03/01/2021",
-    item: "Mask Refill (White)",
-    size: "M",
-    quantity: "20",
-    price: "400",
-    deliveredItems: "10",
-    vendor: "vendor 3",
-    substituteVendor: "substitute vendor 3",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "4",
-    date: "04/01/2021",
-    item: "Hand Sanitizer (500ml)",
-    size: "S",
-    quantity: "15",
-    price: "300",
-    deliveredItems: "5",
-    vendor: "vendor 4",
-    substituteVendor: "substitute vendor 4",
-    needed: "Soon",
-    approved: true,
-  },
-  {
-    id: "5",
-    date: "05/01/2021",
-    item: "Glove Refill (Black)",
-    size: "XL",
-    quantity: "10",
-    price: "200",
-    deliveredItems: "2",
-    vendor: "vendor 1",
-    substituteVendor: "substitute vendor 1",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "6",
-    date: "06/01/2021",
-    item: "Glove Refill (Blue)",
-    size: "L",
-    quantity: "5",
-    price: "100",
-    deliveredItems: "1",
-    vendor: "vendor 2",
-    substituteVendor: "substitute vendor 2",
-    needed: "Urgent",
-    approved: false,
-  },
-  {
-    id: "7",
-    date: "07/01/2021",
-    item: "Mask Refill (White)",
-    size: "M",
-    quantity: "20",
-    price: "400",
-    deliveredItems: "10",
-    vendor: "vendor 3",
-    substituteVendor: "substitute vendor 3",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "8",
-    date: "08/01/2021",
-    item: "Hand Sanitizer (500ml)",
-    size: "S",
-    quantity: "15",
-    price: "300",
-    deliveredItems: "5",
-    vendor: "vendor 4",
-    substituteVendor: "substitute vendor 4",
-    needed: "Soon",
-    approved: true,
-  },
-  {
-    id: "9",
-    date: "09/01/2021",
-    item: "Glove Refill (Black)",
-    size: "XL",
-    quantity: "10",
-    price: "200",
-    deliveredItems: "2",
-    vendor: "vendor 1",
-    substituteVendor: "substitute vendor 1",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "10",
-    date: "10/01/2021",
-    item: "Glove Refill (Blue)",
-    size: "L",
-    quantity: "5",
-    price: "100",
-    deliveredItems: "1",
-    vendor: "vendor 2",
-    substituteVendor: "substitute vendor 2",
-    needed: "Urgent",
-    approved: false,
-  },
-  {
-    id: "11",
-    date: "11/01/2021",
-    item: "Mask Refill (Black)",
-    size: "M",
-    quantity: "15",
-    price: "250",
-    deliveredItems: "8",
-    vendor: "vendor 3",
-    substituteVendor: "substitute vendor 3",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "12",
-    date: "12/01/2021",
-    item: "Hand Sanitizer (1L)",
-    size: "L",
-    quantity: "8",
-    price: "160",
-    deliveredItems: "4",
-    vendor: "vendor 4",
-    substituteVendor: "substitute vendor 4",
-    needed: "Soon",
-    approved: true,
-  },
-  {
-    id: "13",
-    date: "13/01/2021",
-    item: "Glove Refill (Black)",
-    size: "XL",
-    quantity: "20",
-    price: "400",
-    deliveredItems: "10",
-    vendor: "vendor 1",
-    substituteVendor: "substitute vendor 1",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "14",
-    date: "14/01/2021",
-    item: "Glove Refill (Blue)",
-    size: "L",
-    quantity: "10",
-    price: "200",
-    deliveredItems: "3",
-    vendor: "vendor 2",
-    substituteVendor: "substitute vendor 2",
-    needed: "Urgent",
-    approved: false,
-  },
-  {
-    id: "15",
-    date: "15/01/2021",
-    item: "Mask Refill (White)",
-    size: "M",
-    quantity: "25",
-    price: "500",
-    deliveredItems: "15",
-    vendor: "vendor 3",
-    substituteVendor: "substitute vendor 3",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "16",
-    date: "16/01/2021",
-    item: "Hand Sanitizer (500ml)",
-    size: "S",
-    quantity: "20",
-    price: "400",
-    deliveredItems: "6",
-    vendor: "vendor 4",
-    substituteVendor: "substitute vendor 4",
-    needed: "Soon",
-    approved: true,
-  },
-  {
-    id: "17",
-    date: "17/01/2021",
-    item: "Glove Refill (Black)",
-    size: "XL",
-    quantity: "10",
-    price: "200",
-    deliveredItems: "2",
-    vendor: "vendor 1",
-    substituteVendor: "substitute vendor 1",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "18",
-    date: "18/01/2021",
-    item: "Glove Refill (Blue)",
-    size: "L",
-    quantity: "5",
-    price: "100",
-    deliveredItems: "1",
-    vendor: "vendor 2",
-    substituteVendor: "substitute vendor 2",
-    needed: "Urgent",
-    approved: false,
-  },
-  {
-    id: "19",
-    date: "19/01/2021",
-    item: "Mask Refill (White)",
-    size: "M",
-    quantity: "20",
-    price: "400",
-    deliveredItems: "10",
-    vendor: "vendor 3",
-    substituteVendor: "substitute vendor 3",
-    needed: "ASAP",
-    approved: true,
-  },
-  {
-    id: "20",
-    date: "20/01/2021",
-    item: "Hand Sanitizer (500ml)",
-    size: "S",
-    quantity: "15",
-    price: "300",
-    deliveredItems: "5",
-    vendor: "vendor 4",
-    substituteVendor: "substitute vendor 4",
-    needed: "Soon",
-    approved: true,
-  },
-];
+const Checkbox = (props) => {
+  const { id, label, className, onClick, checked } = props;
+
+  return (
+    <>
+      <div className={cw("py-1", className)}>
+        <input
+          className="peer appearance-none h-4 w-4 border-2 border-red-500 rounded bg-transparent checked:bg-green-500 checked:border-green-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+          type="checkbox"
+          id={id}
+          onClick={onClick}
+          checked={checked}
+        />
+        {label && (
+          <label
+            className="inline-block peer-checked:text-green-500 text-red-500 font-semibold transition-all ease-in-out duration-300"
+            htmlFor={id}
+          >
+            {label}
+          </label>
+        )}
+      </div>
+    </>
+  );
+};
+
+export const Table = ({
+  data,
+  role,
+  handleApprove,
+  handleRequest,
+  handleNeededToggle,
+  handleEdit,
+  handleQuantityEdit,
+}) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredData = data.filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  return (
+    <>
+      {data ? (
+        <article className="rounded-lg">
+          <div className="flex justify-between">
+            <div className="flex gap-4 h-10 mb-2">
+              <SearchInput value={searchQuery} onChange={handleSearch} />
+            </div>
+          </div>
+          <div className="max-h-[500px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary">
+            <table className="w-full border-collapse">
+              <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
+                <tr>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Date
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Item
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Size
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Quantity
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Price
+                  </th>
+
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Vendor
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Substitute Vendor
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Needed
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Requests
+                  </th>
+                  {role === "admin" && (
+                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                      Approved
+                    </th>
+                  )}
+                </tr>
+              </thead>
+              <tbody className="text-white">
+                {filteredData.length === 0 ? (
+                  <tr className="text-center">
+                    <td colSpan="12">
+                      <div className="font-bold text-xl text-foreground my-8 opacity-80">
+                        No Data
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredData.map((item, index) => (
+                    <tr
+                      key={index}
+                      className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
+                    >
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.date}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.item}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        {item.size}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 flex items-center justify-center 3xl:gap-1">
+                        {item.isEditing ? (
+                          <input
+                            type="text"
+                            className="border rounded-md p-1 w-10 text-center text-black"
+                            value={item.quantity}
+                            onChange={(e) =>
+                              handleQuantityEdit(item.id, e.target.value)
+                            }
+                          />
+                        ) : (
+                          item.quantity
+                        )}
+                        <Button
+                          onClick={() => handleEdit(item.id)}
+                          icon={BiSolidMessageSquareEdit}
+                          className={"w-4 h-4 bg-transparent"}
+                        />
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        {item.price}
+                      </td>
+
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.vendor}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.substituteVendor}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left transition-all ease-in-out duration-300">
+                        <div
+                          className={cw(
+                            ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
+                            item.needed === "Urgent"
+                              ? "text-yellow-500"
+                              : "text-green-500"
+                          )}
+                          onClick={() => handleNeededToggle(item.id)}
+                        >
+                          {item.needed}
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4 3xl:p-4 3xl:py-2 text-center">
+                        <Checkbox
+                          id={`request_${item.id}`}
+                          label={item.requested ? "Yes" : "No"}
+                          checked={item.requested}
+                          onClick={() => handleRequest(item.id)}
+                          className={
+                            "flex justify-center items-center rounded-md bg-foreground m-0 p-1"
+                          }
+                        />
+                      </td>
+                      {role === "admin" && (
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          <Checkbox
+                            id={item.id}
+                            label={item.approved ? "Yes" : "No"}
+                            checked={item.approved}
+                            onClick={() => handleApprove(item.id)}
+                            className={
+                              "bg-foreground flex justify-center items-center rounded-md"
+                            }
+                          />
+                        </td>
+                      )}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      ) : (
+        <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
+          <Text h1 className={"text-textColor-light"}>
+            No Data to Show
+          </Text>
+        </div>
+      )}
+    </>
+  );
+};
 
 export const Items = () => {
   const [data, setData] = useState(initialData);
+  const [updatedItems, setUpdatedItems] = useState([]);
+  const [isDataUpdated, setIsDataUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEdit = (id) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, isEditing: !item.isEditing } : item
+      )
+    );
+    setUpdatedItems((prevItems) => [...prevItems, id]);
+  };
 
   const handleApprove = (id) => {
+    const updatedData = data.map((item) =>
+      item.id === id ? { ...item, approved: !item.approved } : item
+    );
+
+    setIsDataUpdated(true);
+    setData(updatedData);
+    setUpdatedItems((prevItems) => [...prevItems, id]);
+  };
+
+  const handleRequest = (id) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
+        const updatedItem = { ...item, requested: !item.requested };
+        setIsDataUpdated(true);
+        return updatedItem;
+      }
+      return item;
+    });
+
+    setUpdatedItems((prevItems) => [...prevItems, id]);
+    setData(updatedData);
+  };
+
+  const handleNeededToggle = (id) => {
+    setData((prevData) => {
+      const updatedData = prevData.map((item) => {
+        if (item.id === id) {
+          const updatedItem = {
+            ...item,
+            needed: item.needed === "Urgent" ? "Soon" : "Urgent",
+          };
+          setIsDataUpdated(true);
+          return updatedItem;
+        }
+        return item;
+      });
+
+      setUpdatedItems((prevItems) => [...prevItems, id]);
+      return updatedData;
+    });
+  };
+
+  const handleQuantityEdit = (id, newQuantity) => {
     setData((prevData) =>
       prevData.map((item) => {
-        return item.id === id ? { ...item, approved: !item.approved } : item;
+        if (item.id === id) {
+          setIsDataUpdated(true);
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
       })
     );
+    setUpdatedItems((prevItems) => [...prevItems, id]);
+  };
+
+  const requestOrders = () => {
+    if (updatedItems.length === 0) return;
+
+    const updatedData = data.filter((item) => updatedItems.includes(item.id));
+    console.log(updatedData);
+
+    console.log(data);
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsDataUpdated(false);
+      setUpdatedItems([]);
+    }, 2000);
   };
 
   return (
     <section className="bg-foreground w-full h-full p-4 rounded rounded-tl-none">
-      <Table data={data} role={"admin"} handleApprove={handleApprove} />
+      <Table
+        data={data}
+        role={"admin"}
+        handleApprove={handleApprove}
+        handleRequest={handleRequest}
+        handleNeededToggle={handleNeededToggle}
+        handleEdit={handleEdit}
+        handleQuantityEdit={handleQuantityEdit}
+      />
+      <Button
+        disabled={!isDataUpdated}
+        onClick={requestOrders}
+        icon={MdOutlinePlaylistAdd}
+        loading={isLoading}
+      >
+        Request Order
+      </Button>
     </section>
   );
 };

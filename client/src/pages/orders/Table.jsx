@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SearchInput, Text } from "../../components";
 import { cw } from "../../utils";
 
