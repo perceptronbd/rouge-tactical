@@ -5,10 +5,10 @@ export const AgingSummary = ({ agingSummary, loading }) => {
     <section className="px-4 py-2 flex flex-col gap-2 w-80 h-full 3xl:h-56 border rounded">
       <div>Aging Summary</div>
       {loading ? (
-        <div className="h-full w-full flex justify-center items-center">
+        <div className="w-full h-40 flex justify-center items-center">
           loading...
         </div>
-      ) : (
+      ) : agingSummary ? (
         <div className="bg-background p-2 rounded">
           <div className="flex gap-4 justify-between border-b-2">
             <p className="w-16 text-textColor-light">Current</p>
@@ -49,6 +49,29 @@ export const AgingSummary = ({ agingSummary, loading }) => {
                 ? "..."
                 : `$ ${agingSummary["> 90"].toFixed(2)}`}
             </p>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-background p-2 rounded">
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">Current</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">0 - 30</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">31 - 60</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">61 - 90</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">{`> 90`}</p>
+            <p>. . .</p>
           </div>
         </div>
       )}
