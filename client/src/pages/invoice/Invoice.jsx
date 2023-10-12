@@ -7,6 +7,7 @@ import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
+import { invoiceInputs } from "./invoiceInputs";
 import { capitalizeFirstWord } from "../../utils/capitalize";
 
 export const Invoice = () => {
@@ -16,6 +17,7 @@ export const Invoice = () => {
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
+  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -62,6 +64,10 @@ export const Invoice = () => {
     setShowVendorForm(false);
     setModalMessage("Employee added successfully!");
     setIsError(false);
+  };
+
+  const openInvoiceForm = () => {
+    setShowInvoiceForm(true);
   };
 
   return (
@@ -138,13 +144,28 @@ export const Invoice = () => {
       <div className="h-[330px] 3xl:h-[590px]">
         <Table data={tableData} loading={loadingTable} />
       </div>
-      <Button icon={MdPostAdd} className={"my-2 3xl:my-4"}>
+      <Button
+        icon={MdPostAdd}
+        className={"my-2 3xl:my-4"}
+        onClick={openInvoiceForm}
+      >
         New Invoice
       </Button>
+
+      {/* Pop up forms */}
       <ContentModal isOpen={showVendorForm} setShowModal={setShowVendorForm}>
         <Form
           formTitle={"Add Vendor"}
           inputFields={vendorInputs}
+          icon={BsPersonFillAdd}
+          handleChange={handleChange}
+          onSubmit={onSubmit}
+        />
+      </ContentModal>
+      <ContentModal isOpen={showInvoiceForm} setShowModal={setShowInvoiceForm}>
+        <Form
+          formTitle={"Add Invoice"}
+          inputFields={invoiceInputs}
           icon={BsPersonFillAdd}
           handleChange={handleChange}
           onSubmit={onSubmit}
