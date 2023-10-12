@@ -1,0 +1,57 @@
+import React from "react";
+
+export const AgingSummary = ({ agingSummary, loading }) => {
+  return (
+    <section className="px-4 py-2 flex flex-col gap-2 w-80 h-full 3xl:h-56 border rounded">
+      <div>Aging Summary</div>
+      {loading ? (
+        <div className="h-full w-full flex justify-center items-center">
+          loading...
+        </div>
+      ) : (
+        <div className="bg-background p-2 rounded">
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">Current</p>
+            <p>
+              {agingSummary["0 - 30"] === 0
+                ? "..."
+                : `$ ${agingSummary["current"].toFixed(2)}`}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">0 - 30</p>
+            <p>
+              {agingSummary["0 - 30"] === 0
+                ? "..."
+                : `$ ${agingSummary["0 - 30"].toFixed(2)}`}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">31 - 60</p>
+            <p>
+              {agingSummary["31 - 60"] === 0
+                ? "..."
+                : `$ ${agingSummary["31 - 60"].toFixed(2)}`}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">61 - 90</p>
+            <p>
+              {agingSummary["61 - 90"] === 0
+                ? "..."
+                : `$ ${agingSummary["61 - 90"].toFixed(2)}`}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">{`> 90`}</p>
+            <p>
+              {agingSummary["> 90"] === 0
+                ? "..."
+                : `$ ${agingSummary["> 90"].toFixed(2)}`}
+            </p>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
