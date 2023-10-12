@@ -9,13 +9,16 @@ import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { capitalizeFirstWord } from "../../utils/capitalize";
+import { AgingSummary } from "./AgingSummary";
 
 export const Invoice = () => {
+  const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorDetails, setVendorDetails] = useState(null);
   const [tableData, setTableData] = useState(data);
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
+  const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
   const [showInvoiceForm, setShowInvoiceForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -35,13 +38,46 @@ export const Invoice = () => {
   useEffect(() => {
     if (vendorDetails) {
       setLoadingTable(true);
+      setLoadingAgingSummary(true);
       setTimeout(() => {
-        const invoice = data.filter((invoice) => {
-          console.log(invoice.vendor, vendorDetails.name);
-          return invoice.vendor === vendorDetails.name;
-        });
+        const invoice = data.filter(
+          (invoice) => invoice.vendor === vendorDetails.name
+        );
         setLoadingTable(false);
+        setLoadingAgingSummary(false);
         setTableData(invoice);
+
+        const currentDate = new Date();
+        const summary = {
+          current: 0,
+          "0 - 30": 0,
+          "31 - 60": 0,
+          "61 - 90": 0,
+          "> 90": 0,
+        };
+
+        invoice.forEach((item) => {
+          const updatedAt = new Date(item.date);
+          const daysDifference = Math.floor(
+            (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
+          );
+
+          if (daysDifference <= 1) {
+            summary["current"] += item.totalAmount - item.depositedAmount;
+          } else if (daysDifference <= 30) {
+            summary["0 - 30"] += item.totalAmount - item.depositedAmount;
+          } else if (daysDifference <= 60) {
+            summary["31 - 60"] += item.totalAmount - item.depositedAmount;
+          } else if (daysDifference <= 90) {
+            summary["61 - 90"] += item.totalAmount - item.depositedAmount;
+          } else {
+            summary["> 90"] += item.totalAmount - item.depositedAmount;
+          }
+        });
+
+        setAgingSummary(summary);
+
+        console.log(summary);
       }, 1000);
     }
   }, [vendorDetails]);
@@ -72,74 +108,81 @@ export const Invoice = () => {
 
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
-      <section className="h-70 mb-2">
-        <div className="flex items-center gap-6 mb-2">
-          <div>
-            <select
-              id="vendor"
-              value={selectedVendor}
-              onChange={handleVendorChange}
-              className="peer block border rounded-lg w-64 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary "
-            >
-              <option value="" className="text-textColor-light">
-                Select Vendor
-              </option>
-              {vendorData.map((vendor, index) => (
-                <option
-                  key={index}
-                  value={vendor.id}
-                  className="text-textColor hover:text-accent-tertiary"
-                >
-                  {vendor.name}
+      <section className="h-70 mb-2 flex justify-between">
+        <div>
+          <div className="flex items-center gap-6 mb-2">
+            <div>
+              <select
+                id="vendor"
+                value={selectedVendor}
+                onChange={handleVendorChange}
+                className="peer block border rounded-lg w-64 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary "
+              >
+                <option value="" className="text-textColor-light">
+                  Select Vendor
                 </option>
-              ))}
-            </select>
-            <label
-              htmlFor="vendor"
-              className="absolute text-sm px-1 text-gray-500 duration-300 transform -translate-y-6 bg-foreground scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-accent-tertiary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:bg-white"
-            >
-              Select Vendor
-            </label>
-          </div>
+                {vendorData.map((vendor, index) => (
+                  <option
+                    key={index}
+                    value={vendor.id}
+                    className="text-textColor hover:text-accent-tertiary"
+                  >
+                    {vendor.name}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="vendor"
+                className="absolute text-sm px-1 text-gray-500 duration-300 transform -translate-y-6 bg-foreground scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-accent-tertiary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:bg-white"
+              >
+                Select Vendor
+              </label>
+            </div>
 
-          <Button
-            className={"w-10 m-0"}
-            variant={"ghost"}
-            onClick={openVendorForm}
-          >
-            +
-          </Button>
-        </div>
-        {loading ? (
-          <div className="w-80 h-52 3xl:h-56 border rounded flex justify-center items-center">
-            <AiOutlineLoading3Quarters className="animate-spin" />
+            <Button
+              className={"w-10 m-0"}
+              variant={"ghost"}
+              onClick={openVendorForm}
+            >
+              +
+            </Button>
           </div>
-        ) : vendorDetails ? (
-          <section className="px-4 py-2 flex flex-col gap-2 w-80 h-52 3xl:h-56 border rounded">
-            <div className="flex gap-4 ">
-              <p className="w-16 text-textColor-light ">Contact</p>
-              <p>{vendorDetails.contact}</p>
+          {loading ? (
+            <div className="w-80 h-52 3xl:h-56 border rounded flex justify-center items-center">
+              <AiOutlineLoading3Quarters className="animate-spin" />
             </div>
-            <div className="flex gap-4">
-              <p className="w-16 text-textColor-light">Phone</p>
-              <p>{vendorDetails.phone}</p>
-            </div>
-            <div className="flex gap-4">
-              <p className="w-16 text-textColor-light">Vendor</p>
-              <p>{capitalizeFirstWord(vendorDetails.name)}</p>
-            </div>
-            <div className="flex gap-4">
-              <p className="w-16 text-textColor-light">Email</p>
-              <p>{vendorDetails.email}</p>
-            </div>
-            <div className="flex gap-4">
-              <p className="w-16 text-textColor-light">Address</p>
-              <p className={"p-ellipsis w-36"}>{vendorDetails.address}</p>
-            </div>
-          </section>
-        ) : (
-          <section className="h-52 3xl:h-56" />
-        )}
+          ) : vendorDetails ? (
+            <section className="px-4 py-2 flex flex-col gap-2 w-80 h-52 3xl:h-56 border rounded">
+              <div className="flex gap-4 ">
+                <p className="w-16 text-textColor-light ">Contact</p>
+                <p>{vendorDetails.contact}</p>
+              </div>
+              <div className="flex gap-4">
+                <p className="w-16 text-textColor-light">Phone</p>
+                <p>{vendorDetails.phone}</p>
+              </div>
+              <div className="flex gap-4">
+                <p className="w-16 text-textColor-light">Vendor</p>
+                <p>{capitalizeFirstWord(vendorDetails.name)}</p>
+              </div>
+              <div className="flex gap-4">
+                <p className="w-16 text-textColor-light">Email</p>
+                <p>{vendorDetails.email}</p>
+              </div>
+              <div className="flex gap-4">
+                <p className="w-16 text-textColor-light">Address</p>
+                <p className={"p-ellipsis w-36"}>{vendorDetails.address}</p>
+              </div>
+            </section>
+          ) : (
+            <section className="h-52 3xl:h-56" />
+          )}
+        </div>
+
+        <AgingSummary
+          agingSummary={agingSummary}
+          loading={loadingAgingSummary}
+        />
       </section>
       <div className="h-[330px] 3xl:h-[590px]">
         <Table data={tableData} loading={loadingTable} />

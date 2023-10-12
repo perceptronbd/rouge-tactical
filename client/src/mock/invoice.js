@@ -1,7 +1,7 @@
 export const data = [
   {
     id: 1,
-    date: "01/12/2021",
+    date: "09/09/2023",
     invoiceNumber: "1",
     vendor: "vendor 1",
     item: "Glove Refill (Black)",
