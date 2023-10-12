@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { MdPostAdd } from "react-icons/md";
+import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Button } from "../../components";
+import { Button, ContentModal, Form, Modal } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
+import { vendorInputs } from "./vendorInputs";
 import { capitalizeFirstWord } from "../../utils/capitalize";
 
 export const Invoice = () => {
@@ -13,6 +15,10 @@ export const Invoice = () => {
   const [tableData, setTableData] = useState(data);
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
+  const [showVendorForm, setShowVendorForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +46,22 @@ export const Invoice = () => {
 
   const handleVendorChange = (event) => {
     setSelectedVendor(parseInt(event.target.value));
+  };
+
+  const openVendorForm = () => {
+    setShowVendorForm(true);
+  };
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+    setShowVendorForm(false);
+    setModalMessage("Employee added successfully!");
+    setIsError(false);
   };
 
   return (
@@ -74,7 +96,11 @@ export const Invoice = () => {
             </label>
           </div>
 
-          <Button className={"w-10 m-0"} variant={"ghost"}>
+          <Button
+            className={"w-10 m-0"}
+            variant={"ghost"}
+            onClick={openVendorForm}
+          >
             +
           </Button>
         </div>
@@ -115,6 +141,21 @@ export const Invoice = () => {
       <Button icon={MdPostAdd} className={"my-2 3xl:my-4"}>
         New Invoice
       </Button>
+      <ContentModal isOpen={showVendorForm} setShowModal={setShowVendorForm}>
+        <Form
+          formTitle={"Add Vendor"}
+          inputFields={vendorInputs}
+          icon={BsPersonFillAdd}
+          handleChange={handleChange}
+          onSubmit={onSubmit}
+        />
+      </ContentModal>
+      <Modal
+        isOpen={showModal}
+        setShowModal={setShowModal}
+        modalMessage={modalMessage}
+        isError={isError}
+      />
     </section>
   );
 };

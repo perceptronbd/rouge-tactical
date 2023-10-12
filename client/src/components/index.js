@@ -23,3 +23,6 @@ export { Modal } from "./modals/Modal";
 export { ContentModal } from "./modals/ContentModal";
 //Tabs
 export { Tabs } from "./tabs/Tabs";
+//form
+export { Form } from "./form/Form";
+export { AddVendor } from "./form/AddVendor";
