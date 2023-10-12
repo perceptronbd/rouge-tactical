@@ -10,6 +10,7 @@ import { capitalizeFirstWord } from "../../utils/capitalize";
 export const Invoice = () => {
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorDetails, setVendorDetails] = useState(null);
+  const [tableData, setTableData] = useState(data);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,12 +18,22 @@ export const Invoice = () => {
 
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
-
       setLoading(false);
       setVendorDetails(vendor);
-      console.log(vendorDetails);
     }, 1000);
-  }, [selectedVendor, vendorDetails]);
+  }, [selectedVendor]);
+
+  useEffect(() => {
+    if (vendorDetails) {
+      setTimeout(() => {
+        const invoice = data.filter((invoice) => {
+          console.log(invoice.vendor, vendorDetails.name);
+          return invoice.vendor === vendorDetails.name;
+        });
+        setTableData(invoice);
+      }, 1000);
+    }
+  }, [vendorDetails]);
 
   const handleVendorChange = (event) => {
     setSelectedVendor(parseInt(event.target.value));
@@ -95,7 +106,7 @@ export const Invoice = () => {
           <section className="h-52 3xl:h-56" />
         )}
       </section>
-      <Table data={data} />
+      <Table data={tableData} />
       <Button icon={MdPostAdd} className={"my-2 3xl:my-4"}>
         New Invoice
       </Button>
