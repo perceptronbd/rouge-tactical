@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 
-export const Table = ({ data, role, handleApprove }) => {
+export const Table = ({ data, loading }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -66,6 +66,14 @@ export const Table = ({ data, role, handleApprove }) => {
                       </div>
                     </td>
                   </tr>
+                ) : loading ? (
+                  <tr className="text-center">
+                    <td colSpan="11">
+                      <div className="font-bold text-xl text-foreground my-8 opacity-80">
+                        Loaging...
+                      </div>
+                    </td>
+                  </tr>
                 ) : (
                   filteredData.map((item, index) => (
                     <tr
@@ -120,7 +128,7 @@ export const Table = ({ data, role, handleApprove }) => {
       ) : (
         <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
           <Text h1 className={"text-textColor-light"}>
-            No Data
+            No Such Data
           </Text>
         </div>
       )}

@@ -12,6 +12,7 @@ export const Invoice = () => {
   const [vendorDetails, setVendorDetails] = useState(null);
   const [tableData, setTableData] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [loadingTable, setLoadingTable] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -25,11 +26,13 @@ export const Invoice = () => {
 
   useEffect(() => {
     if (vendorDetails) {
+      setLoadingTable(true);
       setTimeout(() => {
         const invoice = data.filter((invoice) => {
           console.log(invoice.vendor, vendorDetails.name);
           return invoice.vendor === vendorDetails.name;
         });
+        setLoadingTable(false);
         setTableData(invoice);
       }, 1000);
     }
@@ -106,7 +109,9 @@ export const Invoice = () => {
           <section className="h-52 3xl:h-56" />
         )}
       </section>
-      <Table data={tableData} />
+      <div className="h-[330px] 3xl:h-[590px]">
+        <Table data={tableData} loading={loadingTable} />
+      </div>
       <Button icon={MdPostAdd} className={"my-2 3xl:my-4"}>
         New Invoice
       </Button>
