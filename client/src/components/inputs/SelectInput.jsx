@@ -14,7 +14,7 @@ export const SelectInput = (props) => {
   } = props;
 
   return (
-    <div className="relative my-2">
+    <div className="relative">
       <select
         id={id}
         name={name}
@@ -26,6 +26,16 @@ export const SelectInput = (props) => {
         )}
       >
         <optgroup label={label} className="font-semibold">
+          <option
+            value=""
+            key="defaultOption"
+            className="text-textColor hover:text-accent-tertiary"
+            disabled
+            selected
+            hidden
+          >
+            {label}
+          </option>
           {selectOpts.map((opt) => (
             <option
               value={opt.id}

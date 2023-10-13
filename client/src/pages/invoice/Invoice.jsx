@@ -121,6 +121,7 @@ export const Invoice = () => {
               id="vendor"
               name="vendor"
               label="Select Vendor"
+              className="w-64"
               value={selectedVendor}
               onChange={handleVendorChange}
               selectOpts={vendorData}
