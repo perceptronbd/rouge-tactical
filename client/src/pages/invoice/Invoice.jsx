@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Button, ContentModal, Form, Modal } from "../../components";
+import {
+  Button,
+  ContentModal,
+  Form,
+  Modal,
+  SelectInput,
+} from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
@@ -10,6 +16,7 @@ import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { capitalizeFirstWord } from "../../utils/capitalize";
 import { AgingSummary } from "./AgingSummary";
+import { Vendor } from "./Vendor";
 
 export const Invoice = () => {
   const [agingSummary, setAgingSummary] = useState(null);
@@ -111,33 +118,14 @@ export const Invoice = () => {
       <section className="h-70 mb-2 flex justify-between">
         <div>
           <div className="flex items-center gap-6 mb-2">
-            <div>
-              <select
-                id="vendor"
-                value={selectedVendor}
-                onChange={handleVendorChange}
-                className="peer block border rounded-lg w-64 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary "
-              >
-                <option value="" className="text-textColor-light">
-                  Select Vendor
-                </option>
-                {vendorData.map((vendor, index) => (
-                  <option
-                    key={index}
-                    value={vendor.id}
-                    className="text-textColor hover:text-accent-tertiary"
-                  >
-                    {vendor.name}
-                  </option>
-                ))}
-              </select>
-              <label
-                htmlFor="vendor"
-                className="absolute text-sm px-1 text-gray-500 duration-300 transform -translate-y-6 bg-foreground scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-accent-tertiary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:bg-white"
-              >
-                Select Vendor
-              </label>
-            </div>
+            <SelectInput
+              id="vendor"
+              name="vendor"
+              label="Select Vendor"
+              value={selectedVendor}
+              onChange={handleVendorChange}
+              selectOpts={vendorData}
+            />
 
             <Button
               className={"w-10 m-0"}
@@ -152,28 +140,7 @@ export const Invoice = () => {
               <AiOutlineLoading3Quarters className="animate-spin" />
             </div>
           ) : vendorDetails ? (
-            <section className="px-4 py-2 flex flex-col gap-2 w-80 h-52 3xl:h-56 border rounded">
-              <div className="flex gap-4 ">
-                <p className="w-16 text-textColor-light ">Contact</p>
-                <p>{vendorDetails.contact}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Phone</p>
-                <p>{vendorDetails.phone}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Vendor</p>
-                <p>{capitalizeFirstWord(vendorDetails.name)}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Email</p>
-                <p>{vendorDetails.email}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Address</p>
-                <p className={"p-ellipsis w-36"}>{vendorDetails.address}</p>
-              </div>
-            </section>
+            <Vendor vendor={vendorDetails} />
           ) : (
             <section className="h-52 3xl:h-56" />
           )}

@@ -28,7 +28,7 @@ export const SelectInput = (props) => {
         <optgroup label={label} className="font-semibold">
           {selectOpts.map((opt) => (
             <option
-              value={opt.value}
+              value={opt.id}
               key={opt.value}
               className="text-textColor hover:text-accent-tertiary"
             >
