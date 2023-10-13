@@ -2,25 +2,37 @@ import React, { useEffect, useState } from "react";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Button, ContentModal, Form, Modal } from "../../components";
+import {
+  Button,
+  ContentModal,
+  Form,
+  Modal,
+  SelectInput,
+  Vendor,
+  AgingSummary,
+  UpdateForm,
+} from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
-import { capitalizeFirstWord } from "../../utils/capitalize";
-import { AgingSummary } from "./AgingSummary";
 
 export const Invoice = () => {
+  //data states
   const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorDetails, setVendorDetails] = useState(null);
   const [tableData, setTableData] = useState(data);
+  const [invoiceDetails, setInvoiceDetails] = useState(null);
+  //loading states
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
+  //modal states
   const [showVendorForm, setShowVendorForm] = useState(false);
   const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -92,14 +104,17 @@ export const Invoice = () => {
 
   const handleChange = (e) => {
     console.log(e.target.value);
+    console.log(e.target.value);
+    setInvoiceDetails({ ...invoiceDetails, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(true);
     setShowVendorForm(false);
-    setModalMessage("Employee added successfully!");
+    setModalMessage("Process Successfull!");
     setIsError(false);
+    console.log(invoiceDetails);
   };
 
   const openInvoiceForm = () => {
@@ -111,33 +126,15 @@ export const Invoice = () => {
       <section className="h-70 mb-2 flex justify-between">
         <div>
           <div className="flex items-center gap-6 mb-2">
-            <div>
-              <select
-                id="vendor"
-                value={selectedVendor}
-                onChange={handleVendorChange}
-                className="peer block border rounded-lg w-64 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary "
-              >
-                <option value="" className="text-textColor-light">
-                  Select Vendor
-                </option>
-                {vendorData.map((vendor, index) => (
-                  <option
-                    key={index}
-                    value={vendor.id}
-                    className="text-textColor hover:text-accent-tertiary"
-                  >
-                    {vendor.name}
-                  </option>
-                ))}
-              </select>
-              <label
-                htmlFor="vendor"
-                className="absolute text-sm px-1 text-gray-500 duration-300 transform -translate-y-6 bg-foreground scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-accent-tertiary peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:bg-white"
-              >
-                Select Vendor
-              </label>
-            </div>
+            <SelectInput
+              id="vendor"
+              name="vendor"
+              label="Select Vendor"
+              className="w-64"
+              value={selectedVendor}
+              onChange={handleVendorChange}
+              selectOpts={vendorData}
+            />
 
             <Button
               className={"w-10 m-0"}
@@ -152,28 +149,7 @@ export const Invoice = () => {
               <AiOutlineLoading3Quarters className="animate-spin" />
             </div>
           ) : vendorDetails ? (
-            <section className="px-4 py-2 flex flex-col gap-2 w-80 h-52 3xl:h-56 border rounded">
-              <div className="flex gap-4 ">
-                <p className="w-16 text-textColor-light ">Contact</p>
-                <p>{vendorDetails.contact}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Phone</p>
-                <p>{vendorDetails.phone}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Vendor</p>
-                <p>{capitalizeFirstWord(vendorDetails.name)}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Email</p>
-                <p>{vendorDetails.email}</p>
-              </div>
-              <div className="flex gap-4">
-                <p className="w-16 text-textColor-light">Address</p>
-                <p className={"p-ellipsis w-36"}>{vendorDetails.address}</p>
-              </div>
-            </section>
+            <Vendor vendor={vendorDetails} />
           ) : (
             <section className="h-52 3xl:h-56" />
           )}
@@ -185,7 +161,12 @@ export const Invoice = () => {
         />
       </section>
       <div className="h-[330px] 3xl:h-[590px]">
-        <Table data={tableData} loading={loadingTable} />
+        <Table
+          data={tableData}
+          loading={loadingTable}
+          setShowForm={setShowEditForm}
+          setInvoiceDetails={setInvoiceDetails}
+        />
       </div>
       <Button
         icon={MdPostAdd}
@@ -210,6 +191,16 @@ export const Invoice = () => {
           formTitle={"Add Invoice"}
           inputFields={invoiceInputs}
           icon={BsPersonFillAdd}
+          handleChange={handleChange}
+          onSubmit={onSubmit}
+        />
+      </ContentModal>
+      <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
+        <UpdateForm
+          formTitle={"Update Invoice"}
+          inputFields={invoiceInputs}
+          icon={BsPersonFillAdd}
+          data={invoiceDetails}
           handleChange={handleChange}
           onSubmit={onSubmit}
         />

@@ -3,8 +3,6 @@ import { Text } from "../texts/Text";
 import { Button } from "../buttons/Button";
 import { SelectInput } from "../inputs/SelectInput";
 import { FormInput } from "../inputs/FormInput";
-import { Container } from "../views/Container";
-import { icons } from "react-icons/lib";
 
 export const Form = ({
   formTitle,
@@ -38,7 +36,9 @@ export const Form = ({
             );
           })}
         </div>
-        <Button icon={icon}>Add</Button>
+        <Button icon={icon} className={"m-0"}>
+          Add
+        </Button>
       </form>
     </>
   );

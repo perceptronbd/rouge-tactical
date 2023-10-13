@@ -25,4 +25,8 @@ export { ContentModal } from "./modals/ContentModal";
 export { Tabs } from "./tabs/Tabs";
 //form
 export { Form } from "./form/Form";
+export { UpdateForm } from "./form/UpdateForm";
 export { AddVendor } from "./form/AddVendor";
+//others
+export { Vendor } from "./others/Vendor";
+export { AgingSummary } from "./others/AgingSummary";
