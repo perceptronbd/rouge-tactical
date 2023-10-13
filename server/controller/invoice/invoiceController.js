@@ -62,7 +62,7 @@ const createInvoice = async (req, res) => {
       createdAt: Date.now(),
     };
 
-    const newInvoice = new Invoice(newInvoiceData);
+    const newInvoice = new Invoice(newInvoiceData)
 
     await newInvoice.save();
 
