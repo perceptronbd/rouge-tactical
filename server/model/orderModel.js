@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+
 const Schema = mongoose.Schema;
 // const Vendor = require("./vendorModel");
 const orderSchema = new Schema({
@@ -71,7 +73,16 @@ const orderSchema = new Schema({
     default: false,
     required: true,
   },
-   createdAt: {
+  ordered: {
+    type: Boolean,
+  },
+  requested: {
+    type: Boolean,
+  },
+  approvedRequest: {
+    type: Boolean,
+  },
+  createdAt: {
     type: Date,
     default: Date.now,
   },

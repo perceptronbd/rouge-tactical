@@ -1,5 +1,5 @@
-const User = require("../../model/userModel");
-const Order = require("../../model/orderModel");
+const User = require("../../../model/userModel");
+const Order = require("../../../model/orderModel");
 
 const createOrder = async (req, res) => {
   console.log(req.userId);
@@ -46,7 +46,6 @@ const createOrder = async (req, res) => {
     }
 
     const newOrderData = {
-    
       item: item,
       size: size,
       quantity: quantity,
@@ -58,10 +57,13 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      status: status,
+      status: true,
       approved: false,
       createdBy: req.userId,
       purchaseOrdered: purchaseOrdered,
+      ordered: true,
+      requested: false,
+      approvedRequest: false,
     };
 
     if (substituteVendor !== "") {
@@ -120,8 +122,12 @@ const getAllOrder = async (req, res) => {
       needed: data.needed,
       status: data.status,
       approved: data.approved,
-      createdBy: data.createdBy,
+      orderedBy: data.createdBy,
       purchaseOrdered: data.purchaseOrdered,
+      ordered: data.ordered,
+      requested: data.requested,
+      approvedRequest: data.approvedRequest,
+      createdAt : data.createdAt
     }));
 
     // console.log(formattedUsers);
@@ -187,8 +193,80 @@ const updateOrderApprovalStatus = async (req, res) => {
   }
 };
 
+const editOrder = async (req, res) => {
+  console.log(req.userId);
+  console.log(req.email);
+  console.log(req.authenticated);
+
+  const editRecords = req.body;
+
+  try {
+    const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
+
+    console.log(existingUser);
+    // console.log(existingOrder);
+    if (!existingUser) {
+      return res
+        .status(404)
+        .json({ error: "Admin with such credential doesn't exist!" });
+    }
+    
+
+    if (!Array.isArray(editRecords)) {
+      return res.status(400).json({ message: 'Invalid data format. Expecting an array.' });
+    }
+
+    const updatedRecords = [];
+
+    for (const record of editRecords) {
+      const id = record.id;
+      const updatedRecord = await Order.findOneAndUpdate({ _id: id }, record, { new: true });
+
+      if (!updatedRecord) {
+        return res.status(404).json({ message: `Record with id ${id} not found` });
+      }
+
+      updatedRecords.push({
+        orderId: updatedRecord._id,
+        item: updatedRecord.item,
+        size: updatedRecord.size,
+        quantity: updatedRecord.quantity,
+        price: updatedRecord.price,
+        totalAmount: updatedRecord.totalAmount,
+        depositAmount: updatedRecord.depositAmount,
+        deliveredItems: updatedRecord.deliveredItems,
+        vendor: updatedRecord.vendor,
+        date: updatedRecord.date,
+        needed: updatedRecord.needed,
+        status: updatedRecord.status,
+        approved: updatedRecord.approved,
+        orderedBy: updatedRecord.createdBy,
+        purchaseOrdered: updatedRecord.purchaseOrdered,
+        ordered: updatedRecord.ordered,
+        requested: updatedRecord.requested,
+        approvedRequest: updatedRecord.approvedRequest,
+        createdAt: updatedRecord.createdAt,
+      });
+    }
+
+
+    
+    res.json({
+      code: 200,
+      data: {
+        userId: req.userId,
+        editedOrder: updatedRecords,
+      },
+    });
+  } catch (error) {
+    console.error("Error editing order :", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
   updateOrderApprovalStatus,
+  editOrder
 };
