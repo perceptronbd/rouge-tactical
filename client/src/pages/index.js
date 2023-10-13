@@ -10,3 +10,5 @@ export { EditEmployee } from "./employee/EditEmployee";
 export { Orders } from "./orders/Orders";
 //Invoice
 export { Invoice } from "./invoice/Invoice";
+//purchase
+export { Purchase } from "./purchase/Purchase";

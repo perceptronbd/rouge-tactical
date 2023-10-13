@@ -35,7 +35,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                     Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Invoice
+                    Order Number
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Vendor
@@ -94,7 +94,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                         {item.date}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.invoiceNumber}
+                        {item.orderNumber}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}

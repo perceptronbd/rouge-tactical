@@ -7,6 +7,7 @@ import {
   Invoice,
   Login,
   Orders,
+  Purchase,
 } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 import { Components } from "./components/Components";
@@ -34,7 +35,7 @@ function App() {
         <Route path="components" element={<Components />} />
         <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<Invoice />} />
-        <Route path="purchase" element={<div>Purchase</div>} />
+        <Route path="purchase" element={<Purchase />} />
         <Route path="permits" element={<div>Permits</div>} />
         <Route path="payments" element={<div>Payments</div>} />
         <Route path="production" element={<div>Production</div>} />
