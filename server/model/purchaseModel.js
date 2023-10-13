@@ -5,6 +5,11 @@ const Vendor = require("./vendorModel");
 const User = require("./userModel");
 
 const purchaseSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+    required: true,
+  },
   orderNumber: {
     type: String,
     required: true,
@@ -36,7 +41,7 @@ const purchaseSchema = new Schema({
   vendor: {
     type: Schema.Types.ObjectId,
     ref: Vendor,
-    required: true,
+    // required: true,
   },
   substituteVendor: {
     type: Schema.Types.ObjectId,
@@ -50,17 +55,21 @@ const purchaseSchema = new Schema({
     type: String,
   },
   status: {
-    type: Boolean,
-    required: true,
+     type: String,
+    enum: ["open", "close"],
   },
   createdBy: {
     userId: {
       type: Schema.Types.ObjectId,
       ref: User,
     },
-    required: true,
+    // required: true,
   },
   createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     default: Date.now,
   },

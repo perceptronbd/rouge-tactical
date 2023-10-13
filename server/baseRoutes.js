@@ -23,6 +23,10 @@ const orderRoutes = require("./route/order/orderRoute")
 //all routes for invoice
 const invoiceRoutes = require("./route/invoice/invoiceRoute")
 
+//all routes for purchaseOrder
+const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute")
+
+
 //all routes for authentication only for both admin and employee
 router.use("/employee/auth", registrationRoutes);
 router.use("/employee/auth", loginRoutes);
@@ -30,8 +34,7 @@ router.use("/employee/auth", loginRoutes);
 //all routes for employee
 router.use("/employee/profile", employeeProfileRoutes);
 router.use("/employee/order", orderRoutes);
-router.use("/employee/vendor", vendorRoutes);
-router.use("/employee/invoice", invoiceRoutes);
+
 
 //route for permission role
 router.use("/role/", checkPermissionRoutes);
@@ -39,9 +42,13 @@ router.use("/role/", checkPermissionRoutes);
 //all routes for admin
 router.use("/admin/user", userRoutes);
 router.use("/admin/order", orderRoutes);
-router.use("/admin/vendor", vendorRoutes);
-router.use("/admin/invoice", invoiceRoutes);
 
+
+
+//other routes
+router.use("/vendor", vendorRoutes);
+router.use("/invoice", invoiceRoutes);
+router.use("/purchaseOrder", purchaseOrderRoutes);
 
 
 module.exports = router;
