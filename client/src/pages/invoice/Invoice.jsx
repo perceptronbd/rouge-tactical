@@ -8,15 +8,14 @@ import {
   Form,
   Modal,
   SelectInput,
+  Vendor,
+  AgingSummary,
 } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
-import { capitalizeFirstWord } from "../../utils/capitalize";
-import { AgingSummary } from "./AgingSummary";
-import { Vendor } from "./Vendor";
 
 export const Invoice = () => {
   const [agingSummary, setAgingSummary] = useState(null);

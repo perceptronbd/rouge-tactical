@@ -26,3 +26,6 @@ export { Tabs } from "./tabs/Tabs";
 //form
 export { Form } from "./form/Form";
 export { AddVendor } from "./form/AddVendor";
+//others
+export { Vendor } from "./others/Vendor";
+export { AgingSummary } from "./others/AgingSummary";
