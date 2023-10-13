@@ -10,6 +10,7 @@ import {
   SelectInput,
   Vendor,
   AgingSummary,
+  UpdateForm,
 } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
@@ -18,15 +19,20 @@ import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 
 export const Invoice = () => {
+  //data states
   const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorDetails, setVendorDetails] = useState(null);
   const [tableData, setTableData] = useState(data);
+  const [invoiceDetails, setInvoiceDetails] = useState(null);
+  //loading states
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
+  //modal states
   const [showVendorForm, setShowVendorForm] = useState(false);
   const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -98,14 +104,17 @@ export const Invoice = () => {
 
   const handleChange = (e) => {
     console.log(e.target.value);
+    console.log(e.target.value);
+    setInvoiceDetails({ ...invoiceDetails, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(true);
     setShowVendorForm(false);
-    setModalMessage("Employee added successfully!");
+    setModalMessage("Process Successfull!");
     setIsError(false);
+    console.log(invoiceDetails);
   };
 
   const openInvoiceForm = () => {
@@ -152,7 +161,12 @@ export const Invoice = () => {
         />
       </section>
       <div className="h-[330px] 3xl:h-[590px]">
-        <Table data={tableData} loading={loadingTable} />
+        <Table
+          data={tableData}
+          loading={loadingTable}
+          setShowForm={setShowEditForm}
+          setInvoiceDetails={setInvoiceDetails}
+        />
       </div>
       <Button
         icon={MdPostAdd}
@@ -177,6 +191,16 @@ export const Invoice = () => {
           formTitle={"Add Invoice"}
           inputFields={invoiceInputs}
           icon={BsPersonFillAdd}
+          handleChange={handleChange}
+          onSubmit={onSubmit}
+        />
+      </ContentModal>
+      <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
+        <UpdateForm
+          formTitle={"Update Invoice"}
+          inputFields={invoiceInputs}
+          icon={BsPersonFillAdd}
+          data={invoiceDetails}
           handleChange={handleChange}
           onSubmit={onSubmit}
         />

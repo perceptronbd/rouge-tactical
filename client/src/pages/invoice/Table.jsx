@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 
-export const Table = ({ data, loading }) => {
+export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -12,6 +12,12 @@ export const Table = ({ data, loading }) => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleEdit = (item) => {
+    console.log(item);
+    setShowForm(true);
+    setInvoiceDetails(item);
   };
 
   return (
@@ -114,7 +120,10 @@ export const Table = ({ data, loading }) => {
                           : item.updatedAt}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        <button disabled={item.status === "close"}>
+                        <button
+                          disabled={item.status === "close"}
+                          onClick={() => handleEdit(item)}
+                        >
                           <BiSolidMessageSquareEdit size={"1.5rem"} />
                         </button>
                       </td>

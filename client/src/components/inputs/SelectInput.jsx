@@ -6,6 +6,7 @@ export const SelectInput = (props) => {
     id,
     name,
     label,
+    value,
     className,
     errorMessage,
     onChange,
@@ -27,14 +28,14 @@ export const SelectInput = (props) => {
       >
         <optgroup label={label} className="font-semibold">
           <option
-            value=""
+            value={value || ""}
             key="defaultOption"
             className="text-textColor hover:text-accent-tertiary"
             disabled
             selected
             hidden
           >
-            {label}
+            {value || label}
           </option>
           {selectOpts.map((opt) => (
             <option

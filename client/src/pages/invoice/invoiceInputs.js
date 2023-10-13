@@ -1,3 +1,5 @@
+import { vendorData } from "../../mock/vendor";
+
 export const invoiceInputs = [
   {
     id: "date",
@@ -19,8 +21,7 @@ export const invoiceInputs = [
     id: "vendor",
     name: "vendor",
     label: "Vendor",
-    type: "text",
-    placeholder: "Vendor",
+    selectOpts: vendorData,
     required: true,
   },
   {
@@ -59,15 +60,17 @@ export const invoiceInputs = [
     id: "status",
     name: "status",
     label: "Status",
-    type: "text",
-    placeholder: "Status",
+    selectOpts: [
+      { id: "open", name: "Open" },
+      { id: "close", name: "Close" },
+    ],
     required: true,
   },
   {
     id: "updatedAt",
     name: "updatedAt",
     label: "Updated At",
-    type: "text",
+    type: "date",
     placeholder: "Updated At",
     required: true,
   },
