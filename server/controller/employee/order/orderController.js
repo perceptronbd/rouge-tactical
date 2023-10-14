@@ -15,9 +15,9 @@ const createOrder = async (req, res) => {
     //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
-    needed,
-    status,
-    purchaseOrdered,
+    needed
+  
+   
   } = req.body;
 
   try {
@@ -36,9 +36,8 @@ const createOrder = async (req, res) => {
       !depositAmount ||
       !deliveredItems ||
       !vendor ||
-      !needed ||
-      !status ||
-      !purchaseOrdered
+      !needed 
+
     ) {
       return res.status(400).json({
         error: "All required fields must be provided for creating Order!",
@@ -57,13 +56,8 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      status: true,
-      approved: false,
-      createdBy: req.userId,
-      purchaseOrdered: purchaseOrdered,
-      ordered: true,
-      requested: false,
-      approvedRequest: false,
+      createdBy: req.userId
+
     };
 
     if (substituteVendor !== "") {

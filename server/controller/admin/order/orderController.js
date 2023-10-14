@@ -15,9 +15,7 @@ const createOrder = async (req, res) => {
     //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
-    needed,
-    status,
-    purchaseOrdered,
+    needed
   } = req.body;
 
   try {
@@ -36,9 +34,8 @@ const createOrder = async (req, res) => {
       !depositAmount ||
       !deliveredItems ||
       !vendor ||
-      !needed ||
-      !status ||
-      !purchaseOrdered
+      !needed 
+
     ) {
       return res.status(400).json({
         error: "All required fields must be provided for creating Order!",
@@ -57,13 +54,8 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      status: true,
-      approved: false,
-      createdBy: req.userId,
-      purchaseOrdered: purchaseOrdered,
-      ordered: true,
-      requested: false,
-      approvedRequest: false,
+      createdBy: req.userId
+    
     };
 
     if (substituteVendor !== "") {
@@ -144,54 +136,6 @@ const getAllOrder = async (req, res) => {
   }
 };
 
-const updateOrderApprovalStatus = async (req, res) => {
-  console.log(req.userId);
-  console.log(req.email);
-  console.log(req.authenticated);
-
-  const { approved, orderId } = req.body;
-
-  try {
-    const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
-    const existingOrder = await Order.findOne({
-      createdBy: req.userId,
-      _id: orderId,
-    });
-    console.log(existingUser);
-    console.log(existingOrder);
-    if (!existingUser) {
-      return res
-        .status(404)
-        .json({ error: "Admin with such credential doesn't exist!" });
-    }
-    if (!existingOrder) {
-      return res.status(404).json({ error: "No Order available!" });
-    }
-
-    const updateOrderApprovalStatus = await Order.updateOne(
-      { _id: orderId },
-      { $set: { approved: approved } }
-    );
-
-    const updatedOrder = await Order.findOne({ _id: orderId });
-
-    console.log(updatedOrder);
-
-    console.log(updateOrderApprovalStatus);
-
-    // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        updatedOrder: updatedOrder,
-      },
-    });
-  } catch (error) {
-    console.error("Error updating order approval status :", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
 
 const editOrder = async (req, res) => {
   console.log(req.userId);
@@ -267,6 +211,5 @@ const editOrder = async (req, res) => {
 module.exports = {
   createOrder,
   getAllOrder,
-  updateOrderApprovalStatus,
   editOrder
 };
