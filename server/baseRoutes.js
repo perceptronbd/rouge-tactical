@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const registrationRoutes = require("./route/auth/registerRoute");
-
-const loginRoutes = require("./route/auth/loginRoute");
+const authRoutes = require("./route/auth/authRoute");
 
 const checkPermissionRoutes = require("./route/permission/checkPermissionRoute");
 
@@ -22,8 +20,7 @@ const invoiceRoutes = require("./route/invoice/invoiceRoute");
 const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute");
 
 //all routes for authentication only for both admin and employee
-router.use("/auth/", registrationRoutes);
-router.use("/auth/", loginRoutes);
+router.use("/auth/", authRoutes);
 
 //all routes for employee
 router.use("/employee/profile", employeeProfileRoutes);
