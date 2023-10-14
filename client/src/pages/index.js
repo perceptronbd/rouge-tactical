@@ -12,3 +12,5 @@ export { Orders } from "./orders/Orders";
 export { Invoice } from "./invoice/Invoice";
 //purchase
 export { Purchase } from "./purchase/Purchase";
+//permits
+export { Permits } from "./permits/Permits";

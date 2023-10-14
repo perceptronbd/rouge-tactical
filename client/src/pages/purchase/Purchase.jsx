@@ -193,7 +193,6 @@ export const Purchase = () => {
         <Form
           formTitle={"Add Purchase Order"}
           inputFields={purchaseInputs}
-          icon={BsPersonFillAdd}
           handleChange={handleChange}
           onSubmit={onSubmit}
         />
@@ -202,7 +201,6 @@ export const Purchase = () => {
         <UpdateForm
           formTitle={"Update Purchase Order"}
           inputFields={purchaseInputs}
-          icon={BsPersonFillAdd}
           data={purchaseDetails}
           handleChange={handleChange}
           onSubmit={onSubmit}
