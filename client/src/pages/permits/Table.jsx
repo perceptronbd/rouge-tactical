@@ -10,6 +10,22 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
     )
   );
 
+  const checkDeadline = (deadline) => {
+    const currentDate = Date.now();
+    const deadlineDate = new Date(deadline);
+    const daysDifference = Math.floor(
+      (deadlineDate - currentDate) / (1000 * 60 * 60 * 24)
+    );
+
+    console.log(daysDifference);
+
+    if (daysDifference <= 60) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -76,40 +92,75 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                     </td>
                   </tr>
                 ) : (
-                  filteredData.map((item, index) => (
-                    <tr
-                      key={index}
-                      className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
-                    >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.permit}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.form}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.renewalProcess}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.renewalDuration}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.renewalDeadline}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.contactInfo}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.notes}
-                      </td>
+                  filteredData.map((item, index) =>
+                    checkDeadline(item.renewalDeadline) ? (
+                      <tr
+                        key={index}
+                        className={`border-b-2 border-foreground bg-accent-secondary hover:bg-opacity-80 transition-all ease-in-out duration-300`}
+                      >
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.permit}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.form}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalProcess}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalDuration}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalDeadline}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.contactInfo}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.notes}
+                        </td>
 
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        <button onClick={() => handleEdit(item)}>
-                          <BiSolidMessageSquareEdit size={"1.5rem"} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          <button onClick={() => handleEdit(item)}>
+                            <BiSolidMessageSquareEdit size={"1.5rem"} />
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr
+                        key={index}
+                        className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
+                      >
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.permit}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.form}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalProcess}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalDuration}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.renewalDeadline}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.contactInfo}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.notes}
+                        </td>
+
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                          <button onClick={() => handleEdit(item)}>
+                            <BiSolidMessageSquareEdit size={"1.5rem"} />
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  )
                 )}
               </tbody>
             </table>
