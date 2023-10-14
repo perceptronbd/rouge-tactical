@@ -58,7 +58,7 @@ const orderSchema = new Schema({
   approved: {
     type: Boolean,
     // required: true, [as employee wont send the data for this column except admin]
-       default: false,
+    default: false,
   },
   // status: {
   //   type: Boolean,
@@ -76,15 +76,15 @@ const orderSchema = new Schema({
   },
   ordered: {
     type: Boolean,
-       default: false,
+    default: false,
   },
   requested: {
     type: Boolean,
-       default: false,
+    default: false,
   },
   approvedRequest: {
     type: Boolean,
-       default: false,
+    default: false,
   },
   createdAt: {
     type: Date,
