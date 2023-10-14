@@ -6,6 +6,10 @@ const serviceSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
+    service: {
+        type: String,
+        required: true,
+    },
     accountNumber: {
         type: String,
         required: true,
