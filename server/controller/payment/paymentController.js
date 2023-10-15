@@ -149,8 +149,59 @@ const updateService = async(req,res) =>{
 }
 
 
+const fetchServiceCost = async (req, res) => {
+
+    try {
+        
+
+    //fetch data for service 
+        const allServices = await Service.find()
+
+     //calculate total cost for different time intervals
+
+     //declare required variables.
+
+     const now = new date()
+     const timeIntervals = ["1 week","2 week","3 week","1 month"]
+     const totalCost = {}
+
+     for (const timeInterval of timeIntervals) {
+        let intervalEndDate = new Date();
+        if (timeInterval === '1 week') {
+            intervalEndDate.setDate(now.getDate() - 7);
+        } else if (timeInterval === '2 weeks') {
+            intervalEndDate.setDate(now.getDate() - 14);
+        } else if (timeInterval === '3 weeks') {
+            intervalEndDate.setDate(now.getDate() - 21);
+        } else if (timeInterval === '1 month') {
+            intervalEndDate.setMonth(now.getMonth() - 1);
+        }
+
+        const filteredServices = allServices.filter(service => service.dueDate >= intervalEndDate);
+        const totalCost = filteredServices.reduce((acc, service) => acc + service.cost, 0);
+
+        totalCost[timeInterval] = totalCost;
+    }
+
+    res.status(200).json({
+        code: 200,
+        data: totalCost,
+    });
+
+}
+
+
+catch (error) {
+    console.error("Error fetching and calculating service data:", error);
+    res.status(500).json({ error: "Internal server error" });
+}
+ 
+};
+
+
 module.exports = {
     createService,
     getAllServicedata,
-    updateService
+    updateService,
+    fetchServiceCost
   };
