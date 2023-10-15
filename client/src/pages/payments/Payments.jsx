@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Button, Container, PieGraph, SelectInput } from "../../components";
+import {
+  Button,
+  Container,
+  ContentModal,
+  PieGraph,
+  SelectInput,
+  Form,
+} from "../../components";
 import { serviceGraph, services } from "../../mock/service";
 import { Table } from "./Table";
+import { serviceInputs } from "./serviceInputs";
 
 export const Payments = () => {
   const [data, setData] = useState(services);
   const [disable, setDisable] = useState(false);
+
+  const [serviceDetails, setServiceDetails] = useState(null);
+
+  const [showForm, setShowForm] = useState(false);
 
   const filterOpts = [
     { id: "7 days", name: "7 days" },
@@ -67,6 +79,17 @@ export const Payments = () => {
     );
   };
 
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setServiceDetails({ ...serviceDetails, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setShowForm(false);
+    console.log(serviceDetails);
+  };
+
   return (
     <Container>
       <section className="border rounded-md w-full h-[300px] 3xl:h-[450px] p-2 flex justify-between">
@@ -89,9 +112,24 @@ export const Payments = () => {
             disabled={disable}
             handleDelete={handleDelete}
           />
-          <Button className={"w-full"} icon={AiOutlinePlus} variant={"ghost"}>
+          <Button
+            className={"w-full"}
+            icon={AiOutlinePlus}
+            variant={"ghost"}
+            onClick={() => {
+              setShowForm(true);
+            }}
+          >
             Add Service
           </Button>
+          <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+            <Form
+              formTitle={"Add Service"}
+              inputFields={serviceInputs}
+              onSubmit={onSubmit}
+              handleChange={handleChange}
+            />
+          </ContentModal>
         </article>
       </section>
     </Container>
