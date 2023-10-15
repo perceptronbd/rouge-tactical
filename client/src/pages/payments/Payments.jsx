@@ -7,10 +7,12 @@ import {
   PieGraph,
   SelectInput,
   Form,
+  LineGraph,
 } from "../../components";
 import { serviceGraph, services } from "../../mock/service";
 import { Table } from "./Table";
 import { serviceInputs } from "./serviceInputs";
+import { invoiceGraph } from "../../mock/invoice";
 
 export const Payments = () => {
   const [data, setData] = useState(services);
@@ -93,7 +95,7 @@ export const Payments = () => {
   return (
     <Container>
       <section className="border rounded-md w-full h-[300px] 3xl:h-[450px] p-2 flex justify-between">
-        <div>
+        <div className="h-full w-[40%]">
           <SelectInput
             id={"filter"}
             label={"filter"}
@@ -131,6 +133,9 @@ export const Payments = () => {
             />
           </ContentModal>
         </article>
+      </section>
+      <section className="w-full h-full">
+        <LineGraph data={invoiceGraph} />
       </section>
     </Container>
   );

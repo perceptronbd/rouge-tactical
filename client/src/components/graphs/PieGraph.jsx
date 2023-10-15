@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  LabelList,
-} from "recharts";
-import { serviceGraph } from "../../mock/service";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 //add 10 more colors
 const COLORS = [
@@ -82,11 +73,11 @@ export const PieGraph = ({ data }) => {
   const totalValue = data.reduce((total, entry) => total + entry.value, 0);
 
   return (
-    <>
-      <PieChart width={400} height={250}>
+    <ResponsiveContainer height={"90%"}>
+      <PieChart>
         <Pie
           data={data}
-          cx={140}
+          cx={"30%"}
           cy={"50%"}
           innerRadius={"60%"}
           outerRadius={"90%"}
@@ -98,7 +89,7 @@ export const PieGraph = ({ data }) => {
         </Pie>
         <Tooltip content={CustomTooltip} />
         <text
-          x={145}
+          x={"30%"}
           y={"47%"}
           textAnchor="middle"
           dominantBaseline="middle"
@@ -107,7 +98,7 @@ export const PieGraph = ({ data }) => {
           Total:
         </text>
         <text
-          x={145}
+          x={"30%"}
           y={"53%"}
           textAnchor="middle"
           dominantBaseline="middle"
@@ -117,6 +108,6 @@ export const PieGraph = ({ data }) => {
           ${totalValue}
         </text>
       </PieChart>
-    </>
+    </ResponsiveContainer>
   );
 };

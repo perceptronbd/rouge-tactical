@@ -32,3 +32,4 @@ export { Vendor } from "./others/Vendor";
 export { AgingSummary } from "./others/AgingSummary";
 //graphs
 export { PieGraph } from "./graphs/PieGraph";
+export { LineGraph } from "./graphs/LineGraph";
