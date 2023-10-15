@@ -7,6 +7,7 @@ import {
   Invoice,
   Login,
   Orders,
+  Payments,
   Permits,
   Purchase,
 } from "./pages";
@@ -38,7 +39,7 @@ function App() {
         <Route path="invoice" element={<Invoice />} />
         <Route path="purchase" element={<Purchase />} />
         <Route path="permits" element={<Permits />} />
-        <Route path="payments" element={<div>Payments</div>} />
+        <Route path="payments" element={<Payments />} />
         <Route path="production" element={<div>Production</div>} />
         <Route path="maintenance" element={<div>Maintenance</div>} />
       </Route>

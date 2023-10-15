@@ -14,3 +14,5 @@ export { Invoice } from "./invoice/Invoice";
 export { Purchase } from "./purchase/Purchase";
 //permits
 export { Permits } from "./permits/Permits";
+//payments
+export { Payments } from "./payments/Payments";
