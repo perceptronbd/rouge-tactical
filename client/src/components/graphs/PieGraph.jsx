@@ -1,5 +1,13 @@
 import React from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  LabelList,
+} from "recharts";
 import { serviceGraph } from "../../mock/service";
 
 //add 10 more colors
