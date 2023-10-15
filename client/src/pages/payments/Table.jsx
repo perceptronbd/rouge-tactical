@@ -145,7 +145,7 @@ export const Table = ({
           </div>
         </article>
       ) : (
-        <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
+        <div className="flex w-full h-[230px] 3xl:h-[350px] justify-center items-center bg-foreground rounded-lg">
           <Text h1 className={"text-textColor-light"}>
             No Data to Show
           </Text>
