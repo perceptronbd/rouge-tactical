@@ -6,7 +6,7 @@ const createService = async (req, res) => {
     console.log(req.userId);
     console.log(req.email);
 
-    const { service, account, cost, due } = req.body;
+    const { service, accountNumber, cost, dueDate } = req.body;
 
     try {
         const existingUser = await User.findOne({
@@ -17,7 +17,7 @@ const createService = async (req, res) => {
             return res.status(404).json({ error: "No User found" });
         }
 
-        if (!service || !account || !cost || !due) {
+        if (!service || !accountNumber || !cost || !dueDate) {
             return res.status(400).json({
                 error: "All required fields must be provided for creating Service"
             });
@@ -25,19 +25,29 @@ const createService = async (req, res) => {
 
         const newServiceData = {
             service: service,
-            accountNumber: account,
+            accountNumber: accountNumber,
             cost: cost,
-            dueDate: due
+            dueDate: dueDate
         };
 
         const newService = new Service(newServiceData);
 
         await newService.save();
+
+        const formattedService = newService.map((data) => ({
+            ServiceId: data._id,
+            service: data.name,
+            accountNumber: data.accountNumber,
+            cost: data.cost,
+            dueDate: data.dueDate
+          }));
+
+
         res.json({
             code: 200,
             data: {
                 userId: req.userId,
-                newServiceData: newService // Return the newService instance
+                newServiceData: formattedService // Return the newService instance
             }
         });
     } catch (error) {
@@ -70,9 +80,9 @@ const getAllServicedata = async (req, res) => {
         const formattedService = existingServices.map((data) => ({
             ServiceId: data._id,
             service: data.name,
-            accountNumber: data.account,
+            accountNumber: data.accountNumber,
             cost: data.cost,
-            dueDate: data.due
+            dueDate: data.dueDate
           }));
 
         res.json({
@@ -99,7 +109,7 @@ const updateService = async(req,res) =>{
         service,
         accountNumber,
         cost,
-        due
+        dueDate
       } = req.body;
 
       try {
@@ -111,11 +121,11 @@ const updateService = async(req,res) =>{
             return res.status(404).json({error: "no service data found"})
         }
 
-        if (service != null && service !== "" || accountNumber != null && service !== "" || cost != null && cost !== "" || due != null && due !== "") {
+        if (service != null && service !== "" || accountNumber != null && accountNumber !== "" || cost != null && cost !== "" || dueDate != null && dueDate !== "") {
             existingServices.service = service;
             existingServices.accountNumber = accountNumber;
             existingServices.cost = cost;
-            existingServices.dueDate = due;
+            existingServices.dueDate = dueDate;
           }
 
         const updatedServices = await existingServices.save()
@@ -123,9 +133,9 @@ const updateService = async(req,res) =>{
         const formattedUpdateService = existingServices.map((data) => ({
             ServiceId: data._id,
             service: data.name,
-            accountNumber: data.account,
+            accountNumber: data.accountNumber,
             cost: data.cost,
-            dueDate: data.due
+            dueDate: data.dueDate
           }));
 
           
