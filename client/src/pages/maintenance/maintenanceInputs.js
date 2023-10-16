@@ -1,0 +1,61 @@
+export const maintenanceInputs = [
+  {
+    id: "machine",
+    label: "Machine",
+    name: "machine",
+    type: "text",
+    required: true,
+  },
+  {
+    id: "condition",
+    label: "Condition",
+    name: "condition",
+    selectOpts: [
+      { id: "good", name: "Good" },
+      { id: "fair", name: "Fair" },
+      { id: "poor", name: "Poor" },
+      { id: "bad", name: "Bad" },
+    ],
+    required: true,
+  },
+  {
+    id: "location",
+    label: "Location",
+    name: "location",
+    type: "text",
+    required: true,
+  },
+  {
+    id: "assignedTo",
+    label: "Assigned To",
+    name: "assignedTo",
+    selectOpts: [
+      { id: "john", name: "John" },
+      { id: "rachel", name: "Rachel" },
+      { id: "janai", name: "Janai" },
+      { id: "asif", name: "Asif" },
+    ],
+    required: true,
+  },
+  {
+    id: "lastMaintenanceDate",
+    label: "Last Maintenance Date",
+    name: "lastMaintenanceDate",
+    type: "date",
+    required: true,
+  },
+  {
+    id: "maintenanceInterval",
+    label: "Maintenance Interval",
+    name: "maintenanceInterval",
+    type: "number",
+    required: true,
+  },
+  {
+    id: "notes",
+    label: "Notes",
+    name: "notes",
+    type: "text",
+    required: true,
+  },
+];
