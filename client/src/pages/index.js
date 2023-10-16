@@ -18,3 +18,5 @@ export { Permits } from "./permits/Permits";
 export { Payments } from "./payments/Payments";
 //production
 export { Production } from "./production/Production";
+//maintenance
+export { Maintenance } from "./maintenance/Maintenance";

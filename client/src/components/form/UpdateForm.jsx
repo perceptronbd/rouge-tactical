@@ -49,7 +49,7 @@ export const UpdateForm = ({
   return (
     <>
       <form className="h-full w-full flex flex-col justify-between">
-        <section className="flex h-10 justify-between items-center">
+        <section className="flex h-10 mb-4 justify-between items-center">
           <Text variant={"h3"} type={"bold"}>
             {formTitle}
           </Text>

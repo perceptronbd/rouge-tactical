@@ -6,6 +6,7 @@ import {
   Home,
   Invoice,
   Login,
+  Maintenance,
   Orders,
   Payments,
   Permits,
@@ -42,7 +43,7 @@ function App() {
         <Route path="permits" element={<Permits />} />
         <Route path="payments" element={<Payments />} />
         <Route path="production" element={<Production />} />
-        <Route path="maintenance" element={<div>Maintenance</div>} />
+        <Route path="maintenance" element={<Maintenance />} />
       </Route>
     </Routes>
   );
