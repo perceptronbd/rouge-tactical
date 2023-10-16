@@ -9,6 +9,7 @@ import {
   Orders,
   Payments,
   Permits,
+  Production,
   Purchase,
 } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
@@ -40,7 +41,7 @@ function App() {
         <Route path="purchase" element={<Purchase />} />
         <Route path="permits" element={<Permits />} />
         <Route path="payments" element={<Payments />} />
-        <Route path="production" element={<div>Production</div>} />
+        <Route path="production" element={<Production />} />
         <Route path="maintenance" element={<div>Maintenance</div>} />
       </Route>
     </Routes>

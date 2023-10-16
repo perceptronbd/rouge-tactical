@@ -16,3 +16,5 @@ export { Purchase } from "./purchase/Purchase";
 export { Permits } from "./permits/Permits";
 //payments
 export { Payments } from "./payments/Payments";
+//production
+export { Production } from "./production/Production";

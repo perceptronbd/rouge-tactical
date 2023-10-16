@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import { AiFillPrinter, AiOutlineDownload } from "react-icons/ai";
-import { Button, Checkbox, ContentModal } from "../../components";
+import { Button, Checkbox, ContentModal, Text } from "../../components";
 import { AddDocForm } from "./AddDocForm";
 
 const checkboxLabel = [
-  { id: 1, label: "Non Disclosure Agreement (NDA)" },
-  { id: 2, label: "New Employee Information Sheet" },
-  { id: 3, label: "Request for Live Scan Service" },
-  { id: 4, label: "Certificate fo Eligibility Information" },
-  { id: 5, label: "Certificate fo Eligibility Application" },
-  { id: 6, label: "Live Scan Locations" },
-  { id: 7, label: "Live Scan Locations" },
-  { id: 8, label: "Live Scan Locations" },
+  { id: 1, label: "Final Assembly" },
+  { id: 2, label: "Barrel Cleanup" },
+  { id: 3, label: "Grip Initial Assembly" },
+  { id: 4, label: "Slide Clean Up" },
+  { id: 5, label: "Extractor Fitting" },
+  { id: 6, label: "Frame Cleanup" },
+  { id: 7, label: "Text Notes" },
 ];
 
-export const OnboardingDoc = ({ data }) => {
+export const OnboardingDoc = ({ role }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -33,8 +32,11 @@ export const OnboardingDoc = ({ data }) => {
   };
 
   return (
-    <article className="border rounded p-2 w-full h-fit">
-      <div className="h-24 overflow-y-auto">
+    <article className="border rounded p-2 flex flex-col w-full h-full justify-between">
+      <Text variant={"h2"} className={"mb-4"}>
+        Checklist
+      </Text>
+      <div className="h-full overflow-y-auto">
         <section className="grid grid-rows-3 grid-cols-2 w-full">
           {checkboxLabel.map((item) => (
             <Checkbox
@@ -62,7 +64,7 @@ export const OnboardingDoc = ({ data }) => {
         >
           Download
         </Button>
-        {data.role === "admin" && (
+        {role === "admin" && (
           <Button
             className={"mb-0 w-10"}
             variant={"highlight"}

@@ -6,16 +6,45 @@ import { Button } from "../buttons/Button";
 import { SelectInput } from "../inputs/SelectInput";
 import { FormInput } from "../inputs/FormInput";
 
+const generateInputs = (inputFields, data, handleChange) => {
+  return inputFields.map((input) => {
+    const nameParts = input.name.split(".");
+    const value = nameParts.reduce((obj, part) => (obj ? obj[part] : ""), data);
+
+    if (input.selectOpts) {
+      return (
+        <SelectInput
+          key={input.id}
+          {...input}
+          onChange={handleChange}
+          value={value}
+        />
+      );
+    } else {
+      return (
+        <FormInput
+          key={input.id}
+          {...input}
+          onChange={handleChange}
+          value={value}
+        />
+      );
+    }
+  });
+};
+
 export const UpdateForm = ({
   formTitle,
   inputFields,
-  onSubmit,
-  handleChange,
   data,
+  handleChange,
+  onSubmit,
 }) => {
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+  const inputComponents = generateInputs(inputFields, data, handleChange);
 
   return (
     <>
@@ -25,25 +54,8 @@ export const UpdateForm = ({
             {formTitle}
           </Text>
         </section>
-        <div className="grid grid-cols-2 gap-2 my-3 3xl:mb-52 mb-20 items-center">
-          {inputFields.map((input) => {
-            return input.selectOpts ? (
-              <SelectInput
-                {...input}
-                key={input.id}
-                onChange={handleChange}
-                value={data[input.name]}
-              />
-            ) : (
-              <FormInput
-                key={input.id}
-                {...input}
-                onChange={handleChange}
-                className={"my-3"}
-                value={data[input.name]}
-              />
-            );
-          })}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-0 mb-8 items-center">
+          {inputComponents}
         </div>
         <div className="flex gap-4">
           <Button
