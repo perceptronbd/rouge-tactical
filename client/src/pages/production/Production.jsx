@@ -3,6 +3,7 @@ import { Container, ContentModal, UpdateForm } from "../../components";
 import { Table } from "./Table";
 import { productionData } from "../../mock/production";
 import { productionInputs } from "./productionInputs";
+import { OnboardingDoc } from "./OnboardingDoc";
 
 export const Production = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -62,7 +63,9 @@ export const Production = () => {
           />
         </ContentModal>
       </section>
-      <section className="w-full h-full bg-red-400"></section>
+      <section className="w-full h-full">
+        <OnboardingDoc role={"admin"} />
+      </section>
     </Container>
   );
 };
