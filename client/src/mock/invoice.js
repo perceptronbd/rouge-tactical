@@ -242,16 +242,16 @@ export const data = [
 ];
 
 export const invoiceGraph = [
-  { name: "Jan 2021", recieved: 4000, due: 2400, amt: 2400 },
-  { name: "Feb 2021", recieved: 3000, due: 1398, amt: 2210 },
-  { name: "Mar 2021", recieved: 2000, due: 9800, amt: 2290 },
-  { name: "Apr 2021", recieved: 2780, due: 3908, amt: 2000 },
-  { name: "May 2021", recieved: 1890, due: 4800, amt: 2181 },
-  { name: "Jun 2021", recieved: 2390, due: 3800, amt: 2500 },
-  { name: "Jul 2021", recieved: 3490, due: 4300, amt: 2100 },
-  { name: "Aug 2021", recieved: 4000, due: 2400, amt: 2400 },
-  { name: "Sep 2021", recieved: 3000, due: 1398, amt: 2210 },
-  { name: "Oct 2021", recieved: 2000, due: 9800, amt: 2290 },
-  { name: "Nov 2021", recieved: 2780, due: 3908, amt: 2000 },
-  { name: "Dec 2021", recieved: 1890, due: 4800, amt: 2181 },
+  { name: "Jan 2021", received: 4000, due: 2400, amt: 2400 },
+  { name: "Feb 2021", received: 3000, due: 1398, amt: 2210 },
+  { name: "Mar 2021", received: 2000, due: 9800, amt: 2290 },
+  { name: "Apr 2021", received: 2780, due: 3908, amt: 2000 },
+  { name: "May 2021", received: 1890, due: 4800, amt: 2181 },
+  { name: "Jun 2021", received: 2390, due: 3800, amt: 2500 },
+  { name: "Jul 2021", received: 3490, due: 4300, amt: 2100 },
+  { name: "Aug 2021", received: 4000, due: 2400, amt: 2400 },
+  { name: "Sep 2021", received: 3000, due: 1398, amt: 2210 },
+  { name: "Oct 2021", received: 2000, due: 9800, amt: 2290 },
+  { name: "Nov 2021", received: 2780, due: 3908, amt: 2000 },
+  { name: "Dec 2021", received: 1890, due: 4800, amt: 2181 },
 ];

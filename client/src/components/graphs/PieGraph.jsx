@@ -1,5 +1,12 @@
-import React from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import React, { useEffect } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  Label,
+} from "recharts";
 
 //add 10 more colors
 const COLORS = [
@@ -12,27 +19,29 @@ const COLORS = [
 ];
 
 export const PieGraph = ({ data }) => {
-  const getIntroOfPage = (label) => {
-    if (label === "Page A") {
-      return "Page A is about men's clothing";
-    }
-    if (label === "Page B") {
-      return "Page B is about women's dress";
-    }
-    if (label === "Page C") {
-      return "Page C is about women's bag";
-    }
-    if (label === "Page D") {
-      return "Page D is about household goods";
-    }
-    if (label === "Page E") {
-      return "Page E is about food";
-    }
-    if (label === "Page F") {
-      return "Page F is about baby food";
-    }
-    return "";
-  };
+  const [count, setCount] = React.useState(0);
+
+  const totalValue = data.reduce((total, entry) => total + entry.value, 0);
+
+  useEffect(() => {
+    let startCount = 0;
+    const endCount = totalValue;
+    const animationDuration = 1000; // Adjust the animation duration as needed
+    const totalSteps = 50; // Adjust the number of steps as needed
+
+    const increment = Math.ceil(endCount / totalSteps);
+
+    const timer = setInterval(() => {
+      startCount += increment;
+      if (startCount >= endCount) {
+        clearInterval(timer);
+        startCount = endCount;
+      }
+      setCount(startCount);
+    }, animationDuration / totalSteps);
+
+    return () => clearInterval(timer);
+  }, [totalValue]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -58,7 +67,6 @@ export const PieGraph = ({ data }) => {
               {value}
             </span>
           </p>
-          <p className="intro">{getIntroOfPage(label)}</p>
           <p className="text-textColor-light">
             Percentage:
             <span className={`text-textColor font-medium`}> {percentage}%</span>
@@ -69,8 +77,6 @@ export const PieGraph = ({ data }) => {
 
     return null;
   };
-
-  const totalValue = data.reduce((total, entry) => total + entry.value, 0);
 
   return (
     <ResponsiveContainer height={"90%"}>
@@ -105,7 +111,7 @@ export const PieGraph = ({ data }) => {
           fontSize={20}
           className="flex"
         >
-          ${totalValue}
+          ${count}
         </text>
       </PieChart>
     </ResponsiveContainer>
