@@ -50,7 +50,7 @@ export const Table = ({
           <div className="flex justify-end p-2">
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
-          <div className="max-h-[550px] 3xl:max-h-[890px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
+          <div className="max-h-[535px] 3xl:max-h-[880px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
