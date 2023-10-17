@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { FormInput, Button, LinkText } from "../../components";
+import { FormInput, Button, LinkText, Modal } from "../../components";
 import { useAuth } from "../../contexts/AuthContext";
+import { loginAPI } from "../../api/auth/login";
 
 export const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+
+  const [userData, setUserData] = useState(null);
+
+  const [errMsg, setErrMsg] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const { login } = useAuth();
 
@@ -37,7 +44,22 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(values);
-    login(values);
+    try {
+      loginAPI(
+        values.email,
+        values.password,
+        setErrMsg,
+        setShowModal,
+        setIsError,
+        setUserData
+      );
+
+      if (userData) {
+        login(userData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (e) => {
@@ -69,6 +91,12 @@ export const Login = () => {
           <Button variant={"ghost"} className={"w-full"}>
             Login
           </Button>
+          <Modal
+            isOpen={showModal}
+            setShowModal={setShowModal}
+            isError={isError}
+            modalMessage={errMsg}
+          ></Modal>
         </form>
       </section>
     </>

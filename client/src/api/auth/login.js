@@ -5,13 +5,18 @@ export const loginAPI = async (
   password,
   setErrMsg,
   setShowModal,
-  setIsError
+  setIsError,
+  setUser
 ) => {
   try {
     const res = await axios.post("http://localhost:5000/api/v1/auth/login", {
       email,
       password,
     });
+
+    console.log("res", res.data);
+    setUser(res.data.data.userData);
+
     return res.data;
   } catch (error) {
     console.log("error status code:", error.response.status);
