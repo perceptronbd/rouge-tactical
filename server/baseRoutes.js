@@ -23,6 +23,9 @@ const orderRoutes = require("./route/order/orderRoute")
 //all routes for invoice
 const invoiceRoutes = require("./route/invoice/invoiceRoute")
 
+//all routes for payment
+const paymentRoutes = require("./route/payment/paymentRoute")
+
 //all routes for authentication only for both admin and employee
 router.use("/employee/auth", registrationRoutes);
 router.use("/employee/auth", loginRoutes);
@@ -41,6 +44,8 @@ router.use("/admin/user", userRoutes);
 router.use("/admin/order", orderRoutes);
 router.use("/admin/vendor", vendorRoutes);
 router.use("/admin/invoice", invoiceRoutes);
+router.use("/admin/payment", invoiceRoutes);
+
 
 
 
