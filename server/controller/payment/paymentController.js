@@ -160,52 +160,51 @@ const updateService = async(req,res) =>{
 
 
 const fetchServiceCost = async (req, res) => {
-
     try {
-        
+        // Fetch data for services
+        const allServices = await Service.find();
 
-    //fetch data for service 
-        const allServices = await Service.find()
+        // Get the time interval from req.body
+        const { timeInterval } = req.body;
 
-     //calculate total cost for different time intervals
+        // Declare required variables.
+        const now = new Date();
+        const totalCost = {};
 
-     //declare required variables.
-
-     const now = new date()
-     const timeIntervals = ["1 week","2 week","3 week","1 month"]
-     const totalCost = {}
-
-     for (const timeInterval of timeIntervals) {
+        // Define the end date based on the provided time interval
         let intervalEndDate = new Date();
+
         if (timeInterval === '1 week') {
             intervalEndDate.setDate(now.getDate() - 7);
         } else if (timeInterval === '2 weeks') {
             intervalEndDate.setDate(now.getDate() - 14);
-        } else if (timeInterval === '3 weeks') {
-            intervalEndDate.setDate(now.getDate() - 21);
         } else if (timeInterval === '1 month') {
             intervalEndDate.setMonth(now.getMonth() - 1);
+        } else if (timeInterval === '3 months') {
+            intervalEndDate.setMonth(now.getMonth() - 3);
+        } else if (timeInterval === '6 months') {
+            intervalEndDate.setMonth(now.getMonth() - 6);
+        } else if (timeInterval === '1 year') {
+            intervalEndDate.setFullYear(now.getFullYear() - 1);
         }
 
-        const filteredServices = allServices.filter(service => service.dueDate >= intervalEndDate);
-        const totalCost = filteredServices.reduce((acc, service) => acc + service.cost, 0);
+        // Filter services that fall within the time interval
+        const filteredServices = allServices.filter(service => service.dueDate >= intervalEndDate && service.dueDate <= now);
 
-        totalCost[timeInterval] = totalCost;
+        // Calculate the total cost of filtered services
+        const totalCostValue = filteredServices.reduce((acc, service) => acc + service.cost, 0);
+
+        // Store the total cost in the result object
+        totalCost[timeInterval] = totalCostValue;
+
+        res.status(200).json({
+            code: 200,
+            data: [{filteredServices:totalCost}],
+        });
+    } catch (error) {
+        console.error("Error fetching and calculating service data:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
-
-    res.status(200).json({
-        code: 200,
-        data: totalCost,
-    });
-
-}
-
-
-catch (error) {
-    console.error("Error fetching and calculating service data:", error);
-    res.status(500).json({ error: "Internal server error" });
-}
- 
 };
 
 
