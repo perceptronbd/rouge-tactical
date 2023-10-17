@@ -1,7 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
-  AddEmployee,
-  EditEmployee,
   EmployeeInfo,
   Home,
   Invoice,
@@ -34,8 +32,6 @@ function App() {
         }
       >
         <Route path="employee" element={<EmployeeInfo />} />
-        <Route path="employee/add" element={<AddEmployee />} />
-        <Route path="employee/edit" element={<EditEmployee />} />
         <Route path="components" element={<Components />} />
         <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<Invoice />} />
