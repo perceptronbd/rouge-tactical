@@ -5,7 +5,7 @@ export const FormInput = (props) => {
   const { id, onChange, className, errorMessage, label, ...inputProps } = props;
 
   return (
-    <div className={cw("relative my-6 w-72", className)}>
+    <div className={cw("relative my-2 w-72", className)}>
       <input
         id={id}
         autoComplete="off"
