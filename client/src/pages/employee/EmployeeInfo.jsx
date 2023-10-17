@@ -1,8 +1,9 @@
-import React from "react";
-import { Container } from "../../components";
+import React, { useState } from "react";
+import { Container, ContentModal, Form, UpdateForm } from "../../components";
 import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
+import { employeeInfoInputs } from "./employeeInfoInputs";
 
 const userInfo = {
   name: "Atifulislam Asif",
@@ -153,13 +154,69 @@ const usersData = [
 ];
 
 export const EmployeeInfo = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+
+  const [employeeData, setEmployeeData] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    const updatedEmployeeData = { ...employeeData };
+
+    // Split the name into nested property parts
+    const propertyPath = name.split(".");
+
+    console.log(propertyPath);
+
+    // If it's a nested property, update it accordingly
+    if (propertyPath.length === 2) {
+      updatedEmployeeData[propertyPath[0]] = {
+        ...updatedEmployeeData[propertyPath[0]],
+        [propertyPath[1]]: value,
+      };
+    } else {
+      updatedEmployeeData[name] = value;
+    }
+
+    setEmployeeData(updatedEmployeeData);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(employeeData);
+  };
+
   return (
     <Container className={"flex-col justify-start items-start"}>
       <UserInfo data={userInfo} />
 
       {userInfo.role === "admin" && (
         <section className="w-full">
-          <Table data={usersData} />
+          <Table
+            data={usersData}
+            setEmployeeInfo={setEmployeeData}
+            setShowForm={setShowModal}
+            setShowAddForm={setShowForm}
+          />
+          <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+            <Form
+              formTitle={"Add Employee"}
+              inputFields={employeeInfoInputs}
+              handleChange={handleChange}
+              onSubmit={onSubmit}
+            />
+          </ContentModal>
+
+          <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+            <UpdateForm
+              formTitle={"Update Employee Info"}
+              inputFields={employeeInfoInputs}
+              data={employeeData}
+              handleChange={handleChange}
+              onSubmit={onSubmit}
+            />
+          </ContentModal>
         </section>
       )}
       <OnboardingDoc data={userInfo} />
