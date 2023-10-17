@@ -15,7 +15,7 @@ export const SelectInput = (props) => {
   } = props;
 
   return (
-    <div className="relative">
+    <div className="relative my-2">
       <select
         id={id}
         name={name}

@@ -4,7 +4,12 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { Button, SearchInput, Text } from "../../components";
 import { useNavigate } from "react-router-dom";
 
-export const Table = ({ data }) => {
+export const Table = ({
+  data,
+  setShowForm,
+  setEmployeeInfo,
+  setShowAddForm,
+}) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
@@ -17,13 +22,14 @@ export const Table = ({ data }) => {
     setSearchQuery(e.target.value);
   };
 
-  const editUser = (e) => {
-    console.log(e.target.value);
-    navigate("/employee/edit");
+  const handleEdit = (item) => {
+    console.log("employee info:", item);
+    setShowForm(true);
+    setEmployeeInfo(item);
   };
 
   const addUser = () => {
-    navigate("/employee/add");
+    setShowAddForm(true);
   };
 
   return (
@@ -116,7 +122,7 @@ export const Table = ({ data }) => {
                         {item.endDate}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
-                        <button onClick={editUser}>
+                        <button onClick={() => handleEdit(item)}>
                           <BiSolidMessageSquareEdit size={"1.5rem"} />
                         </button>
                       </td>
