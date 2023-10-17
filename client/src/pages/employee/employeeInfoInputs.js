@@ -10,6 +10,16 @@ export const employeeInfoInputs = [
     errorMessage: "Name should contain only letters!",
   },
   {
+    id: "phone",
+    label: "Phone",
+    name: "phone",
+    type: "tel",
+    placeholder: "Phone",
+    required: true,
+    pattern: "[0-9]{10}",
+    errorMessage: "Phone number should be 10 digits!",
+  },
+  {
     id: "workEmail",
     label: "Work Email",
     name: "workEmail",
@@ -29,16 +39,7 @@ export const employeeInfoInputs = [
     pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$",
     errorMessage: "Please enter a valid email!",
   },
-  {
-    id: "phone",
-    label: "Phone",
-    name: "phone",
-    type: "tel",
-    placeholder: "Phone",
-    required: true,
-    pattern: "[0-9]{10}",
-    errorMessage: "Phone number should be 10 digits!",
-  },
+
   {
     id: "DOB",
     label: "Date of Birth",
@@ -55,17 +56,7 @@ export const employeeInfoInputs = [
     placeholder: "Address",
     required: true,
   },
-  {
-    id: "password",
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-    required: true,
-    pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
-    errorMessage:
-      "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
-  },
+
   {
     id: "role",
     label: "Role",
@@ -118,5 +109,16 @@ export const employeeInfoInputs = [
     type: "date",
     placeholder: "End Date",
     required: true,
+  },
+  {
+    id: "password",
+    label: "Password",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+    required: true,
+    pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+    errorMessage:
+      "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
   },
 ];
