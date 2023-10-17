@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+
 const Schema = mongoose.Schema;
 // const Vendor = require("./vendorModel");
 const orderSchema = new Schema({
@@ -56,11 +58,12 @@ const orderSchema = new Schema({
   approved: {
     type: Boolean,
     // required: true, [as employee wont send the data for this column except admin]
+    default: false,
   },
-  status: {
-    type: Boolean,
-    required: true,
-  },
+  // status: {
+  //   type: Boolean,
+  //   required: true,
+  // },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -71,7 +74,19 @@ const orderSchema = new Schema({
     default: false,
     required: true,
   },
-   createdAt: {
+  ordered: {
+    type: Boolean,
+    default: false,
+  },
+  requested: {
+    type: Boolean,
+    default: false,
+  },
+  approvedRequest: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
     type: Date,
     default: Date.now,
   },

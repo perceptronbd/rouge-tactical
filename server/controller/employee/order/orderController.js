@@ -1,5 +1,5 @@
-const User = require("../../model/userModel");
-const Order = require("../../model/orderModel");
+const User = require("../../../model/userModel");
+const Order = require("../../../model/orderModel");
 
 const createOrder = async (req, res) => {
   console.log(req.userId);
@@ -15,9 +15,9 @@ const createOrder = async (req, res) => {
     //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
-    needed,
-    status,
-    purchaseOrdered,
+    needed
+  
+   
   } = req.body;
 
   try {
@@ -36,9 +36,8 @@ const createOrder = async (req, res) => {
       !depositAmount ||
       !deliveredItems ||
       !vendor ||
-      !needed ||
-      !status ||
-      !purchaseOrdered
+      !needed 
+
     ) {
       return res.status(400).json({
         error: "All required fields must be provided for creating Order!",
@@ -46,7 +45,6 @@ const createOrder = async (req, res) => {
     }
 
     const newOrderData = {
-    
       item: item,
       size: size,
       quantity: quantity,
@@ -58,10 +56,8 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      status: status,
-      approved: false,
-      createdBy: req.userId,
-      purchaseOrdered: purchaseOrdered,
+      createdBy: req.userId
+
     };
 
     if (substituteVendor !== "") {
@@ -120,8 +116,12 @@ const getAllOrder = async (req, res) => {
       needed: data.needed,
       status: data.status,
       approved: data.approved,
-      createdBy: data.createdBy,
+      orderedBy: data.createdBy,
       purchaseOrdered: data.purchaseOrdered,
+      ordered: data.ordered,
+      requested: data.requested,
+      approvedRequest: data.approvedRequest,
+      createdAt : data.createdAt
     }));
 
     // console.log(formattedUsers);
@@ -138,57 +138,8 @@ const getAllOrder = async (req, res) => {
   }
 };
 
-const updateOrderApprovalStatus = async (req, res) => {
-  console.log(req.userId);
-  console.log(req.email);
-  console.log(req.authenticated);
-
-  const { approved, orderId } = req.body;
-
-  try {
-    const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
-    const existingOrder = await Order.findOne({
-      createdBy: req.userId,
-      _id: orderId,
-    });
-    console.log(existingUser);
-    console.log(existingOrder);
-    if (!existingUser) {
-      return res
-        .status(404)
-        .json({ error: "Admin with such credential doesn't exist!" });
-    }
-    if (!existingOrder) {
-      return res.status(404).json({ error: "No Order available!" });
-    }
-
-    const updateOrderApprovalStatus = await Order.updateOne(
-      { _id: orderId },
-      { $set: { approved: approved } }
-    );
-
-    const updatedOrder = await Order.findOne({ _id: orderId });
-
-    console.log(updatedOrder);
-
-    console.log(updateOrderApprovalStatus);
-
-    // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        updatedOrder: updatedOrder,
-      },
-    });
-  } catch (error) {
-    console.error("Error updating order approval status :", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 module.exports = {
   createOrder,
   getAllOrder,
-  updateOrderApprovalStatus,
+
 };
