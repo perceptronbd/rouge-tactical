@@ -7,18 +7,24 @@ export const AuthProvider = ({ children }) => {
     const storedUser = sessionStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const [token, setToken] = useState(() => {
+    const storedToken = sessionStorage.getItem("token");
+    return storedToken || null; // No need to parse
+  });
 
   useEffect(() => {
-    console.log("user", user);
     sessionStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+    sessionStorage.setItem("token", JSON.stringify(token));
+  }, [user, token]);
 
-  const login = (userData) => {
-    setUser(userData);
+  const login = (data) => {
+    setUser(data.data.userData);
+    setToken(data.token);
   };
 
   const logout = () => {
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
     setUser(null);
   };
 

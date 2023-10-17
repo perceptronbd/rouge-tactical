@@ -9,8 +9,6 @@ export const Login = () => {
     password: "",
   });
 
-  const [userData, setUserData] = useState(null);
-
   const [errMsg, setErrMsg] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -43,19 +41,15 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
     try {
-      loginAPI(
-        values.email,
-        values.password,
-        setErrMsg,
-        setShowModal,
-        setIsError,
-        setUserData
-      );
+      const response = await loginAPI(values.email, values.password);
 
-      if (userData) {
-        login(userData);
+      if (response.code === 200) {
+        login(response);
+      } else {
+        setIsError(true);
+        setErrMsg(response.error);
+        setShowModal(true);
       }
     } catch (error) {
       console.log(error);
