@@ -12,8 +12,8 @@ const loginUser = async (req, res) => {
 
     // Decrypt the password from the request body
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
-      var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-      console.log(decryptedPassword)
+    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(decryptedPassword);
 
     const existingUser = await User.findOne({ email });
 
@@ -25,7 +25,9 @@ const loginUser = async (req, res) => {
       // Compare the decrypted password with the stored hashed password
       bcrypt.compare(decryptedPassword, hashedPassword).then((match) => {
         if (!match) {
-          res.status(400).json({ error: "Wrong Email and Password Combination!" });
+          res
+            .status(400)
+            .json({ error: "Wrong Email and Password Combination!" });
         } else {
           const accessToken = createTokens(existingUser);
 
@@ -36,9 +38,7 @@ const loginUser = async (req, res) => {
             code: 200,
             token: accessToken,
             data: {
-              userId: existingUser._id,
-              workEmail: existingUser.email,
-              name: existingUser.name,
+              userData: existingUser,
             },
             message: "User logged In successfully",
           });
