@@ -92,11 +92,6 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Requests
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                      Approved
-                    </th>
-                  )}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -177,19 +172,6 @@ export const Table = ({
                           }
                         />
                       </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <Checkbox
-                            id={item.id}
-                            label={item.approved ? "Yes" : "No"}
-                            checked={item.approved}
-                            onClick={() => handleApprove(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
-                            }
-                          />
-                        </td>
-                      )}
                     </tr>
                   ))
                 )}
