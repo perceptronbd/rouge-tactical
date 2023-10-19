@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import {
+  BiSolidMessageSquareEdit,
+  BiSolidCheckboxChecked,
+  BiCheckbox,
+} from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
@@ -90,13 +94,8 @@ export const Table = ({
                     Needed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Requests
+                    Request
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                      Approved
-                    </th>
-                  )}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -157,8 +156,8 @@ export const Table = ({
                           className={cw(
                             ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
                             item.needed === "Urgent"
-                              ? "text-yellow-500"
-                              : "text-green-500"
+                              ? "text-red-500"
+                              : "text-yellow-500"
                           )}
                           onClick={() => handleNeededToggle(item.id)}
                         >
@@ -166,30 +165,18 @@ export const Table = ({
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 3xl:p-4 3xl:py-2 text-center">
-                        <Checkbox
-                          id={`request_${item.id}`}
-                          label={item.requested ? "Yes" : "No"}
-                          checked={item.requested}
+                      <td className="px-6 py-4 3xl:p-4 3xl:py-2">
+                        <div
+                          className=" flex justify-center items-center text-2xl"
                           onClick={() => handleRequest(item.id)}
-                          className={
-                            "flex justify-center items-center rounded-md bg-foreground m-0 p-1"
-                          }
-                        />
+                        >
+                          {item.requested ? (
+                            <BiSolidCheckboxChecked />
+                          ) : (
+                            <BiCheckbox />
+                          )}
+                        </div>
                       </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <Checkbox
-                            id={item.id}
-                            label={item.approved ? "Yes" : "No"}
-                            checked={item.approved}
-                            onClick={() => handleApprove(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
-                            }
-                          />
-                        </td>
-                      )}
                     </tr>
                   ))
                 )}
