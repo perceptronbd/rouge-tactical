@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
+import { formatDate } from "../../utils";
 
 export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -111,7 +112,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                           {item.renewalDuration}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalDeadline}
+                          {formatDate(item.renewalDeadline)}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {item.contactInfo}
@@ -144,7 +145,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                           {item.renewalDuration}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalDeadline}
+                          {formatDate(item.renewalDeadline)}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {item.contactInfo}

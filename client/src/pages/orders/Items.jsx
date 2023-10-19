@@ -3,7 +3,7 @@ import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
-import { cw } from "../../utils";
+import { cw, formatDate } from "../../utils";
 
 const Checkbox = (props) => {
   const { id, label, className, onClick, checked } = props;
@@ -115,7 +115,7 @@ export const Table = ({
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.date}
+                        {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}

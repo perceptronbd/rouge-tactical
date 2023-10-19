@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { Button, SearchInput, Text } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../utils";
 
 export const Table = ({
   data,
@@ -10,7 +10,6 @@ export const Table = ({
   setEmployeeInfo,
   setShowAddForm,
 }) => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -59,7 +58,7 @@ export const Table = ({
                     Position
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Email
+                    Work Email
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Phone
@@ -108,18 +107,18 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.phone}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item["date of birth"]}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                        {formatDate(item.DOB)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm flex flex-col gap-1">
                         <span>{item.emergencyContact.name}</span>
                         <span>{item.emergencyContact.phone}</span>
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.startDate}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                        {formatDate(item.startDate)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.endDate}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                        {formatDate(item.endDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
                         <button onClick={() => handleEdit(item)}>
