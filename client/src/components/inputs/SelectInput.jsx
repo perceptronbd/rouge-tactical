@@ -11,6 +11,7 @@ export const SelectInput = (props) => {
     errorMessage,
     onChange,
     selectOpts,
+    defaultValue,
     ...inputProps
   } = props;
 
@@ -27,16 +28,11 @@ export const SelectInput = (props) => {
         )}
       >
         <optgroup label={label} className="font-semibold">
-          <option
-            value={value || ""}
-            key="defaultOption"
-            className="text-textColor hover:text-accent-tertiary"
-            disabled
-            selected
-            hidden
-          >
-            {value || label}
-          </option>
+          {defaultValue && (
+            <option value={defaultValue} key="defaultOption" selected>
+              {defaultValue}
+            </option>
+          )}
           {selectOpts.map((opt) => (
             <option
               value={opt.id}
