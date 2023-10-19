@@ -42,6 +42,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
       {data ? (
         <article className="rounded-lg bg-accent-tertiary-light">
           <div className="flex justify-end p-2">
+            {" "}
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
           <div className="max-h-[550px] 3xl:max-h-[890px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
@@ -118,7 +119,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                           {item.contactInfo}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.notes}
+                          <p className="max-w-xs">{item.notes}</p>
                         </td>
 
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
