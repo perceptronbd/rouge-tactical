@@ -156,8 +156,8 @@ export const Table = ({
                           className={cw(
                             ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
                             item.needed === "Urgent"
-                              ? "text-yellow-500"
-                              : "text-green-500"
+                              ? "text-red-500"
+                              : "text-yellow-500"
                           )}
                           onClick={() => handleNeededToggle(item.id)}
                         >
