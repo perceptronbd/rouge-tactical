@@ -64,9 +64,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Renewal Deadline
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Contact Info
-                  </th>
+
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Notes
                   </th>
@@ -115,11 +113,9 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {formatDate(item.renewalDeadline)}
                         </td>
+
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.contactInfo}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <p className="max-w-xs">{item.notes}</p>
+                          <p className="max-w-sm">{item.notes}</p>
                         </td>
 
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
@@ -147,9 +143,6 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {formatDate(item.renewalDeadline)}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.contactInfo}
                         </td>
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {item.notes}
