@@ -97,7 +97,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                     checkDeadline(item.renewalDeadline) ? (
                       <tr
                         key={index}
-                        className={`border-b-2 border-foreground bg-accent-secondary hover:bg-opacity-80 transition-all ease-in-out duration-300`}
+                        className={`border-b-2 border-foreground bg-yellow-500 hover:bg-opacity-80 transition-all ease-in-out duration-300`}
                       >
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                           {item.permit}
