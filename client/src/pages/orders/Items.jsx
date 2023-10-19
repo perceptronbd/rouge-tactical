@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import {
+  BiSolidMessageSquareEdit,
+  BiSolidCheckboxChecked,
+  BiCheckbox,
+} from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
@@ -90,7 +94,7 @@ export const Table = ({
                     Needed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Requests
+                    Request
                   </th>
                 </tr>
               </thead>
@@ -161,16 +165,17 @@ export const Table = ({
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 3xl:p-4 3xl:py-2 text-center">
-                        <Checkbox
-                          id={`request_${item.id}`}
-                          label={item.requested ? "Yes" : "No"}
-                          checked={item.requested}
+                      <td className="px-6 py-4 3xl:p-4 3xl:py-2">
+                        <div
+                          className=" flex justify-center items-center text-2xl"
                           onClick={() => handleRequest(item.id)}
-                          className={
-                            "flex justify-center items-center rounded-md bg-foreground m-0 p-1"
-                          }
-                        />
+                        >
+                          {item.requested ? (
+                            <BiSolidCheckboxChecked />
+                          ) : (
+                            <BiCheckbox />
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))
