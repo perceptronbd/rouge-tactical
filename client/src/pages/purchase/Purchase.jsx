@@ -17,6 +17,7 @@ import { purchaseData } from "../../mock/purchase";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { purchaseInputs } from "./purchaseInputs";
+import { data } from "../../mock/invoice";
 
 export const Purchase = () => {
   //data states
@@ -42,6 +43,13 @@ export const Purchase = () => {
 
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
+      if (!vendor) {
+        setTableData(data);
+        setSelectedVendor(null);
+        setVendorDetails(null);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
       setVendorDetails(vendor);
     }, 1000);
@@ -132,6 +140,7 @@ export const Purchase = () => {
               label="Select Vendor"
               className="w-64"
               value={selectedVendor}
+              defaultValue={"View All"}
               onChange={handleVendorChange}
               selectOpts={vendorData}
             />

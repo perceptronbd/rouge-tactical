@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
-import { cw } from "../../utils";
+import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
@@ -128,16 +128,18 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.assignedTo}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.lastMaintenanceDate}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
+                        {formatDate(item.lastMaintenanceDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.maintenanceInterval}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {checkNextMaintenanceDate(
-                          item.lastMaintenanceDate,
-                          item.maintenanceInterval
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
+                        {formatDate(
+                          checkNextMaintenanceDate(
+                            item.lastMaintenanceDate,
+                            item.maintenanceInterval
+                          )
                         )}
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">

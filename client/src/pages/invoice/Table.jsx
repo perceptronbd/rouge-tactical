@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
+import { formatDate } from "../../utils";
 
 export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -90,8 +91,8 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                           : "bg-accent-tertiary-light"
                       } `}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.date}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                        {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.invoiceNumber}
@@ -114,10 +115,10 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.status}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.updatedAt === "NaN/NaN/NaN"
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
+                        {item.updatedAt === "NaN-NaN-NaN"
                           ? "TBA"
-                          : item.updatedAt}
+                          : formatDate(item.updatedAt)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         <button

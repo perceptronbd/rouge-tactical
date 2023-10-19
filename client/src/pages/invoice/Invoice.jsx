@@ -42,6 +42,14 @@ export const Invoice = () => {
 
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
+      console.log(vendor);
+      if (!vendor) {
+        setLoading(false);
+        setTableData(data);
+        setSelectedVendor(null);
+        setVendorDetails(null);
+        return;
+      }
       setLoading(false);
       setVendorDetails(vendor);
     }, 1000);
@@ -131,6 +139,7 @@ export const Invoice = () => {
               name="vendor"
               label="Select Vendor"
               className="w-64"
+              defaultValue="View All"
               value={selectedVendor}
               onChange={handleVendorChange}
               selectOpts={vendorData}

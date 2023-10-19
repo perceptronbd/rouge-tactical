@@ -15,8 +15,8 @@ module.exports = {
           secondary: "#0B0B0D",
           tertiary: {
             DEFAULT: "#961a23",
-            light: "#d42127",
-            hover: "#ff272e",
+            light: "#FE233E",
+            hover: "#FF7384",
           },
         },
       },
