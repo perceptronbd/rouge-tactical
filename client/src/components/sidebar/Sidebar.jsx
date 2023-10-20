@@ -18,9 +18,9 @@ export const Sidebar = () => {
 
   return (
     <section className="bg-foreground h-[98vh] rounded">
-      <div className="relative bg-red-500 flex justify-end">
+      <div className="relative flex justify-end">
         <BsFillArrowLeftCircleFill
-          className={`absolute -right-3 ${
+          className={`absolute -right-1 ${
             open ? "top-12" : "top-7"
           } w-7 h-7 cursor-pointer  text-accent-secondary border-foreground bg-foreground
      border-2 rounded-full ${!open && "rotate-180"}`}

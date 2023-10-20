@@ -169,7 +169,7 @@ export const Purchase = () => {
           loading={loadingAgingSummary}
         />
       </section>
-      <div className="h-[330px] 3xl:h-[590px]">
+      <div>
         <Table
           data={tableData}
           loading={loadingTable}

@@ -1,6 +1,7 @@
 import React from "react";
 import { CiUser } from "react-icons/ci";
 import { Text } from "../../components";
+import { formatDate } from "../../utils";
 
 export const UserInfo = ({ data }) => {
   return (
@@ -30,7 +31,7 @@ export const UserInfo = ({ data }) => {
           </Text>
           <Text>{data.email}</Text>
           <Text>{data.phone}</Text>
-          <Text>{data.DOB}</Text>
+          <Text>{formatDate(data.DOB)}</Text>
         </div>
       </section>
       <div className="h-full flex flex-col justify-between">
@@ -60,12 +61,12 @@ export const UserInfo = ({ data }) => {
         <section className="flex flex-col gap-1">
           <div className="bg-green-100 p-0.5 text-center rounded">
             <Text type={"bold"} className={"text-green-800"}>
-              Start Date : {data.startDate}
+              Start Date : {formatDate(data.startDate)}
             </Text>
           </div>
           <div className="bg-red-100 p-0.5 text-center rounded">
             <Text type={"bold"} className={"text-red-800"}>
-              End Date : {data.endDate}
+              End Date : {formatDate(data.endDate)}
             </Text>
           </div>
         </section>

@@ -11,13 +11,13 @@ const userInfo = {
   role: "admin",
   email: "asif@gmail.com",
   phone: "1234567890",
-  DOB: "01/01/1990",
+  DOB: "1990/01/01",
   emergencyContact: {
     name: "John Doe",
     phone: "1234567890",
   },
-  startDate: "01/01/2021",
-  endDate: "01/01/2021",
+  startDate: "2021/01/01",
+  endDate: "2021/01/01",
 };
 
 const usersData = [
@@ -26,20 +26,20 @@ const usersData = [
     position: "Software Engineer",
     email: "asif@gmail.com",
     phone: "1234567890",
-    DOB: "01/01/1990",
+    DOB: "1990/01/01",
     emergencyContact: {
       name: "John Doe",
       phone: "1234567890",
     },
-    startDate: "01/01/2021",
-    endDate: "01/01/2021",
+    startDate: "2021/01/01",
+    endDate: "2021/01/01",
   },
   {
     name: "John Doe",
     position: "Frontend Developer",
     email: "john@gmail.com",
     phone: "9876543210",
-    DOB: "02/15/1985",
+    DOB: "1985/01/02",
     emergencyContact: {
       name: "Jane Smith",
       phone: "9876543210",

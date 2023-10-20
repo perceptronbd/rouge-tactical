@@ -9,36 +9,8 @@ import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
-const Checkbox = (props) => {
-  const { id, label, className, onClick, checked } = props;
-
-  return (
-    <>
-      <div className={cw("py-1", className)}>
-        <input
-          className="peer appearance-none h-4 w-4 border-2 border-red-500 rounded bg-transparent checked:bg-green-500 checked:border-green-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-          type="checkbox"
-          id={id}
-          onClick={onClick}
-          checked={checked}
-        />
-        {label && (
-          <label
-            className="inline-block peer-checked:text-green-500 text-red-500 font-semibold transition-all ease-in-out duration-300"
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        )}
-      </div>
-    </>
-  );
-};
-
 export const Table = ({
   data,
-  role,
-  handleApprove,
   handleRequest,
   handleNeededToggle,
   handleEdit,

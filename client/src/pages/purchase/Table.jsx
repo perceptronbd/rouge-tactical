@@ -28,7 +28,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
           <div className="flex justify-end p-2">
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
-          <div className="max-h-[270px] 3xl:max-h-[520px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
+          <div className="max-h-[250px] 3xl:max-h-[500px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
