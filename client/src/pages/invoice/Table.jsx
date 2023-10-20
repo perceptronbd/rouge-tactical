@@ -117,7 +117,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
                         {item.updatedAt === "NaN-NaN-NaN"
-                          ? "TBA"
+                          ? "- - -"
                           : formatDate(item.updatedAt)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">

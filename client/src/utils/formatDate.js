@@ -1,25 +1,25 @@
 export const formatDate = (inputDate) => {
   const parts = inputDate.split(/-|\//);
-  if (parts.length !== 3) {
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    const monthName = new Date(inputDate + "T00:00:00").toLocaleString(
+      "en-us",
+      {
+        month: "short",
+      }
+    );
+    const dayNum = parseInt(day);
+    const daySuffix =
+      dayNum === 1 || dayNum === 21 || dayNum === 31
+        ? "st"
+        : dayNum === 2 || dayNum === 22
+        ? "nd"
+        : dayNum === 3 || dayNum === 23
+        ? "rd"
+        : "th";
+
+    return `${monthName} ${dayNum}${daySuffix} ${year}`;
+  } else {
     return "Invalid Date";
   }
-
-  const month = new Date(parts[2], parts[1] - 1, parts[0]).toLocaleString(
-    "en-us",
-    {
-      month: "short",
-    }
-  );
-  const day = parseInt(parts[0]);
-
-  const daySuffix =
-    day === 1 || day === 21 || day === 31
-      ? "st"
-      : day === 2 || day === 22
-      ? "nd"
-      : day === 3 || day === 23
-      ? "rd"
-      : "th";
-
-  return `${month} ${day}${daySuffix} ${parts[2]}`;
 };
