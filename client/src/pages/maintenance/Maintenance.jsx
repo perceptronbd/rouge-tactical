@@ -35,7 +35,7 @@ export const Maintenance = () => {
 
   return (
     <Container>
-      <section>
+      <section className="w-full">
         <Table
           data={maintenanceData}
           setShowForm={setShowModal}

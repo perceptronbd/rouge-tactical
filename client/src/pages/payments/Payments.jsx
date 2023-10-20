@@ -103,6 +103,7 @@ export const Payments = () => {
             selectOpts={filterOpts}
             onChange={handleFilter}
           />
+
           <PieGraph data={serviceGraph} />
         </div>
         <article className="w-[60%] h-full">

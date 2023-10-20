@@ -79,11 +79,11 @@ export const PieGraph = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer height={"90%"}>
+    <ResponsiveContainer height={"85%"}>
       <PieChart>
         <Pie
           data={data}
-          cx={"30%"}
+          cx={"40%"}
           cy={"50%"}
           innerRadius={"60%"}
           outerRadius={"90%"}
@@ -95,16 +95,16 @@ export const PieGraph = ({ data }) => {
         </Pie>
         <Tooltip content={CustomTooltip} />
         <text
-          x={"30%"}
+          x={"40%"}
           y={"47%"}
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize={15}
+          fontSize={12}
         >
           Total:
         </text>
         <text
-          x={"30%"}
+          x={"40%"}
           y={"53%"}
           textAnchor="middle"
           dominantBaseline="middle"
