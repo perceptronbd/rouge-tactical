@@ -83,7 +83,7 @@ export const PieGraph = ({ data }) => {
       <PieChart>
         <Pie
           data={data}
-          cx={"40%"}
+          cx={"50%"}
           cy={"50%"}
           innerRadius={"60%"}
           outerRadius={"90%"}
@@ -95,7 +95,7 @@ export const PieGraph = ({ data }) => {
         </Pie>
         <Tooltip content={CustomTooltip} />
         <text
-          x={"40%"}
+          x={"50%"}
           y={"47%"}
           textAnchor="middle"
           dominantBaseline="middle"
@@ -104,7 +104,7 @@ export const PieGraph = ({ data }) => {
           Total:
         </text>
         <text
-          x={"40%"}
+          x={"50%"}
           y={"53%"}
           textAnchor="middle"
           dominantBaseline="middle"

@@ -6,12 +6,11 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../buttons/Button";
 import { useAuth } from "../../contexts/AuthContext";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
-import { FaBars } from "react-icons/fa";
 
 export const Sidebar = () => {
   const { logout } = useAuth();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
     logout();
