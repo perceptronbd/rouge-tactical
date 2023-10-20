@@ -49,7 +49,7 @@ export const Table = ({
           </div>
           <div className="max-h-[230px] 3xl:max-h-[500px] overflow-y-auto rounded-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
-              <thead className=" text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
+              <thead className="rt-sm:text-xs text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Name
@@ -66,13 +66,13 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
                     Date of Birth
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium  text-left">
                     Emergency Contact
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium text-left">
                     Start Date
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium  text-left">
                     End Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
@@ -80,7 +80,7 @@ export const Table = ({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-white">
+              <tbody className="text-white rt-sm:text-xs">
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="9">
@@ -107,17 +107,17 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.phone}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm rt-sm:w-20 whitespace-nowrap">
                         {formatDate(item.DOB)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm flex flex-col gap-1">
                         <span>{item.emergencyContact.name}</span>
                         <span>{item.emergencyContact.phone}</span>
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
                         {formatDate(item.startDate)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
                         {formatDate(item.endDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">

@@ -29,37 +29,37 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
           <div className="max-h-[250px] 3xl:max-h-[500px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Date
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Order Number
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                    Order #
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Vendor
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Item
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Quantity
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Total Amount
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Deposited Amount
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium text-center">
                     Status
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Closed At
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Edit
                   </th>
                 </tr>
@@ -91,7 +91,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                           : "bg-accent-tertiary-light"
                       } `}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">

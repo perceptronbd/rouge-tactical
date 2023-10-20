@@ -51,7 +51,7 @@ export const Table = ({
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
           <div className="max-h-[525px] 3xl:max-h-[880px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -128,13 +128,13 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.assignedTo}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
                         {formatDate(item.lastMaintenanceDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.maintenanceInterval}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
                         {formatDate(
                           checkNextMaintenanceDate(
                             item.lastMaintenanceDate,
