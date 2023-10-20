@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       screens: {
         "3xl": { min: "1367px" },
+        "rt-sm": { max: "768px" },
       },
       colors: {
         background: "#F2F2F2",
