@@ -21,8 +21,8 @@ export const Sidebar = () => {
       <div className="relative flex justify-end">
         <BsFillArrowLeftCircleFill
           className={`absolute -right-1 ${
-            open ? "top-12" : "top-7"
-          } w-7 h-7 cursor-pointer  text-accent-secondary border-foreground bg-foreground
+            open ? "top-14" : "top-8"
+          } w-5 h-5 cursor-pointer  text-accent-secondary border-foreground bg-foreground
      border-2 rounded-full ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
