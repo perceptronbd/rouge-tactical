@@ -104,6 +104,7 @@ export const Invoice = () => {
 
   const handleVendorChange = (event) => {
     setSelectedVendor(parseInt(event.target.value));
+    console.log(event.target.value);
   };
 
   const openVendorForm = () => {
