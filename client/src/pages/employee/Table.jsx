@@ -51,31 +51,31 @@ export const Table = ({
             <table className="w-full border-collapse">
               <thead className="rt-sm:text-xs text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Name
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-center">
                     Position
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Work Email
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Phone
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-center">
                     Date of Birth
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium  text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium  text-center">
                     Emergency Contact
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium text-center">
                     Start Date
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium  text-left">
+                  <th className="px-1 py-4 3xl:p-4  font-medium  text-center">
                     End Date
                   </th>
-                  <th className="px-1 py-4 3xl:p-4  font-medium whitespace-nowrap text-left">
+                  <th className="px-4 py-4 3xl:p-4  font-medium whitespace-nowrap text-right">
                     Edit
                   </th>
                 </tr>
@@ -95,32 +95,32 @@ export const Table = ({
                       key={index}
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.name}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.position}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.email}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.phone}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm rt-sm:w-20 whitespace-nowrap">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm rt-sm:w-20 whitespace-nowrap">
                         {formatDate(item.DOB)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm flex flex-col gap-1">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm flex flex-col gap-1">
                         <span>{item.emergencyContact.name}</span>
                         <span>{item.emergencyContact.phone}</span>
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
                         {formatDate(item.startDate)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
                         {formatDate(item.endDate)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
                         <button onClick={() => handleEdit(item)}>
                           <BiSolidMessageSquareEdit size={"1.5rem"} />
                         </button>
