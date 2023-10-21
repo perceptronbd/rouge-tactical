@@ -48,7 +48,10 @@ export const UpdateForm = ({
 
   return (
     <>
-      <form className="h-full w-full flex flex-col justify-between">
+      <form
+        className="h-full w-full flex flex-col justify-between"
+        onSubmit={onSubmit}
+      >
         <section className="flex h-10 mb-4 justify-between items-center">
           <Text variant={"h3"} type={"bold"}>
             {formTitle}
@@ -62,7 +65,6 @@ export const UpdateForm = ({
             icon={BiMessageSquareEdit}
             className={"m-0"}
             variant={"success"}
-            onClick={onSubmit}
           >
             Update
           </Button>

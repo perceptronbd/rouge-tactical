@@ -20,7 +20,10 @@ export const Form = ({ formTitle, inputFields, handleChange, onSubmit }) => {
 
   return (
     <>
-      <form className="h-full w-full flex flex-col justify-between">
+      <form
+        className="h-full w-full flex flex-col justify-between"
+        onSubmit={onSubmit}
+      >
         <section className="flex h-10 mb-4 justify-between items-center">
           <Text variant={"h3"} type={"bold"}>
             {formTitle}
@@ -30,12 +33,7 @@ export const Form = ({ formTitle, inputFields, handleChange, onSubmit }) => {
           {inputComponents}
         </div>
         <div className="flex gap-4">
-          <Button
-            icon={MdPostAdd}
-            className={"m-0"}
-            variant={"success"}
-            onClick={onSubmit}
-          >
+          <Button icon={MdPostAdd} className={"m-0"} variant={"success"}>
             Add
           </Button>
         </div>
