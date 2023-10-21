@@ -1,6 +1,7 @@
 export const maintenanceData = [
   {
     id: 1,
+    name: "Water Filter Replacement",
     machine: "Water Filter Replacement",
     condition: "Good",
     location: "East side of Warehouse",
@@ -12,6 +13,7 @@ export const maintenanceData = [
   },
   {
     id: 2,
+    name: "Air Compressor",
     machine: "Air Compressor",
     condition: "Good",
     location: "South side of Warehouse",
@@ -23,6 +25,7 @@ export const maintenanceData = [
   },
   {
     id: 3,
+    name: "Water Filter Replacement",
     machine: "Water Filter Replacement",
     condition: "Good",
     location: "East side of Warehouse",
@@ -34,6 +37,7 @@ export const maintenanceData = [
   },
   {
     id: 4,
+    name: "Machine 1",
     machine: "Machine 1",
     condition: "Fair",
     location: "Warehouse",
@@ -45,6 +49,7 @@ export const maintenanceData = [
   },
   {
     id: 5,
+    name: "Machine 2",
     machine: "Machine 2",
     condition: "Poor",
     location: "Warehouse",
@@ -56,6 +61,7 @@ export const maintenanceData = [
   },
   {
     id: 6,
+    name: "Machine 3",
     machine: "Machine 3",
     condition: "Good",
     location: "Warehouse",
@@ -67,6 +73,7 @@ export const maintenanceData = [
   },
   {
     id: 7,
+    name: "Machine 4",
     machine: "Machine 4",
     condition: "Fair",
     location: "Warehouse",
@@ -78,6 +85,7 @@ export const maintenanceData = [
   },
   {
     id: 8,
+    name: "Machine 5",
     machine: "Machine 5",
     condition: "Bad",
     location: "Warehouse",
@@ -89,6 +97,7 @@ export const maintenanceData = [
   },
   {
     id: 9,
+    name: "Machine 6",
     machine: "Machine 6",
     condition: "Poor",
     location: "Warehouse",
@@ -100,6 +109,7 @@ export const maintenanceData = [
   },
   {
     id: 10,
+    name: "Machine 7",
     machine: "Machine 7",
     condition: "Good",
     location: "Warehouse",
@@ -111,6 +121,7 @@ export const maintenanceData = [
   },
   {
     id: 11,
+    name: "Machine 8",
     machine: "Machine 8",
     condition: "Fair",
     location: "Warehouse",
@@ -122,6 +133,7 @@ export const maintenanceData = [
   },
   {
     id: 12,
+    name: "Machine 9",
     machine: "Machine 9",
     condition: "Good",
     location: "Warehouse",
@@ -133,6 +145,7 @@ export const maintenanceData = [
   },
   {
     id: 13,
+    name: "Machine 10",
     machine: "Machine 10",
     condition: "Fair",
     location: "Warehouse",
@@ -144,6 +157,7 @@ export const maintenanceData = [
   },
   {
     id: 14,
+    name: "Machine 11",
     machine: "Machine 11",
     condition: "Good",
     location: "Warehouse",
@@ -155,6 +169,7 @@ export const maintenanceData = [
   },
   {
     id: 15,
+    name: "Machine 12",
     machine: "Machine 12",
     condition: "Poor",
     location: "Warehouse",
@@ -166,6 +181,7 @@ export const maintenanceData = [
   },
   {
     id: 16,
+    name: "Machine 13",
     machine: "Machine 13",
     condition: "Fair",
     location: "Warehouse",
@@ -177,6 +193,7 @@ export const maintenanceData = [
   },
   {
     id: 17,
+    name: "Machine 14",
     machine: "Machine 14",
     condition: "Good",
     location: "Warehouse",
@@ -188,6 +205,7 @@ export const maintenanceData = [
   },
   {
     id: 18,
+    name: "Machine 15",
     machine: "Machine 15",
     condition: "Poor",
     location: "Warehouse",
@@ -199,6 +217,7 @@ export const maintenanceData = [
   },
   {
     id: 19,
+    name: "Machine 16",
     machine: "Machine 16",
     condition: "Bad",
     location: "Warehouse",
@@ -210,6 +229,7 @@ export const maintenanceData = [
   },
   {
     id: 20,
+    name: "Machine 17",
     machine: "Machine 17",
     condition: "Fair",
     location: "Warehouse",
