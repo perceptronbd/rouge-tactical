@@ -62,8 +62,8 @@ export const employeeInfoInputs = [
     label: "Role",
     name: "role",
     selectOpts: [
-      { id: "admin", name: "Admin" },
-      { id: "employee", name: "Employee" },
+      { value: "admin", name: "Admin" },
+      { value: "employee", name: "Employee" },
     ],
   },
   {
@@ -109,6 +109,15 @@ export const employeeInfoInputs = [
     type: "date",
     placeholder: "End Date",
     required: true,
+  },
+  {
+    id: "onboardingComplete",
+    label: "Onboarding Complete",
+    name: "onboardingComplete",
+    selectOpts: [
+      { value: "true", name: "Yes" },
+      { value: "false", name: "No" },
+    ],
   },
   {
     id: "password",

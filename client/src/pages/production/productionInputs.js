@@ -5,10 +5,10 @@ export const productionInputs = [
     name: "status",
     required: true,
     selectOpts: [
-      { id: "Machining", name: "Machining" },
-      { id: "Building", name: "Building" },
-      { id: "Coating", name: "Coating" },
-      { id: "Assembly", name: "Assembly" },
+      { value: "Machining", name: "Machining" },
+      { value: "Building", name: "Building" },
+      { value: "Coating", name: "Coating" },
+      { value: "Assembly", name: "Assembly" },
     ],
   },
   {
