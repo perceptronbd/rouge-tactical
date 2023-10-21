@@ -6,15 +6,18 @@ import {
 } from "react-icons/bi";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { Button, SearchInput, Text } from "../../components";
-import { formatDate } from "../../utils";
+import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
   setShowForm,
   setEmployeeInfo,
   setShowAddForm,
+  setOnboardingDocs,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,6 +32,19 @@ export const Table = ({
     console.log("employee info:", item);
     setShowForm(true);
     setEmployeeInfo(item);
+  };
+
+  const handleRowClick = (index, item) => {
+    // Toggle the selected row and its onboarding status
+    setSelectedRowIndex(index);
+    const updatedItem = {
+      ...item,
+      onboardingComplete: !item.onboardingComplete,
+    };
+    const updatedData = [...data];
+    updatedData[index] = updatedItem;
+    console.log(updatedData, updatedItem);
+    setOnboardingDocs(item.onboardingDocs);
   };
 
   const addUser = () => {
@@ -100,7 +116,18 @@ export const Table = ({
                   filteredData.map((item, index) => (
                     <tr
                       key={index}
-                      className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
+                      className={cw(
+                        `border-b-2 cursor-pointer ${
+                          selectedRowIndex === index
+                            ? "bg-black"
+                            : "bg-accent-tertiary-light"
+                        } ${
+                          selectedRowIndex === index
+                            ? "text-white"
+                            : "text-foreground"
+                        } hover:bg-opacity-70 transition-all ease-in-out duration-300`
+                      )}
+                      onClick={() => handleRowClick(index, item)}
                     >
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.name}
