@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { MdOutlineDoneAll } from "react-icons/md";
-import { historyData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
-import { cw, formatDate } from "../../utils";
+import { cw } from "../../utils";
+import { historyData as initialData } from "../../mock/history";
+import { MdDeleteOutline, MdOutlinePlaylistAdd } from "react-icons/md";
 
 const Checkbox = (props) => {
   const { id, label, className, ...inputProps } = props;
@@ -27,15 +27,13 @@ const Checkbox = (props) => {
   );
 };
 
-export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
+export const Table = ({ data, handleApprove }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = data.filter(
-    (item) =>
-      item.approved === true &&
-      Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      )
+  const filteredData = data.filter((item) =>
+    Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
   );
 
   const handleSearch = (e) => {
@@ -51,15 +49,11 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
               <SearchInput value={searchQuery} onChange={handleSearch} />
             </div>
           </div>
-          <div
-            className={
-              "max-h-[500px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary"
-            }
-          >
-            <table className="w-full border-collapse rt-sm:text-xs">
+          <div className="max-h-[490px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary">
+            <table className="w-full border-collapse">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left rt-sm:w-32">
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -74,28 +68,22 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Price
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Vendor
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium text-center">
                     Substitute Vendor
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Needed
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                      Ordered By
-                    </th>
-                  )}
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Ordered
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Approved
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                      Approved
-                    </th>
-                  )}
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Delete
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -113,8 +101,8 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
                       key={index}
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-32">
-                        {formatDate(item.date)}
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.date}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
@@ -128,50 +116,48 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.price}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.vendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.needed}
-                      </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.orderedBy}
-                        </td>
-                      )}
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {role === "admin" ? (
-                          <Checkbox
-                            id={item.id}
-                            label={item.ordered ? "Yes" : "No"}
-                            checked={item.ordered}
-                            onClick={() => handleOrdered(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
+                      <td
+                        className={cw("px-1 py-2 3xl:p-4 3xl:py-2 text-center")}
+                      >
+                        <span
+                          className={cw(
+                            "bg-white text-textColor px-2 text-sm font-semibold rounded-full",
+                            {
+                              "text-red-500": item.needed === "Soon",
+                              "text-yellow-500": item.needed === "Urgent",
                             }
-                          />
-                        ) : item.ordered ? (
-                          "Yes"
-                        ) : (
-                          "No"
-                        )}
+                          )}
+                        >
+                          {item.needed}
+                        </span>
                       </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <Checkbox
-                            id={item.id}
-                            label={item.approvedRequest ? "Yes" : "No"}
-                            checked={item.approvedRequest}
-                            onClick={() => handleApproveRequest(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
-                            }
-                          />
-                        </td>
-                      )}
+
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        <Checkbox
+                          id={item.id}
+                          label={item.approved ? "Yes" : "No"}
+                          checked={item.approved}
+                          onClick={() => {
+                            handleApprove(item.id);
+                          }}
+                          className={
+                            "bg-foreground flex justify-center items-center rounded-md"
+                          }
+                        />
+                      </td>
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                        <Button
+                          icon={MdDeleteOutline}
+                          className={"w-10 m-0"}
+                          variant={"danger"}
+                        />
+                      </td>
                     </tr>
                   ))
                 )}
@@ -190,33 +176,24 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
   );
 };
 
-export const History = () => {
-  const [data, setData] = useState(historyData);
+export const Manage = () => {
+  const [data, setData] = useState(() => {
+    return initialData.map((item) => ({ ...item, approved: false }));
+  });
   const [updatedItems, setUpdatedItems] = useState([]);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const role = "admin";
 
-  const handleApproveRequest = (id) => {
+  const handleApprove = (id) => {
     const updatedData = data.map((item) =>
-      item.id === id
-        ? { ...item, approvedRequest: !item.approvedRequest }
-        : item
+      item.id === id ? { ...item, approved: !item.approved } : item
     );
 
     setIsDataUpdated(true);
     setData(updatedData);
     setUpdatedItems((prevItems) => [...prevItems, id]);
-  };
 
-  const handleOrdered = (id) => {
-    const updatedData = data.map((item) =>
-      item.id === id ? { ...item, ordered: !item.ordered } : item
-    );
-
-    setIsDataUpdated(true);
-    setData(updatedData);
-    setUpdatedItems((prevItems) => [...prevItems, id]);
+    console.log(updatedData);
   };
 
   const requestOrders = () => {
@@ -237,22 +214,15 @@ export const History = () => {
 
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
-      <Table
-        data={data}
-        role={role}
-        handleApproveRequest={handleApproveRequest}
-        handleOrdered={handleOrdered}
-      />
-      {role === "admin" && (
-        <Button
-          disabled={!isDataUpdated}
-          onClick={requestOrders}
-          icon={MdOutlineDoneAll}
-          loading={isLoading}
-        >
-          Submit
-        </Button>
-      )}
+      <Table data={data} role={"admin"} handleApprove={handleApprove} />
+      <Button
+        disabled={!isDataUpdated}
+        onClick={requestOrders}
+        icon={MdOutlinePlaylistAdd}
+        loading={isLoading}
+      >
+        Confirm
+      </Button>
     </section>
   );
 };

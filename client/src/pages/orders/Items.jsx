@@ -17,10 +17,13 @@ export const Table = ({
   handleQuantityEdit,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
+
+  const filteredData = data.filter(
+    (item) =>
+      item.approved === true &&
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
   );
 
   const handleSearch = (e) => {
