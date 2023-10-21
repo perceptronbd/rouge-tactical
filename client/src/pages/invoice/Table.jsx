@@ -32,34 +32,34 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
             <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Invoice #
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Vendor
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Item
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Quantity
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Total Amount
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Deposited Amount
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Status
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Closed At
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Edit
                   </th>
                 </tr>

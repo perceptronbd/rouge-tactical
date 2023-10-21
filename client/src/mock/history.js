@@ -1,7 +1,7 @@
 export const historyData = [
   {
     id: "1",
-    date: "01/01/2021",
+    date: "2021-01-01",
     item: "Glove Refill (Black)",
     size: "XL",
     quantity: "10",
@@ -18,7 +18,7 @@ export const historyData = [
   },
   {
     id: "2",
-    date: "02/01/2021",
+    date: "2021-01-02",
     item: "Glove Refill (Blue)",
     size: "L",
     quantity: "5",
@@ -35,7 +35,7 @@ export const historyData = [
   },
   {
     id: "3",
-    date: "03/01/2021",
+    date: "2021-01-03",
     item: "Mask Refill (White)",
     size: "M",
     quantity: "20",
@@ -52,7 +52,7 @@ export const historyData = [
   },
   {
     id: "4",
-    date: "04/01/2021",
+    date: "2021-01-04",
     item: "Hand Sanitizer (500ml)",
     size: "S",
     quantity: "15",
@@ -69,7 +69,7 @@ export const historyData = [
   },
   {
     id: "5",
-    date: "05/01/2021",
+    date: "2021-01-05",
     item: "Glove Refill (Black)",
     size: "XL",
     quantity: "10",
@@ -86,7 +86,7 @@ export const historyData = [
   },
   {
     id: "6",
-    date: "06/01/2021",
+    date: "2021-01-06",
     item: "Glove Refill (Blue)",
     size: "L",
     quantity: "5",
@@ -103,7 +103,7 @@ export const historyData = [
   },
   {
     id: "7",
-    date: "07/01/2021",
+    date: "2021-01-07",
     item: "Mask Refill (White)",
     size: "M",
     quantity: "20",
@@ -120,7 +120,7 @@ export const historyData = [
   },
   {
     id: "8",
-    date: "08/01/2021",
+    date: "2021-01-08",
     item: "Hand Sanitizer (500ml)",
     size: "S",
     quantity: "15",
@@ -137,7 +137,7 @@ export const historyData = [
   },
   {
     id: "9",
-    date: "09/01/2021",
+    date: "2021-01-09",
     item: "Glove Refill (Black)",
     size: "XL",
     quantity: "10",
@@ -154,7 +154,7 @@ export const historyData = [
   },
   {
     id: "10",
-    date: "10/01/2021",
+    date: "2021-01-10",
     item: "Glove Refill (Blue)",
     size: "L",
     quantity: "5",
@@ -171,7 +171,7 @@ export const historyData = [
   },
   {
     id: "11",
-    date: "11/01/2021",
+    date: "2021-01-11",
     item: "Mask Refill (Black)",
     size: "M",
     quantity: "15",
@@ -188,7 +188,7 @@ export const historyData = [
   },
   {
     id: "12",
-    date: "12/01/2021",
+    date: "2021-01-12",
     item: "Hand Sanitizer (1L)",
     size: "L",
     quantity: "8",
@@ -205,7 +205,7 @@ export const historyData = [
   },
   {
     id: "13",
-    date: "13/01/2021",
+    date: "2021-01-13",
     item: "Glove Refill (Black)",
     size: "XL",
     quantity: "20",
@@ -222,7 +222,7 @@ export const historyData = [
   },
   {
     id: "14",
-    date: "14/01/2021",
+    date: "2021-01-14",
     item: "Glove Refill (Blue)",
     size: "L",
     quantity: "10",
@@ -239,7 +239,7 @@ export const historyData = [
   },
   {
     id: "15",
-    date: "15/01/2021",
+    date: "2021-01-15",
     item: "Mask Refill (White)",
     size: "M",
     quantity: "25",
@@ -256,7 +256,7 @@ export const historyData = [
   },
   {
     id: "16",
-    date: "16/01/2021",
+    date: "2021-01-16",
     item: "Hand Sanitizer (500ml)",
     size: "S",
     quantity: "20",
@@ -273,7 +273,7 @@ export const historyData = [
   },
   {
     id: "17",
-    date: "17/01/2021",
+    date: "2021-01-17",
     item: "Glove Refill (Black)",
     size: "XL",
     quantity: "10",
@@ -290,7 +290,7 @@ export const historyData = [
   },
   {
     id: "18",
-    date: "18/01/2021",
+    date: "2021-01-18",
     item: "Glove Refill (Blue)",
     size: "L",
     quantity: "5",
@@ -307,7 +307,7 @@ export const historyData = [
   },
   {
     id: "19",
-    date: "19/01/2021",
+    date: "2021-01-19",
     item: "Mask Refill (White)",
     size: "M",
     quantity: "20",
@@ -324,7 +324,7 @@ export const historyData = [
   },
   {
     id: "20",
-    date: "20/01/2021",
+    date: "2021-01-20",
     item: "Hand Sanitizer (500ml)",
     size: "S",
     quantity: "15",

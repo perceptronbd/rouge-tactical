@@ -35,7 +35,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
                     Date
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Order #
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
