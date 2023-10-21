@@ -33,6 +33,7 @@ const usersData = [
     },
     startDate: "2021/01/01",
     endDate: "2021/01/01",
+    onboardingComplete: true,
   },
   {
     name: "John Doe",
@@ -46,6 +47,7 @@ const usersData = [
     },
     startDate: "03/15/2020",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Jane Smith",
@@ -59,6 +61,7 @@ const usersData = [
     },
     startDate: "11/01/2018",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Alice Johnson",
@@ -72,6 +75,7 @@ const usersData = [
     },
     startDate: "07/01/2019",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Eva Williams",
@@ -85,6 +89,7 @@ const usersData = [
     },
     startDate: "09/15/2020",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Michael Brown",
@@ -98,6 +103,7 @@ const usersData = [
     },
     startDate: "02/01/2017",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Sarah Davis",
@@ -111,6 +117,7 @@ const usersData = [
     },
     startDate: "06/01/2022",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Daniel Wilson",
@@ -124,6 +131,7 @@ const usersData = [
     },
     startDate: "10/15/2016",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Sophia Thomas",
@@ -137,6 +145,7 @@ const usersData = [
     },
     startDate: "04/01/2019",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Liam Harris",
@@ -150,6 +159,7 @@ const usersData = [
     },
     startDate: "12/01/2020",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
 ];
 
