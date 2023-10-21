@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
-import { formatDate } from "../../utils";
+import { cw, formatDate } from "../../utils";
 
 export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,10 +20,10 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
 
     console.log(daysDifference);
 
-    if (daysDifference <= 60) {
-      return true;
-    } else {
-      return false;
+    if (daysDifference <= 60 && daysDifference >= 0) {
+      return "in range";
+    } else if (daysDifference < 0) {
+      return "overdue";
     }
   };
 
@@ -92,70 +92,46 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                     </td>
                   </tr>
                 ) : (
-                  filteredData.map((item, index) =>
-                    checkDeadline(item.renewalDeadline) ? (
-                      <tr
-                        key={index}
-                        className={`border-b-2 border-foreground bg-yellow-500 hover:bg-opacity-80 transition-all ease-in-out duration-300`}
-                      >
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.permit}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.form}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalProcess}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalDuration}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {formatDate(item.renewalDeadline)}
-                        </td>
+                  filteredData.map((item, index) => (
+                    <tr
+                      key={index}
+                      className={cw(
+                        `border-b-2 border-foreground bg-white text-black hover:bg-opacity-80 transition-all ease-in-out duration-300`,
+                        {
+                          "bg-yellow-500 text-white":
+                            checkDeadline(item.renewalDeadline) === "in range",
+                          "bg-red-500 text-white":
+                            checkDeadline(item.renewalDeadline) === "overdue",
+                        }
+                      )}
+                    >
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.permit}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.form}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.renewalProcess}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.renewalDuration}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {formatDate(item.renewalDeadline)}
+                      </td>
 
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <p className="max-w-sm">{item.notes}</p>
-                        </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <p className="max-w-sm">{item.notes}</p>
+                      </td>
 
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <button onClick={() => handleEdit(item)}>
-                            <BiSolidMessageSquareEdit size={"1.5rem"} />
-                          </button>
-                        </td>
-                      </tr>
-                    ) : (
-                      <tr
-                        key={index}
-                        className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
-                      >
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.permit}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.form}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalProcess}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.renewalDuration}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {formatDate(item.renewalDeadline)}
-                        </td>
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.notes}
-                        </td>
-
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <button onClick={() => handleEdit(item)}>
-                            <BiSolidMessageSquareEdit size={"1.5rem"} />
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  )
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <button onClick={() => handleEdit(item)}>
+                          <BiSolidMessageSquareEdit size={"1.5rem"} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                 )}
               </tbody>
             </table>

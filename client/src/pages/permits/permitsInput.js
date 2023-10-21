@@ -40,6 +40,14 @@ export const permitsInput = [
     required: true,
   },
   {
+    id: "expirationDate",
+    label: "Expiration Date",
+    name: "expirationDate",
+    type: "date",
+    placeholder: "Expiration Date",
+    required: true,
+  },
+  {
     id: "contactInfo",
     label: "Contact Info",
     name: "contactInfo",
