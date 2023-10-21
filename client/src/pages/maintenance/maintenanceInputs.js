@@ -58,4 +58,13 @@ export const maintenanceInputs = [
     type: "text",
     required: true,
   },
+  {
+    id: "status",
+    label: "Status",
+    name: "status",
+    selectOpts: [
+      { value: "in progress", name: "In Progress" },
+      { value: "complete", name: "Complete" },
+    ],
+  },
 ];

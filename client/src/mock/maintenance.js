@@ -8,6 +8,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-10-01",
     maintenanceInterval: "12",
     notes: "Replacement cartridge is in the storage room",
+    status: "in progress",
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-10-01",
     maintenanceInterval: "12",
     notes: "Replacement cartridge is in the storage room",
+    status: "in progress",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-10-01",
     maintenanceInterval: "12",
     notes: "Replacement cartridge is in the storage room",
+    status: "in progress",
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "8",
     notes: "Notes for Machine 1",
+    status: "complete",
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "10",
     notes: "Notes for Machine 2",
+    status: "complete",
   },
   {
     id: 6,
@@ -58,6 +63,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "6",
     notes: "Notes for Machine 3",
+    status: "in progress",
   },
   {
     id: 7,
@@ -68,6 +74,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "14",
     notes: "Notes for Machine 4",
+    status: "in progress",
   },
   {
     id: 8,
@@ -78,6 +85,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "9",
     notes: "Notes for Machine 5",
+    status: "complete",
   },
   {
     id: 9,
@@ -88,6 +96,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "11",
     notes: "Notes for Machine 6",
+    status: "in progress",
   },
   {
     id: 10,
@@ -98,6 +107,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "7",
     notes: "Notes for Machine 7",
+    status: "complete",
   },
   {
     id: 11,
@@ -108,6 +118,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "13",
     notes: "Notes for Machine 8",
+    status: "in progress",
   },
   {
     id: 12,
@@ -118,6 +129,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "5",
     notes: "Notes for Machine 9",
+    status: "complete",
   },
   {
     id: 13,
@@ -128,6 +140,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "9",
     notes: "Notes for Machine 10",
+    status: "in progress",
   },
   {
     id: 14,
@@ -138,6 +151,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "8",
     notes: "Notes for Machine 11",
+    status: "complete",
   },
   {
     id: 15,
@@ -148,6 +162,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "12",
     notes: "Notes for Machine 12",
+    status: "in progress",
   },
   {
     id: 16,
@@ -158,6 +173,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "10",
     notes: "Notes for Machine 13",
+    status: "complete",
   },
   {
     id: 17,
@@ -168,6 +184,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "6",
     notes: "Notes for Machine 14",
+    status: "in progress",
   },
   {
     id: 18,
@@ -178,6 +195,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "13",
     notes: "Notes for Machine 15",
+    status: "complete",
   },
   {
     id: 19,
@@ -188,6 +206,7 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "9",
     notes: "Notes for Machine 16",
+    status: "in progress",
   },
   {
     id: 20,
@@ -198,5 +217,6 @@ export const maintenanceData = [
     lastMaintenanceDate: "2021-09-01",
     maintenanceInterval: "7",
     notes: "Notes for Machine 17",
+    status: "complete",
   },
 ];
