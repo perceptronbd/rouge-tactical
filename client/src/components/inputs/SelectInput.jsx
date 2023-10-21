@@ -35,8 +35,8 @@ export const SelectInput = (props) => {
           )}
           {selectOpts.map((opt) => (
             <option
-              value={opt.value}
-              key={opt.value}
+              value={opt.value ? opt.value : opt.id}
+              key={opt.value ? opt.value : opt.id}
               className="text-textColor hover:text-accent-tertiary"
             >
               {opt.name}

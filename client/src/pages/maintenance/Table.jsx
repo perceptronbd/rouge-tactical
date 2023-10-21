@@ -78,6 +78,9 @@ export const Table = ({
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Notes
                   </th>
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Status
+                  </th>
 
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-right">
                     Edit
@@ -144,6 +147,21 @@ export const Table = ({
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.notes}
+                      </td>
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <span
+                          className={cw(
+                            "uppercase text-sm font-semibold whitespace-nowrap px-2 rounded-full",
+                            {
+                              "text-yellow-300 bg-yellow-600":
+                                item.status === "in progress",
+                              "text-green-200 bg-green-600":
+                                item.status === "complete",
+                            }
+                          )}
+                        >
+                          {item.status}
+                        </span>
                       </td>
 
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">

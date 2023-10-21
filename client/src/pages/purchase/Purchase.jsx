@@ -60,12 +60,12 @@ export const Purchase = () => {
       setLoadingTable(true);
       setLoadingAgingSummary(true);
       setTimeout(() => {
-        const invoice = purchaseData.filter(
-          (invoice) => invoice.vendor === vendorDetails.name
+        const purchase = purchaseData.filter(
+          (purchase) => purchase.vendor === vendorDetails.name
         );
         setLoadingTable(false);
         setLoadingAgingSummary(false);
-        setTableData(invoice);
+        setTableData(purchase);
 
         const currentDate = new Date();
         const summary = {
@@ -76,7 +76,7 @@ export const Purchase = () => {
           "> 90": 0,
         };
 
-        invoice.forEach((item) => {
+        purchase.forEach((item) => {
           const updatedAt = new Date(item.date);
           const daysDifference = Math.floor(
             (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
