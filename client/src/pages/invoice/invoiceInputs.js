@@ -61,8 +61,8 @@ export const invoiceInputs = [
     name: "status",
     label: "Status",
     selectOpts: [
-      { id: "open", name: "Open" },
-      { id: "close", name: "Close" },
+      { value: "open", name: "Open" },
+      { value: "close", name: "Close" },
     ],
     required: true,
   },

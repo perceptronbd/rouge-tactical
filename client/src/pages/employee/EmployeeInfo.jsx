@@ -33,6 +33,17 @@ const usersData = [
     },
     startDate: "2021/01/01",
     endDate: "2021/01/01",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+      { id: 6, label: "Live Scan Locations" },
+      { id: 7, label: "Live Scan Locations" },
+      { id: 8, label: "Live Scan Locations" },
+    ],
   },
   {
     name: "John Doe",
@@ -46,6 +57,7 @@ const usersData = [
     },
     startDate: "03/15/2020",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Jane Smith",
@@ -59,6 +71,14 @@ const usersData = [
     },
     startDate: "11/01/2018",
     endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
   {
     name: "Alice Johnson",
@@ -72,6 +92,7 @@ const usersData = [
     },
     startDate: "07/01/2019",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Eva Williams",
@@ -85,6 +106,7 @@ const usersData = [
     },
     startDate: "09/15/2020",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Michael Brown",
@@ -98,6 +120,7 @@ const usersData = [
     },
     startDate: "02/01/2017",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Sarah Davis",
@@ -111,6 +134,14 @@ const usersData = [
     },
     startDate: "06/01/2022",
     endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
   {
     name: "Daniel Wilson",
@@ -124,6 +155,7 @@ const usersData = [
     },
     startDate: "10/15/2016",
     endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Sophia Thomas",
@@ -137,6 +169,7 @@ const usersData = [
     },
     startDate: "04/01/2019",
     endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Liam Harris",
@@ -150,14 +183,22 @@ const usersData = [
     },
     startDate: "12/01/2020",
     endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
 ];
 
 export const EmployeeInfo = () => {
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
   const [employeeData, setEmployeeData] = useState({});
+  const [onboardingDocs, setOnboardingDocs] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -198,6 +239,7 @@ export const EmployeeInfo = () => {
             setEmployeeInfo={setEmployeeData}
             setShowForm={setShowModal}
             setShowAddForm={setShowForm}
+            setOnboardingDocs={setOnboardingDocs}
           />
           <ContentModal isOpen={showForm} setShowModal={setShowForm}>
             <Form
@@ -219,7 +261,7 @@ export const EmployeeInfo = () => {
           </ContentModal>
         </section>
       )}
-      <OnboardingDoc data={userInfo} />
+      <OnboardingDoc data={onboardingDocs} />
     </Container>
   );
 };
