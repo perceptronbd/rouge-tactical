@@ -9,6 +9,7 @@ export { DocInput } from "./inputs/DocInput";
 //views
 export { Container } from "./views/Container";
 export { Separator } from "./views/Separator";
+export { Preview } from "./views/Preview";
 //buttons
 export { Button } from "./buttons/Button";
 //texts
