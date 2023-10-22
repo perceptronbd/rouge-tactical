@@ -1,5 +1,13 @@
 export const productionInputs = [
   {
+    id: "batch",
+    label: "Batch",
+    name: "batch",
+    type: "text",
+    placeholder: "Batch",
+    required: true,
+  },
+  {
     id: "status",
     label: "Status",
     name: "status",
@@ -10,14 +18,6 @@ export const productionInputs = [
       { value: "Coating", name: "Coating" },
       { value: "Assembly", name: "Assembly" },
     ],
-  },
-  {
-    id: "batch",
-    label: "Batch",
-    name: "batch",
-    type: "text",
-    placeholder: "Batch",
-    required: true,
   },
   {
     id: "serialNumber",
@@ -49,6 +49,14 @@ export const productionInputs = [
     name: "range.max",
     type: "number",
     placeholder: "Max",
+    required: true,
+  },
+  {
+    id: "style",
+    label: "Style",
+    name: "style",
+    type: "text",
+    placeholder: "Style",
     required: true,
   },
   {
