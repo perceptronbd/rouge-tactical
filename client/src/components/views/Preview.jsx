@@ -1,7 +1,9 @@
-import React from "react";
-import { FiMail, FiPhoneCall, FiLink, FiMap } from "react-icons/fi";
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import { FiMail, FiPhoneCall, FiLink, FiMap, FiPrinter } from "react-icons/fi";
 import { Text } from "../texts/Text";
 import { capitalizeFirstLetter } from "../../utils";
+import { Button } from "../buttons/Button";
 
 const invoiceData = {
   id: 1,
@@ -25,11 +27,16 @@ const vendorData = {
   address: "1234 Fairy Ln, San Diego CA, 92110",
 };
 
-export const Preview = () => {
+export const Preview = ({ ref }) => {
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
-    <article className="bg-accent-secondary bg-opacity-20 fixed inset-0 flex items-center justify-center z-50 transition-all ease-in-out duration-300">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-[60%] h-[90%] overflow-y-scroll">
-        <div className="grid grid-cols-2 gap-y-4">
+    <article className="bg-accent-secondary bg-opacity-20 fixed inset-0 flex flex-col gap-y-1 items-center justify-center z-50 transition-all ease-in-out duration-300">
+      <div className="bg-white rounded-lg shadow-lg p-0 w-[750px] h-[90%] overflow-y-scroll">
+        <div ref={componentRef} className="grid grid-cols-2 gap-y-4 p-8">
           {/* Logo & Contact */}
           <div className="col-span-2 h-52 flex justify-between items-center bg-[#4b4b4b] rounded-md">
             <img
@@ -154,6 +161,9 @@ export const Preview = () => {
           <section />
         </div>
       </div>
+      <Button icon={FiPrinter} onClick={handlePrint} className={"m-2"}>
+        Print
+      </Button>
     </article>
   );
 };
