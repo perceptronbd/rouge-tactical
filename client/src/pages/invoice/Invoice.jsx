@@ -11,6 +11,7 @@ import {
   Vendor,
   AgingSummary,
   UpdateForm,
+  Preview,
 } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
@@ -30,6 +31,7 @@ export const Invoice = () => {
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
+  const [showPreview, setShowPreview] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
   const [showInvoiceForm, setShowInvoiceForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -176,6 +178,7 @@ export const Invoice = () => {
           loading={loadingTable}
           setShowForm={setShowEditForm}
           setInvoiceDetails={setInvoiceDetails}
+          setShowPreview={setShowPreview}
         />
       </div>
       <Button
@@ -215,6 +218,11 @@ export const Invoice = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
+      <Preview
+        isOpen={showPreview}
+        setShowModal={setShowPreview}
+        data={invoiceDetails}
+      />
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}

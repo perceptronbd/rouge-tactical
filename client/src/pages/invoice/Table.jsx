@@ -3,13 +3,24 @@ import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
+export const Table = ({
+  data,
+  loading,
+  setShowForm,
+  setInvoiceDetails,
+  setShowPreview,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+
+  const showInvoicePreview = (item) => {
+    setShowPreview(true);
+    setInvoiceDetails(item);
+  };
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -100,8 +111,13 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.invoiceNumber}
+                      <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <button
+                          className="bg-accent-secondary rounded-md text-accent-primary w-full"
+                          onClick={() => showInvoicePreview(item)}
+                        >
+                          {item.invoiceNumber}
+                        </button>
                       </td>
 
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
