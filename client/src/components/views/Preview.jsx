@@ -41,16 +41,16 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
   }, [isOpen, data]);
 
   const downloadPDF = () => {
-    const capture = document.getElementById("download-preview"); // Change this line
+    const capture = document.getElementById("download-preview");
 
-    html2canvas(capture).then((canvas) => {
-      const imgData = canvas.toDataURL("image/jpeg"); // Change image format to jpeg
-      const doc = new jsPDF("p", "mm", "a4"); // Use "mm" units
+    html2canvas(capture, { scale: 4 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/jpeg");
+      const doc = new jsPDF("p", "mm", "a4");
 
       const componentWidth = doc.internal.pageSize.getWidth();
       const componentHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "JPEG", 0, 0, componentWidth, componentHeight); // Change image format to JPEG
-      doc.save("invoice.pdf");
+      doc.addImage(imgData, "JPEG", 0, 0, componentWidth, componentHeight);
+      doc.save(`Invoice-${data.invoiceNumber}.pdf`);
     });
   };
 
