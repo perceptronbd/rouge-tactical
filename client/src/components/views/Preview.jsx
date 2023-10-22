@@ -13,19 +13,6 @@ import { capitalizeFirstLetter, cw, formatDate } from "../../utils";
 import { Button } from "../buttons/Button";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-const invoiceData = {
-  id: 1,
-  date: "2023-09-09",
-  invoiceNumber: "01-0001-23-09",
-  vendor: "vendor 1",
-  item: "Glove Refill (Black)",
-  quantity: "10",
-  totalAmount: "200",
-  depositedAmount: "100",
-  status: "open",
-  updatedAt: "NaN-NaN-NaN",
-};
-
 const vendorData = {
   id: 1,
   name: "vendor 1",
@@ -51,12 +38,12 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
       }, 5);
   }, [isOpen, data]);
 
-  if (!isOpen) return null;
-
   const handleClose = () => {
     setShowModal(false);
     setShowPreview(false);
   };
+
+  if (!isOpen) return null;
 
   return (
     <article className="bg-accent-secondary bg-opacity-20 fixed inset-0 flex flex-col items-center justify-center z-50 scale-100 transition-all ease-in-out duration-300">
@@ -69,8 +56,8 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
           <div className="w-[500px] flex gap-2">
             <Button
               icon={FiPrinter}
-              onClick={handlePrint}
               className={"m-0 w-32"}
+              onClick={handlePrint}
             >
               Print
             </Button>
@@ -85,12 +72,16 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
           <Button
             icon={AiOutlineCloseCircle}
             variant={"danger"}
-            onClick={handleClose}
             className={"m-0 w-10"}
+            onClick={handleClose}
           />
         </section>
         <div className="bg-white rounded-lg shadow-lg p-0 w-full h-[90%] overflow-y-scroll">
-          <div ref={componentRef} className="grid grid-cols-2 gap-y-4 p-8">
+          <div
+            ref={componentRef}
+            className="grid grid-cols-2 gap-y-4 p-8"
+            id="download-preview"
+          >
             {/* Logo & Contact */}
             <div className="col-span-2 h-52 flex justify-between items-center bg-[#4b4b4b] rounded-md">
               <img
