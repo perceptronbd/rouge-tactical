@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import {
   FiMail,
   FiPhoneCall,
@@ -9,7 +11,7 @@ import {
   FiDownload,
 } from "react-icons/fi";
 import { Text } from "../texts/Text";
-import { capitalizeFirstLetter, cw, formatDate } from "../../utils";
+import { capitalizeFirstLetter, formatDate } from "../../utils";
 import { Button } from "../buttons/Button";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
@@ -38,6 +40,20 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
       }, 5);
   }, [isOpen, data]);
 
+  const downloadPDF = () => {
+    const capture = document.getElementById("download-preview"); // Change this line
+
+    html2canvas(capture).then((canvas) => {
+      const imgData = canvas.toDataURL("image/jpeg"); // Change image format to jpeg
+      const doc = new jsPDF("p", "mm", "a4"); // Use "mm" units
+
+      const componentWidth = doc.internal.pageSize.getWidth();
+      const componentHeight = doc.internal.pageSize.getHeight();
+      doc.addImage(imgData, "JPEG", 0, 0, componentWidth, componentHeight); // Change image format to JPEG
+      doc.save("invoice.pdf");
+    });
+  };
+
   const handleClose = () => {
     setShowModal(false);
     setShowPreview(false);
@@ -65,6 +81,7 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
               icon={FiDownload}
               variant={"highlight"}
               className={"m-0 w-32"}
+              onClick={downloadPDF}
             >
               Download
             </Button>
