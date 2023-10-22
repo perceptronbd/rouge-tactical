@@ -9,7 +9,7 @@ import {
   FiDownload,
 } from "react-icons/fi";
 import { Text } from "../texts/Text";
-import { capitalizeFirstLetter, cw } from "../../utils";
+import { capitalizeFirstLetter, cw, formatDate } from "../../utils";
 import { Button } from "../buttons/Button";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
@@ -126,13 +126,13 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
             {/* Invoice Number & Date */}
             <section className="flex gap-3 rounded-md bg-accent-tertiary-light text-white px-4 py-2 w-fit">
               <Text type={"thin"}>Invoice: </Text>
-              <Text type={"bold"}>{invoiceData.invoiceNumber}</Text>
+              <Text type={"bold"}>{data.invoiceNumber}</Text>
             </section>
             <section className="flex justify-end">
               {" "}
               <div className="flex gap-2 border rounded-md px-4 py-2 w-fit">
                 <Text type={"thin"}>Date:</Text>
-                <Text type={"bold"}>{invoiceData.date}</Text>
+                <Text type={"bold"}>{formatDate(data.date)}</Text>
               </div>
             </section>
 
@@ -163,32 +163,32 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
               <div className="grid grid-cols-2 gap-2 p-2 border-b">
                 <Text type={"thin"}>Item:</Text>
                 <div className="flex justify-end">
-                  <Text type={"bold"}>{invoiceData.item}</Text>
+                  <Text type={"bold"}>{data.item}</Text>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 p-2 border-b">
                 <Text type={"thin"}>Quantity:</Text>
                 <div className="flex justify-end">
-                  <Text type={"bold"}>{invoiceData.quantity}</Text>
+                  <Text type={"bold"}>{data.quantity}</Text>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 p-2 border-b ">
                 <Text type={"thin"}>Total Amount:</Text>
                 <div className="flex justify-end">
-                  <Text type={"bold"}>{invoiceData.totalAmount}</Text>
+                  <Text type={"bold"}>{data.totalAmount}</Text>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 p-2 border-b ">
                 <Text type={"thin"}>Deposit Paid:</Text>
                 <div className="flex justify-end">
-                  <Text type={"bold"}>{invoiceData.depositedAmount}</Text>
+                  <Text type={"bold"}>{data.depositedAmount}</Text>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 p-2 border-b ">
                 <Text type={"thin"}>Remaining Amount:</Text>
                 <div className="flex justify-end">
                   <Text type={"bold"}>
-                    {invoiceData.totalAmount - invoiceData.depositedAmount}
+                    {data.totalAmount - data.depositedAmount}
                   </Text>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
                 <Text type={"thin"}>Status:</Text>
                 <div className="flex justify-end">
                   <Text type={"bold"}>
-                    {capitalizeFirstLetter(invoiceData.status)}
+                    {capitalizeFirstLetter(data.status)}
                   </Text>
                 </div>
               </div>
@@ -204,9 +204,9 @@ export const Preview = ({ isOpen, setShowModal, data }) => {
                 <Text type={"thin"}>Date Closed:</Text>
                 <div className="flex justify-end">
                   <Text type={"bold"}>
-                    {invoiceData.updatedAt === "NaN-NaN-NaN"
+                    {data.updatedAt === "NaN-NaN-NaN"
                       ? "- - -"
-                      : invoiceData.updatedAt}
+                      : data.updatedAt}
                   </Text>
                 </div>
               </div>
