@@ -32,6 +32,9 @@ export const Table = ({ data, loading, setShowForm, setItemData }) => {
                     Range
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                    Style
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Serial Number
                   </th>
 
@@ -85,6 +88,9 @@ export const Table = ({ data, loading, setShowForm, setItemData }) => {
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.range.min} - {item.range.max}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        {item.style}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.serialNumber}
