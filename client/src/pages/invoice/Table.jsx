@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
-import { capitalizeFirstLetter, formatDate } from "../../utils";
+import { formatDate } from "../../utils";
 
 export const Table = ({
   data,

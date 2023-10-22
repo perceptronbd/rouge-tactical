@@ -8,6 +8,7 @@ export { EmployeeInfo } from "./employee/EmployeeInfo";
 export { Orders } from "./orders/Orders";
 //Invoice
 export { Invoice } from "./invoice/Invoice";
+export { InvoiceForm } from "./invoice/InvoiceForm";
 //purchase
 export { Purchase } from "./purchase/Purchase";
 //permits

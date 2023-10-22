@@ -3,6 +3,7 @@ import {
   EmployeeInfo,
   Home,
   Invoice,
+  InvoiceForm,
   Login,
   Maintenance,
   Orders,
@@ -35,6 +36,7 @@ function App() {
         <Route path="components" element={<Components />} />
         <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<Invoice />} />
+        <Route path="invoice/new" element={<InvoiceForm />} />
         <Route path="purchase" element={<Purchase />} />
         <Route path="permits" element={<Permits />} />
         <Route path="payments" element={<Payments />} />

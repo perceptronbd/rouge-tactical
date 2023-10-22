@@ -18,8 +18,10 @@ import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
+import { useNavigate } from "react-router-dom";
 
 export const Invoice = () => {
+  const navaigate = useNavigate();
   //data states
   const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
@@ -33,7 +35,6 @@ export const Invoice = () => {
   //modal states
   const [showPreview, setShowPreview] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
-  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -128,10 +129,6 @@ export const Invoice = () => {
     console.log(invoiceDetails);
   };
 
-  const openInvoiceForm = () => {
-    setShowInvoiceForm(true);
-  };
-
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
       <section className="h-70 mb-2 flex justify-between">
@@ -184,7 +181,9 @@ export const Invoice = () => {
       <Button
         icon={MdPostAdd}
         className={"my-2 3xl:my-4"}
-        onClick={openInvoiceForm}
+        onClick={() => {
+          navaigate("/invoice/new");
+        }}
       >
         New Invoice
       </Button>
@@ -199,15 +198,7 @@ export const Invoice = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal isOpen={showInvoiceForm} setShowModal={setShowInvoiceForm}>
-        <Form
-          formTitle={"Add Invoice"}
-          inputFields={invoiceInputs}
-          icon={BsPersonFillAdd}
-          handleChange={handleChange}
-          onSubmit={onSubmit}
-        />
-      </ContentModal>
+
       <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
         <UpdateForm
           formTitle={"Update Invoice"}
