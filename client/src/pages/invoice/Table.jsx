@@ -51,13 +51,16 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                     Total Amount
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
-                    Deposited Amount
+                    Deposit Paid
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
+                    Total Remaining
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Status
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
-                    Closed At
+                    Date Closed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Edit
@@ -111,6 +114,9 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.depositedAmount}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        {item.totalAmount - item.depositedAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.status}
