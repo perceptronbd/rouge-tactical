@@ -165,6 +165,7 @@ export const Invoice = () => {
         </div>
 
         <AgingSummary
+          data={vendorDetails}
           agingSummary={agingSummary}
           loading={loadingAgingSummary}
         />

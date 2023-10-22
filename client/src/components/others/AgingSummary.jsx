@@ -1,6 +1,6 @@
 import React from "react";
 
-export const AgingSummary = ({ agingSummary, loading }) => {
+export const AgingSummary = ({ data, agingSummary, loading }) => {
   const calculateTotal = () => {
     const total =
       agingSummary["current"] +
@@ -18,7 +18,7 @@ export const AgingSummary = ({ agingSummary, loading }) => {
         <div className="w-full h-40 flex justify-center items-center">
           loading...
         </div>
-      ) : agingSummary ? (
+      ) : agingSummary && data ? (
         <div className="bg-background p-2 rounded">
           <div className="flex gap-4 justify-between border-b-2">
             <p className="w-16 text-textColor-light">Current</p>
