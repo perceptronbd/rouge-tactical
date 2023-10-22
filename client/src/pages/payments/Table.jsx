@@ -41,7 +41,7 @@ export const Table = ({
                     Cost
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-normal whitespace-nowrap text-center">
-                    Due
+                    Owed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-normal whitespace-nowrap text-right" />
                 </tr>
