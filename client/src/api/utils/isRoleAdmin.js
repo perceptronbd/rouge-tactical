@@ -11,6 +11,9 @@ export const isRoleAdmin = async (setLoading, setIsAdmin) => {
       if (response.data.role === "admin") {
         setIsAdmin(true);
         setLoading(false);
+      } else {
+        setIsAdmin(false);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);

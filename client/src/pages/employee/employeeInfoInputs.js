@@ -61,10 +61,12 @@ export const employeeInfoInputs = [
     id: "role",
     label: "Role",
     name: "role",
+    defaultValue: "Select Role",
     selectOpts: [
       { value: "admin", name: "Admin" },
       { value: "employee", name: "Employee" },
     ],
+    required: true,
   },
   {
     id: "position",
@@ -114,6 +116,7 @@ export const employeeInfoInputs = [
     id: "onboardingComplete",
     label: "Onboarding Complete",
     name: "onboardingComplete",
+    defaultValue: "Select Status",
     selectOpts: [
       { value: "true", name: "Yes" },
       { value: "false", name: "No" },
@@ -126,7 +129,6 @@ export const employeeInfoInputs = [
     type: "password",
     placeholder: "Password",
     required: true,
-    value: "RT12345!",
     pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
     errorMessage:
       "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",

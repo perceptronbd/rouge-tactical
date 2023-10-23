@@ -32,7 +32,13 @@ export const Preview = ({ isOpen, setShowModal, data, children }) => {
       const componentWidth = doc.internal.pageSize.getWidth();
       const componentHeight = doc.internal.pageSize.getHeight();
       doc.addImage(imgData, "JPEG", 0, 0, componentWidth, componentHeight);
-      doc.save(`Invoice-${data.invoiceNumber || data.orderNumber}.pdf`);
+      doc.save(
+        `${
+          data.invoiceNumber
+            ? "Invoice-" + data.invoiceNumber
+            : "PO-" + data.orderNumber
+        }.pdf`
+      );
     });
   };
 

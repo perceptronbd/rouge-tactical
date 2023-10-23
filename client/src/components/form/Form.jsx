@@ -4,6 +4,7 @@ import { Text } from "../texts/Text";
 import { Button } from "../buttons/Button";
 import { SelectInput } from "../inputs/SelectInput";
 import { FormInput } from "../inputs/FormInput";
+import { Modal } from "..";
 
 const generateInputs = (inputFields, handleChange) => {
   return inputFields.map((input) => {

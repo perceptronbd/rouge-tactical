@@ -4,6 +4,7 @@ import {
   ContentModal,
   Form,
   LoaderCard,
+  Modal,
   UpdateForm,
 } from "../../components";
 import { UserInfo } from "./UserInfo";
@@ -12,7 +13,7 @@ import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
 import { useAuth } from "../../contexts/AuthContext";
 import { isRoleAdmin } from "../../api/utils/isRoleAdmin";
-import { getAllUsers } from "../../api/admin/user";
+import { createUser, getAllUsers } from "../../api/admin/user";
 
 export const EmployeeInfo = () => {
   const { user } = useAuth();
@@ -21,6 +22,10 @@ export const EmployeeInfo = () => {
   const [loading, setLoading] = useState(false);
 
   const [allExistingUsers, setAllExistingUsers] = useState([]);
+
+  const [showMsg, setShowMsg] = useState(false);
+  const [modalMsg, setModalMsg] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -58,8 +63,41 @@ export const EmployeeInfo = () => {
     setEmployeeData(updatedEmployeeData);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (employeeData.password === null || employeeData.password === undefined) {
+      employeeData.password = "RT12345!";
+    }
+
+    try {
+      createUser(employeeData)
+        .then((res) => {
+          if (res.status === 500) {
+            setIsError(true);
+            setModalMsg("Something went wrong. Please try again later.");
+            setShowMsg(true);
+            console.log(res.data.message);
+          } else if (res.status === 400) {
+            setIsError(true);
+            setModalMsg("User with the same email already exists.");
+            setShowMsg(true);
+          } else if (res.code === 200) {
+            setIsError(false);
+            setModalMsg("Employee added successfully.");
+            setShowMsg(true);
+            setShowForm(false);
+            getAllUsers().then((res) => {
+              setAllExistingUsers(res.data.allUserProfileData);
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
     console.log(employeeData);
   };
 
@@ -97,6 +135,12 @@ export const EmployeeInfo = () => {
                 onSubmit={onSubmit}
               />
             </ContentModal>
+            <Modal
+              isOpen={showMsg}
+              setShowModal={setShowMsg}
+              modalMessage={modalMsg}
+              isError={isError}
+            />
           </section>
         )
       )}

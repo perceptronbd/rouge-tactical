@@ -10,7 +10,8 @@ const createUser = async (req, res) => {
     const {
       name,
       phone,
-      email,
+      workEmail,
+      personalEmail,
       DOB,
       position,
       password,
@@ -20,14 +21,13 @@ const createUser = async (req, res) => {
       endDate,
     } = req.body;
 
-    // console.log(req.body)
+    console.log(req.body);
 
-    const existingUser = await User.findOne({ email });
-    console.log(existingUser)
+    const existingUser = await User.findOne({ email: workEmail });
+    console.log(existingUser);
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
     var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
     console.log(decryptedPassword);
-
 
     // Check if a user with the same email or employee ID already exists
 
@@ -38,7 +38,8 @@ const createUser = async (req, res) => {
 
       const newUser = new User({
         name: name,
-        email: email,
+        email: workEmail,
+        personalEmail: personalEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
@@ -55,7 +56,7 @@ const createUser = async (req, res) => {
 
       res.json({
         code: 200,
-          data: {
+        data: {
           userId: newUser._id,
           name: newUser.name,
           workEmail: newUser.email,
