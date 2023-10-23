@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, ContentModal, Form, UpdateForm } from "../../components";
 import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
+import { useAuth } from "../../contexts/AuthContext";
 
 const userInfo = {
   name: "Atifulislam Asif",
@@ -195,6 +196,8 @@ const usersData = [
 ];
 
 export const EmployeeInfo = () => {
+  const { user } = useAuth();
+
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
@@ -230,7 +233,7 @@ export const EmployeeInfo = () => {
 
   return (
     <Container className={"flex-col justify-start items-start"}>
-      <UserInfo data={userInfo} />
+      <UserInfo data={user} />
 
       {userInfo.role === "admin" && (
         <section className="w-full">
