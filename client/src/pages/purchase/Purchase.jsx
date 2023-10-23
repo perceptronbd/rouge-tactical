@@ -11,13 +11,13 @@ import {
   Vendor,
   AgingSummary,
   UpdateForm,
+  Preview,
 } from "../../components";
 import { Table } from "./Table";
 import { purchaseData } from "../../mock/purchase";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { purchaseInputs } from "./purchaseInputs";
-import { data } from "../../mock/invoice";
 
 export const Purchase = () => {
   //data states
@@ -31,6 +31,7 @@ export const Purchase = () => {
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
+  const [showPreview, setShowPreview] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
   const [showPurchaseForm, setShowPurchaseForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -44,7 +45,7 @@ export const Purchase = () => {
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
       if (!vendor) {
-        setTableData(data);
+        setTableData(purchaseData);
         setSelectedVendor(null);
         setVendorDetails(null);
         setLoading(false);
@@ -175,7 +176,8 @@ export const Purchase = () => {
           data={tableData}
           loading={loadingTable}
           setShowForm={setShowEditForm}
-          setInvoiceDetails={setPurchaseDetails}
+          setPurchaseDetails={setPurchaseDetails}
+          setShowPreview={setShowPreview}
         />
       </div>
       <Button
@@ -216,6 +218,11 @@ export const Purchase = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
+      <Preview
+        isOpen={showPreview}
+        setShowModal={setShowPreview}
+        data={purchaseDetails}
+      />
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}

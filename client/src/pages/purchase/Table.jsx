@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
+export const Table = ({ data, loading, setShowForm, setPurchaseDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
+
+  const filteredData = data.filter((item) => {
+    return Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+    );
+  });
+
+  useEffect(() => {
+    console.log("purchase orders", data);
+  }, [data]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -18,7 +23,7 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
   const handleEdit = (item) => {
     console.log(item);
     setShowForm(true);
-    setInvoiceDetails(item);
+    setPurchaseDetails(item);
   };
 
   return (
@@ -96,12 +101,12 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                     >
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
                         {formatDate(item.date)}
-                      </td>{" "}
+                      </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.invoiceNumber}
+                        {item.orderNumber}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
