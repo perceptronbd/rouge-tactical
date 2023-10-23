@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Container, ContentModal, Form, UpdateForm } from "../../components";
+import {
+  Container,
+  ContentModal,
+  Form,
+  LoaderCard,
+  UpdateForm,
+} from "../../components";
 import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
 import { useAuth } from "../../contexts/AuthContext";
-
-const userInfo = {
-  name: "Atifulislam Asif",
-  position: "Software Engineer",
-  role: "admin",
-  email: "asif@gmail.com",
-  phone: "1234567890",
-  DOB: "1990/01/01",
-  emergencyContact: {
-    name: "John Doe",
-    phone: "1234567890",
-  },
-  startDate: "2021/01/01",
-  endDate: "2021/01/01",
-};
+import { isRoleAdmin } from "../../api/utils/isRoleAdmin";
 
 const usersData = [
   {
@@ -198,10 +190,17 @@ const usersData = [
 export const EmployeeInfo = () => {
   const { user } = useAuth();
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
   const [onboardingDocs, setOnboardingDocs] = useState([]);
+
+  useEffect(() => {
+    isRoleAdmin(setLoading, setIsAdmin);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -235,34 +234,38 @@ export const EmployeeInfo = () => {
     <Container className={"flex-col justify-start items-start"}>
       <UserInfo data={user} />
 
-      {userInfo.role === "admin" && (
-        <section className="w-full">
-          <Table
-            data={usersData}
-            setEmployeeInfo={setEmployeeData}
-            setShowForm={setShowModal}
-            setShowAddForm={setShowForm}
-            setOnboardingDocs={setOnboardingDocs}
-          />
-          <ContentModal isOpen={showForm} setShowModal={setShowForm}>
-            <Form
-              formTitle={"Add Employee"}
-              inputFields={employeeInfoInputs}
-              handleChange={handleChange}
-              onSubmit={onSubmit}
+      {loading ? (
+        <LoaderCard />
+      ) : (
+        isAdmin && (
+          <section className="w-full">
+            <Table
+              data={usersData}
+              setEmployeeInfo={setEmployeeData}
+              setShowForm={setShowModal}
+              setShowAddForm={setShowForm}
+              setOnboardingDocs={setOnboardingDocs}
             />
-          </ContentModal>
+            <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+              <Form
+                formTitle={"Add Employee"}
+                inputFields={employeeInfoInputs}
+                handleChange={handleChange}
+                onSubmit={onSubmit}
+              />
+            </ContentModal>
 
-          <ContentModal isOpen={showModal} setShowModal={setShowModal}>
-            <UpdateForm
-              formTitle={"Update Employee Info"}
-              inputFields={employeeInfoInputs}
-              data={employeeData}
-              handleChange={handleChange}
-              onSubmit={onSubmit}
-            />
-          </ContentModal>
-        </section>
+            <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+              <UpdateForm
+                formTitle={"Update Employee Info"}
+                inputFields={employeeInfoInputs}
+                data={employeeData}
+                handleChange={handleChange}
+                onSubmit={onSubmit}
+              />
+            </ContentModal>
+          </section>
+        )
       )}
       <OnboardingDoc data={onboardingDocs} />
     </Container>
