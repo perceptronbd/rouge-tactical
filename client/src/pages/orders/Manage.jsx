@@ -81,9 +81,9 @@ export const Table = ({ data, handleApprove }) => {
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Approved
                   </th>
-                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  {/* <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -151,13 +151,13 @@ export const Table = ({ data, handleApprove }) => {
                           }
                         />
                       </td>
-                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                      {/* <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
                         <Button
                           icon={MdDeleteOutline}
                           className={"w-10 m-0"}
                           variant={"danger"}
                         />
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 )}
