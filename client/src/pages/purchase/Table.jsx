@@ -3,7 +3,13 @@ import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setPurchaseDetails }) => {
+export const Table = ({
+  data,
+  loading,
+  setShowForm,
+  setPurchaseDetails,
+  setShowPreview,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = data.filter((item) => {
@@ -23,6 +29,11 @@ export const Table = ({ data, loading, setShowForm, setPurchaseDetails }) => {
   const handleEdit = (item) => {
     console.log(item);
     setShowForm(true);
+    setPurchaseDetails(item);
+  };
+
+  const showInvoicePreview = (item) => {
+    setShowPreview(true);
     setPurchaseDetails(item);
   };
 
@@ -105,8 +116,13 @@ export const Table = ({ data, loading, setShowForm, setPurchaseDetails }) => {
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.orderNumber}
+                      <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <button
+                          className="bg-accent-secondary rounded-md text-accent-primary w-full"
+                          onClick={() => showInvoicePreview(item)}
+                        >
+                          {item.orderNumber}
+                        </button>
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}

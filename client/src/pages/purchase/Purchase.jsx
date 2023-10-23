@@ -18,6 +18,7 @@ import { purchaseData } from "../../mock/purchase";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { purchaseInputs } from "./purchaseInputs";
+import { PurchasePreview } from "./PurchasePreview";
 
 export const Purchase = () => {
   //data states
@@ -222,7 +223,9 @@ export const Purchase = () => {
         isOpen={showPreview}
         setShowModal={setShowPreview}
         data={purchaseDetails}
-      />
+      >
+        <PurchasePreview data={purchaseDetails} />
+      </Preview>
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}
