@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
+export const Table = ({
+  data,
+  loading,
+  setShowForm,
+  setPurchaseDetails,
+  setShowPreview,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
+
+  const filteredData = data.filter((item) => {
+    return Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+    );
+  });
+
+  useEffect(() => {
+    console.log("purchase orders", data);
+  }, [data]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -18,7 +29,12 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
   const handleEdit = (item) => {
     console.log(item);
     setShowForm(true);
-    setInvoiceDetails(item);
+    setPurchaseDetails(item);
+  };
+
+  const showInvoicePreview = (item) => {
+    setShowPreview(true);
+    setPurchaseDetails(item);
   };
 
   return (
@@ -32,16 +48,16 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
             <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium  text-left">
                     Date
+                  </th>{" "}
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                    Vendor
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Order #
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
-                    Vendor
-                  </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium  text-left">
                     Item
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
@@ -51,15 +67,18 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                     Total Amount
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
-                    Deposited Amount
+                    Deposited Paid
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
+                    Total Remaining
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium text-center">
                     Status
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
-                    Closed At
+                    Date Closed
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
+                  <th className="px-4 py-4 3xl:p-4 font-medium  text-right">
                     Edit
                   </th>
                 </tr>
@@ -91,14 +110,19 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                           : "bg-accent-tertiary-light"
                       } `}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left text-sm whitespace-nowrap">
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.orderNumber}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.vendor}
+                      </td>
+                      <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <button
+                          className="bg-accent-secondary rounded-md text-accent-primary w-full"
+                          onClick={() => showInvoicePreview(item)}
+                        >
+                          {item.orderNumber}
+                        </button>
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
@@ -113,14 +137,17 @@ export const Table = ({ data, loading, setShowForm, setInvoiceDetails }) => {
                         {item.depositedAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.status}
+                        {item.totalAmount - item.depositedAmount}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                        {item.status === "close" ? "Closed" : "Open"}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
                         {item.updatedAt === "NaN-NaN-NaN"
                           ? "- - -"
                           : formatDate(item.updatedAt)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right">
                         <button
                           disabled={item.status === "close"}
                           onClick={() => handleEdit(item)}

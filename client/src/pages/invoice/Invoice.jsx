@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -18,7 +19,7 @@ import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
-import { useNavigate } from "react-router-dom";
+import { InvoicePreview } from "./InvoicePreview";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
@@ -214,7 +215,9 @@ export const Invoice = () => {
         isOpen={showPreview}
         setShowModal={setShowPreview}
         data={invoiceDetails}
-      />
+      >
+        <InvoicePreview data={invoiceDetails} />
+      </Preview>
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}

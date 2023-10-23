@@ -11,6 +11,7 @@ export { Invoice } from "./invoice/Invoice";
 export { InvoiceForm } from "./invoice/InvoiceForm";
 //purchase
 export { Purchase } from "./purchase/Purchase";
+export { PurchaseForm } from "./purchase/PurchaseForm";
 //permits
 export { Permits } from "./permits/Permits";
 //payments

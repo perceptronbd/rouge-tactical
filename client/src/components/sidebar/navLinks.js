@@ -15,7 +15,7 @@ export const navLinks = [
   { title: "Home", path: "/employee", Icon: TbHome2 },
   { title: "Orders", path: "/orders", Icon: TbPackage },
   { title: "Invoice", path: "/invoice", Icon: TbFileInvoice },
-  { title: "Purchase", path: "/purchase", Icon: MdOutlineSell },
+  { title: "Purchase Orders", path: "/purchase", Icon: MdOutlineSell },
   { title: "Permits", path: "/permits", Icon: TbLockAccess },
   { title: "Payments", path: "/payments", Icon: MdOutlinePayments },
   {

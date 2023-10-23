@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -11,15 +12,17 @@ import {
   Vendor,
   AgingSummary,
   UpdateForm,
+  Preview,
 } from "../../components";
 import { Table } from "./Table";
 import { purchaseData } from "../../mock/purchase";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { purchaseInputs } from "./purchaseInputs";
-import { data } from "../../mock/invoice";
+import { PurchasePreview } from "./PurchasePreview";
 
 export const Purchase = () => {
+  const navaigate = useNavigate();
   //data states
   const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
@@ -31,8 +34,8 @@ export const Purchase = () => {
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
+  const [showPreview, setShowPreview] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
-  const [showPurchaseForm, setShowPurchaseForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -44,7 +47,7 @@ export const Purchase = () => {
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
       if (!vendor) {
-        setTableData(data);
+        setTableData(purchaseData);
         setSelectedVendor(null);
         setVendorDetails(null);
         setLoading(false);
@@ -126,7 +129,7 @@ export const Purchase = () => {
   };
 
   const openPurchaseForm = () => {
-    setShowPurchaseForm(true);
+    navaigate("/purchase/new");
   };
 
   return (
@@ -175,7 +178,8 @@ export const Purchase = () => {
           data={tableData}
           loading={loadingTable}
           setShowForm={setShowEditForm}
-          setInvoiceDetails={setPurchaseDetails}
+          setPurchaseDetails={setPurchaseDetails}
+          setShowPreview={setShowPreview}
         />
       </div>
       <Button
@@ -196,17 +200,7 @@ export const Purchase = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal
-        isOpen={showPurchaseForm}
-        setShowModal={setShowPurchaseForm}
-      >
-        <Form
-          formTitle={"Add Purchase Order"}
-          inputFields={purchaseInputs}
-          handleChange={handleChange}
-          onSubmit={onSubmit}
-        />
-      </ContentModal>
+
       <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
         <UpdateForm
           formTitle={"Update Purchase Order"}
@@ -216,6 +210,13 @@ export const Purchase = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
+      <Preview
+        isOpen={showPreview}
+        setShowModal={setShowPreview}
+        data={purchaseDetails}
+      >
+        <PurchasePreview data={purchaseDetails} />
+      </Preview>
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}

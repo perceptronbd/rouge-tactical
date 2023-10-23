@@ -5,7 +5,7 @@ import { vendorData } from "../../mock/vendor";
 import { useNavigate } from "react-router-dom";
 import { BiSolidAddToQueue } from "react-icons/bi";
 
-export const InvoiceForm = () => {
+export const PurchaseForm = () => {
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +13,7 @@ export const InvoiceForm = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [values, setValues] = useState({
     date: "",
-    invoiceNumber: "",
+    orderNumber: "",
     vendor: "",
     items: [{ item: "", quantity: "", totalCost: "" }],
     totalAmount: "",
@@ -72,7 +72,7 @@ export const InvoiceForm = () => {
         className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded"
       >
         <div className="w-full flex justify-between items-start">
-          <Text variant={"h2"}>New Invoice</Text>
+          <Text variant={"h2"}>New Order</Text>
           <Button
             icon={MdOutlineArrowBackIosNew}
             className={"w-10 m-0"}
@@ -93,13 +93,13 @@ export const InvoiceForm = () => {
             onChange={handleChange}
           />
           <FormInput
-            id="invoiceNumber"
-            name="invoiceNumber"
-            label="Invoice Number"
+            id="orderNumber"
+            name="orderNumber"
+            label="Order Number"
             type="text"
-            placeholder="Invoice Number"
+            placeholder="Order Number"
             required={true}
-            value={values.invoiceNumber}
+            value={values.orderNumber}
             onChange={handleChange}
           />
           <SelectInput
