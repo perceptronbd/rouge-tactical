@@ -34,3 +34,5 @@ export { AgingSummary } from "./others/AgingSummary";
 //graphs
 export { PieGraph } from "./graphs/PieGraph";
 export { LineGraph } from "./graphs/LineGraph";
+//loaders
+export { LoaderCard } from "./loaders/LoaderCard";
