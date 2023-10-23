@@ -136,7 +136,7 @@ export const Table = ({
                         {item.position}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.email}
+                        {item.workEmail}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.phone}
