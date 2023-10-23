@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import { AiFillPrinter, AiOutlineDownload } from "react-icons/ai";
-import { Button, Checkbox, ContentModal } from "../../components";
+import { Button, Checkbox, ContentModal, Text } from "../../components";
 import { AddDocForm } from "./AddDocForm";
-
-const checkboxLabel = [
-  { id: 1, label: "Non Disclosure Agreement (NDA)" },
-  { id: 2, label: "New Employee Information Sheet" },
-  { id: 3, label: "Request for Live Scan Service" },
-  { id: 4, label: "Certificate fo Eligibility Information" },
-  { id: 5, label: "Certificate fo Eligibility Application" },
-  { id: 6, label: "Live Scan Locations" },
-  { id: 7, label: "Live Scan Locations" },
-  { id: 8, label: "Live Scan Locations" },
-];
 
 export const OnboardingDoc = ({ data }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -20,7 +9,7 @@ export const OnboardingDoc = ({ data }) => {
 
   const handleCheckboxChange = () => {
     let checked = false;
-    for (let i = 1; i <= checkboxLabel.length; i++) {
+    for (let i = 1; i <= data.length; i++) {
       if (document.getElementById(i).checked) {
         checked = true;
       }
@@ -35,16 +24,32 @@ export const OnboardingDoc = ({ data }) => {
   return (
     <article className="border rounded p-2 w-full h-fit">
       <div className="h-24 overflow-y-auto">
-        <section className="grid grid-rows-3 grid-cols-2 w-full">
-          {checkboxLabel.map((item) => (
-            <Checkbox
-              key={item.id}
-              id={item.id}
-              label={item.label}
-              onChange={handleCheckboxChange}
-            />
-          ))}
-        </section>
+        {data !== undefined ? (
+          data?.length > 0 ? (
+            <section className="grid grid-rows-3 grid-cols-2 w-full">
+              {data.map((item) => (
+                <Checkbox
+                  key={item.id}
+                  id={item.id}
+                  label={item.label}
+                  onChange={handleCheckboxChange}
+                />
+              ))}
+            </section>
+          ) : (
+            <section className="h-full w-full flex justify-center items-center">
+              <Text variant={"h2"} type={"bold"} className={"text-neutral-200"}>
+                Select A User To See The Documents
+              </Text>
+            </section>
+          )
+        ) : (
+          <section className="h-full w-full flex justify-center items-center">
+            <Text variant={"h2"} type={"bold"} className={"text-neutral-200"}>
+              No Documents Found
+            </Text>
+          </section>
+        )}
       </div>
       <div className="flex gap-2 m-0">
         <Button
@@ -62,15 +67,14 @@ export const OnboardingDoc = ({ data }) => {
         >
           Download
         </Button>
-        {data.role === "admin" && (
-          <Button
-            className={"mb-0 w-10"}
-            variant={"highlight"}
-            onClick={handleAddDoc}
-          >
-            +
-          </Button>
-        )}
+
+        <Button
+          className={"mb-0 w-10"}
+          variant={"highlight"}
+          onClick={handleAddDoc}
+        >
+          +
+        </Button>
       </div>
       <ContentModal isOpen={showModal} setShowModal={setShowModal}>
         <AddDocForm />

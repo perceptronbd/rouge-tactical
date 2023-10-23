@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 import { GoDotFill } from "react-icons/go";
 import { Button, Text } from "../../components";
+import { formatDate } from "../../utils";
 
 const COLORS = [
   "#0088FE",
@@ -40,7 +41,7 @@ export const Table = ({
                     Cost
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-normal whitespace-nowrap text-center">
-                    Due
+                    Owed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-normal whitespace-nowrap text-right" />
                 </tr>
@@ -120,15 +121,15 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.cost}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.dueDate}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center rt-sm:text-xs">
+                        {formatDate(item.dueDate)}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-right flex gap-2">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-right flex gap-2 rt-sm:w-8">
                         <Button
                           onClick={() => handleEdit(item.id)}
                           disabled={disabled}
                           icon={BiSolidMessageSquareEdit}
-                          className="text-accent-primary hover:text-opacity-80 w-10 bg-transparent m-0"
+                          className="text-accent-primary hover:text-opacity-80 w-10 bg-transparent m-0 "
                         ></Button>
                         <Button
                           disabled={disabled}

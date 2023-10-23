@@ -11,13 +11,13 @@ const userInfo = {
   role: "admin",
   email: "asif@gmail.com",
   phone: "1234567890",
-  DOB: "01/01/1990",
+  DOB: "1990/01/01",
   emergencyContact: {
     name: "John Doe",
     phone: "1234567890",
   },
-  startDate: "01/01/2021",
-  endDate: "01/01/2021",
+  startDate: "2021/01/01",
+  endDate: "2021/01/01",
 };
 
 const usersData = [
@@ -26,138 +26,179 @@ const usersData = [
     position: "Software Engineer",
     email: "asif@gmail.com",
     phone: "1234567890",
-    "date of birth": "01/01/1990",
+    DOB: "1990/01/01",
     emergencyContact: {
       name: "John Doe",
       phone: "1234567890",
     },
-    startDate: "01/01/2021",
-    endDate: "01/01/2021",
+    startDate: "2021/01/01",
+    endDate: "2021/01/01",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+      { id: 6, label: "Live Scan Locations" },
+      { id: 7, label: "Live Scan Locations" },
+      { id: 8, label: "Live Scan Locations" },
+    ],
   },
   {
     name: "John Doe",
     position: "Frontend Developer",
     email: "john@gmail.com",
     phone: "9876543210",
-    "date of birth": "02/15/1985",
+    DOB: "1985/01/02",
     emergencyContact: {
       name: "Jane Smith",
       phone: "9876543210",
     },
     startDate: "03/15/2020",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Jane Smith",
     position: "Backend Developer",
     email: "jane@gmail.com",
     phone: "5555555555",
-    "date of birth": "07/20/1992",
+    DOB: "07/20/1992",
     emergencyContact: {
       name: "James Brown",
       phone: "5555555555",
     },
     startDate: "11/01/2018",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
   {
     name: "Alice Johnson",
     position: "Data Scientist",
     email: "alice@gmail.com",
     phone: "1231231234",
-    "date of birth": "05/10/1988",
+    DOB: "05/10/1988",
     emergencyContact: {
       name: "Bob Smith",
       phone: "1231231234",
     },
     startDate: "07/01/2019",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Eva Williams",
     position: "UI/UX Designer",
     email: "eva@gmail.com",
     phone: "9879879876",
-    "date of birth": "12/30/1987",
+    DOB: "12/30/1987",
     emergencyContact: {
       name: "David Lee",
       phone: "9879879876",
     },
     startDate: "09/15/2020",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Michael Brown",
     position: "Product Manager",
     email: "michael@gmail.com",
     phone: "7777777777",
-    "date of birth": "03/05/1980",
+    DOB: "03/05/1980",
     emergencyContact: {
       name: "Emily White",
       phone: "7777777777",
     },
     startDate: "02/01/2017",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Sarah Davis",
     position: "QA Tester",
     email: "sarah@gmail.com",
     phone: "1111111111",
-    "date of birth": "09/25/1995",
+    DOB: "09/25/1995",
     emergencyContact: {
       name: "Chris Miller",
       phone: "1111111111",
     },
     startDate: "06/01/2022",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
   {
     name: "Daniel Wilson",
     position: "System Administrator",
     email: "daniel@gmail.com",
     phone: "9999999999",
-    "date of birth": "04/12/1983",
+    DOB: "04/12/1983",
     emergencyContact: {
       name: "Olivia Adams",
       phone: "9999999999",
     },
     startDate: "10/15/2016",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: false,
   },
   {
     name: "Sophia Thomas",
     position: "Marketing Manager",
     email: "sophia@gmail.com",
     phone: "8888888888",
-    "date of birth": "08/08/1990",
+    DOB: "08/08/1990",
     emergencyContact: {
       name: "William Brown",
       phone: "8888888888",
     },
     startDate: "04/01/2019",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
   },
   {
     name: "Liam Harris",
     position: "Financial Analyst",
     email: "liam@gmail.com",
     phone: "6666666666",
-    "date of birth": "11/18/1991",
+    DOB: "11/18/1991",
     emergencyContact: {
       name: "Emma Johnson",
       phone: "6666666666",
     },
     startDate: "12/01/2020",
-    endDate: "Present",
+    endDate: "11/02/2023",
+    onboardingComplete: true,
+    onboardingDocs: [
+      { id: 1, label: "Non Disclosure Agreement (NDA)" },
+      { id: 2, label: "New Employee Information Sheet" },
+      { id: 3, label: "Request for Live Scan Service" },
+      { id: 4, label: "Certificate fo Eligibility Information" },
+      { id: 5, label: "Certificate fo Eligibility Application" },
+    ],
   },
 ];
 
 export const EmployeeInfo = () => {
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
   const [employeeData, setEmployeeData] = useState({});
+  const [onboardingDocs, setOnboardingDocs] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -198,6 +239,7 @@ export const EmployeeInfo = () => {
             setEmployeeInfo={setEmployeeData}
             setShowForm={setShowModal}
             setShowAddForm={setShowForm}
+            setOnboardingDocs={setOnboardingDocs}
           />
           <ContentModal isOpen={showForm} setShowModal={setShowForm}>
             <Form
@@ -219,7 +261,7 @@ export const EmployeeInfo = () => {
           </ContentModal>
         </section>
       )}
-      <OnboardingDoc data={userInfo} />
+      <OnboardingDoc data={onboardingDocs} />
     </Container>
   );
 };

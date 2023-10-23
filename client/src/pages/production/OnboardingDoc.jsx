@@ -10,7 +10,7 @@ const checkboxLabel = [
   { id: 4, label: "Slide Clean Up" },
   { id: 5, label: "Extractor Fitting" },
   { id: 6, label: "Frame Cleanup" },
-  { id: 7, label: "Text Notes" },
+  { id: 7, label: "Test Notes" },
 ];
 
 export const OnboardingDoc = ({ role }) => {

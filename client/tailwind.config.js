@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       screens: {
         "3xl": { min: "1367px" },
+        "rt-sm": { max: "768px" },
       },
       colors: {
         background: "#F2F2F2",
@@ -15,8 +16,8 @@ module.exports = {
           secondary: "#0B0B0D",
           tertiary: {
             DEFAULT: "#961a23",
-            light: "#d42127",
-            hover: "#ff272e",
+            light: "#FE233E",
+            hover: "#FF7384",
           },
         },
       },

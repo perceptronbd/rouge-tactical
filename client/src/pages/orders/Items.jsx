@@ -1,50 +1,29 @@
 import React, { useState } from "react";
-import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import {
+  BiSolidMessageSquareEdit,
+  BiSolidCheckboxChecked,
+  BiCheckbox,
+} from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData as initialData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
-import { cw } from "../../utils";
-
-const Checkbox = (props) => {
-  const { id, label, className, onClick, checked } = props;
-
-  return (
-    <>
-      <div className={cw("py-1", className)}>
-        <input
-          className="peer appearance-none h-4 w-4 border-2 border-red-500 rounded bg-transparent checked:bg-green-500 checked:border-green-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-          type="checkbox"
-          id={id}
-          onClick={onClick}
-          checked={checked}
-        />
-        {label && (
-          <label
-            className="inline-block peer-checked:text-green-500 text-red-500 font-semibold transition-all ease-in-out duration-300"
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        )}
-      </div>
-    </>
-  );
-};
+import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
-  role,
-  handleApprove,
   handleRequest,
   handleNeededToggle,
   handleEdit,
   handleQuantityEdit,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
+
+  const filteredData = data.filter(
+    (item) =>
+      item.approved === true &&
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
   );
 
   const handleSearch = (e) => {
@@ -61,7 +40,7 @@ export const Table = ({
             </div>
           </div>
           <div className="max-h-[500px] 3xl:max-h-[830px] overflow-y-auto rounded-lg bg-accent-tertiary">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -90,13 +69,8 @@ export const Table = ({
                     Needed
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Requests
+                    Request
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                      Approved
-                    </th>
-                  )}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -114,8 +88,8 @@ export const Table = ({
                       key={index}
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.date}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-20">
+                        {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
@@ -157,8 +131,8 @@ export const Table = ({
                           className={cw(
                             ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
                             item.needed === "Urgent"
-                              ? "text-yellow-500"
-                              : "text-green-500"
+                              ? "text-red-500"
+                              : "text-yellow-500"
                           )}
                           onClick={() => handleNeededToggle(item.id)}
                         >
@@ -166,30 +140,18 @@ export const Table = ({
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 3xl:p-4 3xl:py-2 text-center">
-                        <Checkbox
-                          id={`request_${item.id}`}
-                          label={item.requested ? "Yes" : "No"}
-                          checked={item.requested}
+                      <td className="px-6 py-4 3xl:p-4 3xl:py-2">
+                        <div
+                          className=" flex justify-center items-center text-2xl"
                           onClick={() => handleRequest(item.id)}
-                          className={
-                            "flex justify-center items-center rounded-md bg-foreground m-0 p-1"
-                          }
-                        />
+                        >
+                          {item.requested ? (
+                            <BiSolidCheckboxChecked />
+                          ) : (
+                            <BiCheckbox />
+                          )}
+                        </div>
                       </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <Checkbox
-                            id={item.id}
-                            label={item.approved ? "Yes" : "No"}
-                            checked={item.approved}
-                            onClick={() => handleApprove(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
-                            }
-                          />
-                        </td>
-                      )}
                     </tr>
                   ))
                 )}

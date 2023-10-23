@@ -3,6 +3,7 @@ import {
   EmployeeInfo,
   Home,
   Invoice,
+  InvoiceForm,
   Login,
   Maintenance,
   Orders,
@@ -10,6 +11,7 @@ import {
   Permits,
   Production,
   Purchase,
+  PurchaseForm,
 } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 import { Components } from "./components/Components";
@@ -35,7 +37,9 @@ function App() {
         <Route path="components" element={<Components />} />
         <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<Invoice />} />
+        <Route path="invoice/new" element={<InvoiceForm />} />
         <Route path="purchase" element={<Purchase />} />
+        <Route path="purchase/new" element={<PurchaseForm />} />
         <Route path="permits" element={<Permits />} />
         <Route path="payments" element={<Payments />} />
         <Route path="production" element={<Production />} />

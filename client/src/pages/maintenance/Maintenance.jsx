@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MdPlaylistAdd } from "react-icons/md";
+import { MdNotificationImportant, MdPlaylistAdd } from "react-icons/md";
 import {
   Button,
   Container,
@@ -10,14 +10,19 @@ import {
 import { Table } from "./Table";
 import { maintenanceData } from "../../mock/maintenance";
 import { maintenanceInputs } from "./maintenanceInputs";
+import { adminFormInputs } from "./adminFormInputs";
 
 export const Maintenance = () => {
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [showAdminForm, setShowAdminForm] = useState(false);
   const [maintenanceDetails, setMaintenanceDetails] = useState({});
 
   const openForm = () => {
     setShowForm(true);
+  };
+  const openAdminForm = () => {
+    setShowAdminForm(true);
   };
 
   const handleChange = (e) => {
@@ -35,15 +40,24 @@ export const Maintenance = () => {
 
   return (
     <Container>
-      <section>
+      <section className="w-full">
         <Table
           data={maintenanceData}
           setShowForm={setShowModal}
           setMaintenanceDetails={setMaintenanceDetails}
         />
-        <Button icon={MdPlaylistAdd} onClick={openForm}>
-          Add New
-        </Button>
+        <div className="flex gap-2">
+          <Button icon={MdPlaylistAdd} onClick={openForm}>
+            Add New
+          </Button>
+          <Button
+            icon={MdNotificationImportant}
+            variant={"highlight"}
+            onClick={openAdminForm}
+          >
+            Notify Admin
+          </Button>
+        </div>
       </section>
       <ContentModal isOpen={showModal} setShowModal={setShowModal}>
         <UpdateForm
@@ -58,6 +72,14 @@ export const Maintenance = () => {
         <Form
           formTitle={"Add Maintenance"}
           inputFields={maintenanceInputs}
+          handleChange={handleChange}
+          onSubmit={onSubmit}
+        />
+      </ContentModal>
+      <ContentModal isOpen={showAdminForm} setShowModal={setShowAdminForm}>
+        <Form
+          formTitle={"Notify Admin"}
+          inputFields={adminFormInputs}
           handleChange={handleChange}
           onSubmit={onSubmit}
         />

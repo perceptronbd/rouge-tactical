@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -11,14 +12,17 @@ import {
   Vendor,
   AgingSummary,
   UpdateForm,
+  Preview,
 } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
 import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
+import { InvoicePreview } from "./InvoicePreview";
 
 export const Invoice = () => {
+  const navaigate = useNavigate();
   //data states
   const [agingSummary, setAgingSummary] = useState(null);
   const [selectedVendor, setSelectedVendor] = useState(null);
@@ -30,8 +34,8 @@ export const Invoice = () => {
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
+  const [showPreview, setShowPreview] = useState(false);
   const [showVendorForm, setShowVendorForm] = useState(false);
-  const [showInvoiceForm, setShowInvoiceForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -42,6 +46,14 @@ export const Invoice = () => {
 
     setTimeout(() => {
       const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
+      console.log(vendor);
+      if (!vendor) {
+        setLoading(false);
+        setTableData(data);
+        setSelectedVendor(null);
+        setVendorDetails(null);
+        return;
+      }
       setLoading(false);
       setVendorDetails(vendor);
     }, 1000);
@@ -96,6 +108,7 @@ export const Invoice = () => {
 
   const handleVendorChange = (event) => {
     setSelectedVendor(parseInt(event.target.value));
+    console.log(event.target.value);
   };
 
   const openVendorForm = () => {
@@ -117,10 +130,6 @@ export const Invoice = () => {
     console.log(invoiceDetails);
   };
 
-  const openInvoiceForm = () => {
-    setShowInvoiceForm(true);
-  };
-
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
       <section className="h-70 mb-2 flex justify-between">
@@ -131,6 +140,7 @@ export const Invoice = () => {
               name="vendor"
               label="Select Vendor"
               className="w-64"
+              defaultValue="View All"
               value={selectedVendor}
               onChange={handleVendorChange}
               selectOpts={vendorData}
@@ -156,22 +166,26 @@ export const Invoice = () => {
         </div>
 
         <AgingSummary
+          data={vendorDetails}
           agingSummary={agingSummary}
           loading={loadingAgingSummary}
         />
       </section>
-      <div className="h-[330px] 3xl:h-[590px]">
+      <div>
         <Table
           data={tableData}
           loading={loadingTable}
           setShowForm={setShowEditForm}
           setInvoiceDetails={setInvoiceDetails}
+          setShowPreview={setShowPreview}
         />
       </div>
       <Button
         icon={MdPostAdd}
         className={"my-2 3xl:my-4"}
-        onClick={openInvoiceForm}
+        onClick={() => {
+          navaigate("/invoice/new");
+        }}
       >
         New Invoice
       </Button>
@@ -186,15 +200,7 @@ export const Invoice = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal isOpen={showInvoiceForm} setShowModal={setShowInvoiceForm}>
-        <Form
-          formTitle={"Add Invoice"}
-          inputFields={invoiceInputs}
-          icon={BsPersonFillAdd}
-          handleChange={handleChange}
-          onSubmit={onSubmit}
-        />
-      </ContentModal>
+
       <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
         <UpdateForm
           formTitle={"Update Invoice"}
@@ -205,6 +211,13 @@ export const Invoice = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
+      <Preview
+        isOpen={showPreview}
+        setShowModal={setShowPreview}
+        data={invoiceDetails}
+      >
+        <InvoicePreview data={invoiceDetails} />
+      </Preview>
       <Modal
         isOpen={showModal}
         setShowModal={setShowModal}

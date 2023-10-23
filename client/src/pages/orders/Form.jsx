@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
-import {
-  Button,
-  Dropdown,
-  FormInput,
-  Modal,
-  SelectInput,
-} from "../../components";
+import { Button, FormInput, Modal, SelectInput } from "../../components";
 
 const inputFields = [
   {
@@ -16,8 +10,6 @@ const inputFields = [
     type: "text",
     placeholder: "Item",
     required: true,
-    pattern: "[a-zA-Z ]{2,30}",
-    errorMessage: "Please enter a valid name",
   },
   {
     id: "size",
@@ -26,8 +18,6 @@ const inputFields = [
     type: "text",
     placeholder: "Size",
     required: true,
-    pattern: "[a-zA-Z ]{2,30}",
-    errorMessage: "Please enter a valid name",
   },
   {
     id: "quantity",
@@ -45,8 +35,6 @@ const inputFields = [
     type: "number",
     placeholder: "Price",
     required: true,
-    pattern: "[0-9]{10}",
-    errorMessage: "Please enter a valid phone number",
   },
   {
     id: "total amount",

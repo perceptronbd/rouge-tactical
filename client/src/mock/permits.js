@@ -29,7 +29,8 @@ export const permitsData = [
     renewalDuration: "2 years",
     renewalDeadline: "2023-09-30",
     contactInfo: "Contact 3",
-    notes: "Notes 3",
+    notes:
+      "Option to renew up to 60 days prior to expiration date. Must renew no later than 90 days after expiration date, otherwise you must re-apply for a new COE, which requires you to re-submit fingerprint impressions",
     notifyAdmin: "admin 3",
   },
   {

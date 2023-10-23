@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
-import { cw } from "../../utils";
+import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
@@ -50,8 +50,8 @@ export const Table = ({
           <div className="flex justify-end p-2">
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
-          <div className="max-h-[535px] 3xl:max-h-[880px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
-            <table className="w-full border-collapse">
+          <div className="max-h-[525px] 3xl:max-h-[880px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
+            <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -77,6 +77,9 @@ export const Table = ({
                   </th>
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Notes
+                  </th>
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Status
                   </th>
 
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-right">
@@ -128,20 +131,37 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.assignedTo}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.lastMaintenanceDate}
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
+                        {formatDate(item.lastMaintenanceDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.maintenanceInterval}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {checkNextMaintenanceDate(
-                          item.lastMaintenanceDate,
-                          item.maintenanceInterval
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
+                        {formatDate(
+                          checkNextMaintenanceDate(
+                            item.lastMaintenanceDate,
+                            item.maintenanceInterval
+                          )
                         )}
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.notes}
+                      </td>
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
+                        <span
+                          className={cw(
+                            "uppercase text-sm font-semibold whitespace-nowrap px-2 rounded-full",
+                            {
+                              "text-yellow-300 bg-yellow-600":
+                                item.status === "in progress",
+                              "text-green-200 bg-green-600":
+                                item.status === "complete",
+                            }
+                          )}
+                        >
+                          {item.status}
+                        </span>
                       </td>
 
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">

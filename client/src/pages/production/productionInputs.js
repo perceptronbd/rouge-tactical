@@ -1,23 +1,23 @@
 export const productionInputs = [
   {
-    id: "status",
-    label: "Status",
-    name: "status",
-    required: true,
-    selectOpts: [
-      { id: "Machining", name: "Machining" },
-      { id: "Building", name: "Building" },
-      { id: "Coating", name: "Coating" },
-      { id: "Assembly", name: "Assembly" },
-    ],
-  },
-  {
     id: "batch",
     label: "Batch",
     name: "batch",
     type: "text",
     placeholder: "Batch",
     required: true,
+  },
+  {
+    id: "status",
+    label: "Status",
+    name: "status",
+    required: true,
+    selectOpts: [
+      { value: "Machining", name: "Machining" },
+      { value: "Building", name: "Building" },
+      { value: "Coating", name: "Coating" },
+      { value: "Assembly", name: "Assembly" },
+    ],
   },
   {
     id: "serialNumber",
@@ -49,6 +49,14 @@ export const productionInputs = [
     name: "range.max",
     type: "number",
     placeholder: "Max",
+    required: true,
+  },
+  {
+    id: "style",
+    label: "Style",
+    name: "style",
+    type: "text",
+    placeholder: "Style",
     required: true,
   },
   {

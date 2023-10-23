@@ -63,7 +63,7 @@ export const Permits = () => {
         message={modalMessage}
         isError={isError}
       />
-      <div className="h-[605px] 3xl:h-[960px]">
+      <div>
         <Table
           data={permitsData}
           setShowForm={setShowEditForm}

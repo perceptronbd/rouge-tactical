@@ -11,6 +11,7 @@ export const SelectInput = (props) => {
     errorMessage,
     onChange,
     selectOpts,
+    defaultValue,
     ...inputProps
   } = props;
 
@@ -22,25 +23,20 @@ export const SelectInput = (props) => {
         {...inputProps}
         onChange={onChange}
         className={cw(
-          `peer block border rounded-lg w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary `,
+          `peer block border rounded-lg rt-sm:w-60 w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary `,
           className
         )}
       >
         <optgroup label={label} className="font-semibold">
-          <option
-            value={value || ""}
-            key="defaultOption"
-            className="text-textColor hover:text-accent-tertiary"
-            disabled
-            selected
-            hidden
-          >
-            {value || label}
-          </option>
+          {defaultValue && (
+            <option value={defaultValue} key="defaultOption" selected>
+              {defaultValue}
+            </option>
+          )}
           {selectOpts.map((opt) => (
             <option
-              value={opt.id}
-              key={opt.value}
+              value={opt.value ? opt.value : opt.id}
+              key={opt.value ? opt.value : opt.id}
               className="text-textColor hover:text-accent-tertiary"
             >
               {opt.name}
