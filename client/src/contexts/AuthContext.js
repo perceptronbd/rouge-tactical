@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     sessionStorage.setItem("user", JSON.stringify(user));
-    sessionStorage.setItem("token", JSON.stringify(token));
+    sessionStorage.setItem("token", token);
   }, [user, token]);
 
   const login = (data) => {
@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
     setUser(null);
+    setToken(null);
   };
 
   return (
