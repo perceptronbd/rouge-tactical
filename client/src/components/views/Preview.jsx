@@ -50,8 +50,23 @@ export const Preview = ({ isOpen, setShowModal, data, children }) => {
           showPreview ? "scale-100" : "scale-0"
         } transition-all ease-in-out duration-300`}
       >
-        <section className="w-full pb-2 flex justify-between gap-2 ">
-          <div className="w-[500px] flex gap-2">
+        <div className="bg-white rounded-lg shadow-lg p-0 w-full h-[98%] overflow-y-scroll">
+          <section className="w-full px-8 pt-8 flex justify-end gap-2 ">
+            <Button
+              icon={AiOutlineCloseCircle}
+              variant={"danger"}
+              className={"m-0 w-8 h-8"}
+              onClick={handleClose}
+            />
+          </section>
+          <div
+            ref={componentRef}
+            className="grid grid-cols-2 gap-y-4 p-8"
+            id="download-preview"
+          >
+            {children}
+          </div>
+          <div className="w-[500px] flex gap-2 px-8 pb-8">
             <Button
               icon={FiPrinter}
               className={"m-0 w-32"}
@@ -67,21 +82,6 @@ export const Preview = ({ isOpen, setShowModal, data, children }) => {
             >
               Download
             </Button>
-          </div>
-          <Button
-            icon={AiOutlineCloseCircle}
-            variant={"danger"}
-            className={"m-0 w-10"}
-            onClick={handleClose}
-          />
-        </section>
-        <div className="bg-white rounded-lg shadow-lg p-0 w-full h-[90%] overflow-y-scroll">
-          <div
-            ref={componentRef}
-            className="grid grid-cols-2 gap-y-4 p-8"
-            id="download-preview"
-          >
-            {children}
           </div>
         </div>
       </article>
