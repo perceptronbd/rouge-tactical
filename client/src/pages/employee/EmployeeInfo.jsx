@@ -9,7 +9,9 @@ const userInfo = {
   name: "Atifulislam Asif",
   position: "Software Engineer",
   role: "admin",
-  email: "asif@gmail.com",
+  workEmail: "asifVudi@gmail.com",
+  personalEmail: "atif@gmail.com",
+  preferredEmail: "asifVudi@gmail.com",
   phone: "1234567890",
   DOB: "1990/01/01",
   emergencyContact: {
@@ -24,7 +26,9 @@ const usersData = [
   {
     name: "Atifulislam Asif",
     position: "Software Engineer",
-    email: "asif@gmail.com",
+    workEmail: "asif@gmail.com",
+    personalEmail: "vudi@gmail.com",
+    preferredEmail: "asif@gmail.com",
     phone: "1234567890",
     DOB: "1990/01/01",
     emergencyContact: {

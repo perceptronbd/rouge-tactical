@@ -78,7 +78,7 @@ export const Table = ({
                     Position
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Work Email
+                    Email
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Phone
@@ -136,7 +136,7 @@ export const Table = ({
                         {item.position}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.email}
+                        {item.preferredEmail}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.phone}
