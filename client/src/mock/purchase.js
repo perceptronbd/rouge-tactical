@@ -48,7 +48,7 @@ export const purchaseData = [
     id: 4,
     date: "2023-09-12",
     orderNumber: "PO004",
-    vendor: "vendor 5", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 8, // Replace with the ID of the vendor from vendorData
     item: "Mask Refill (Blue)",
     size: "M",
@@ -63,7 +63,7 @@ export const purchaseData = [
     id: 5,
     date: "2023-09-13",
     orderNumber: "PO005",
-    vendor: "vendor 5", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 10, // Replace with the ID of the vendor from vendorData
     item: "Glove Refill (White)",
     size: "L",
@@ -78,7 +78,7 @@ export const purchaseData = [
     id: 6,
     date: "2023-09-14",
     orderNumber: "PO006",
-    vendor: "vendor 2", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 12, // Replace with the ID of the vendor from vendorData
     item: "Glove Refill (Black)",
     size: "M",
@@ -93,7 +93,7 @@ export const purchaseData = [
     id: 7,
     date: "2023-09-15",
     orderNumber: "PO007",
-    vendor: "vendor 2", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 14, // Replace with the ID of the vendor from vendorData
     item: "Mask Refill (Blue)",
     size: "S",
@@ -108,7 +108,7 @@ export const purchaseData = [
     id: 8,
     date: "2023-09-16",
     orderNumber: "PO008",
-    vendor: "vendor 2", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 16, // Replace with the ID of the vendor from vendorData
     item: "Glove Refill (White)",
     size: "L",
@@ -123,7 +123,7 @@ export const purchaseData = [
     id: 9,
     date: "2023-09-17",
     orderNumber: "PO009",
-    vendor: "vendor 3", // Replace with the ID of the vendor from vendorData
+    vendor: "vendor 1", // Replace with the ID of the vendor from vendorData
     substituteVendor: 18, // Replace with the ID of the vendor from vendorData
     item: "Mask Refill (Black)",
     size: "M",

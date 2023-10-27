@@ -67,7 +67,7 @@ export const Table = ({
                     Total Amount
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
-                    Deposited Paid
+                    Deposit Paid
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Total Remaining

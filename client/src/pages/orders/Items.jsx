@@ -5,7 +5,7 @@ import {
   BiCheckbox,
 } from "react-icons/bi";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { historyData as initialData } from "../../mock/history";
+import { historyData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
@@ -126,13 +126,13 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left transition-all ease-in-out duration-300">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 transition-all ease-in-out duration-300">
                         <div
                           className={cw(
-                            ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
-                            item.needed === "Urgent"
-                              ? "text-red-500"
-                              : "text-yellow-500"
+                            ` bg-foreground font-semibold w-24 rounded-md px-2 py-1 text-center cursor-pointer`,
+                            item.needed === "Soon"
+                              ? "text-yellow-500"
+                              : "text-red-500"
                           )}
                           onClick={() => handleNeededToggle(item.id)}
                         >
@@ -171,7 +171,7 @@ export const Table = ({
 };
 
 export const Items = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState(historyData);
   const [updatedItems, setUpdatedItems] = useState([]);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

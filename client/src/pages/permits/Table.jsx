@@ -52,6 +52,9 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Permit
                   </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium text-left">
+                    Expiration Date
+                  </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Form
                   </th>
@@ -107,6 +110,9 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                     >
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.permit}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {formatDate(item.expirationDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.form}
