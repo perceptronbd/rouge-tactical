@@ -43,7 +43,7 @@ export const Table = ({
             <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -88,7 +88,7 @@ export const Table = ({
                       key={index}
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-20">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-20">
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
@@ -268,6 +268,7 @@ export const Items = () => {
         handleEdit={handleEdit}
         handleQuantityEdit={handleQuantityEdit}
       />
+
       <Button
         disabled={!isDataUpdated}
         onClick={requestOrders}

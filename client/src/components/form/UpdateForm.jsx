@@ -39,6 +39,7 @@ export const UpdateForm = ({
   data,
   handleChange,
   onSubmit,
+  handleDelete,
 }) => {
   useEffect(() => {
     console.log(data);
@@ -68,7 +69,12 @@ export const UpdateForm = ({
           >
             Update
           </Button>
-          <Button icon={MdDeleteOutline} className={"m-0"} variant={"danger"}>
+          <Button
+            icon={MdDeleteOutline}
+            className={"m-0"}
+            variant={"danger"}
+            onClick={handleDelete}
+          >
             Delete
           </Button>
         </div>
