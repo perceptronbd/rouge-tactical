@@ -27,7 +27,7 @@ const Checkbox = (props) => {
   );
 };
 
-export const Table = ({ data, handleApprove }) => {
+export const Table = ({ data, handleApprove, handleDelete }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = data.filter((item) =>
@@ -81,9 +81,9 @@ export const Table = ({ data, handleApprove }) => {
                   <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Approved
                   </th>
-                  {/* <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Delete
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -151,13 +151,16 @@ export const Table = ({ data, handleApprove }) => {
                           }
                         />
                       </td>
-                      {/* <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
                         <Button
                           icon={MdDeleteOutline}
-                          className={"w-10 m-0"}
+                          className={"w-8 h-8 m-0 bg-white text-red-500"}
                           variant={"danger"}
+                          onClick={() => {
+                            handleDelete(item.id);
+                          }}
                         />
-                      </td> */}
+                      </td>
                     </tr>
                   ))
                 )}
@@ -196,6 +199,11 @@ export const Manage = () => {
     console.log(updatedData);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   const requestOrders = () => {
     if (updatedItems.length === 0) return;
 
@@ -214,7 +222,12 @@ export const Manage = () => {
 
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
-      <Table data={data} role={"admin"} handleApprove={handleApprove} />
+      <Table
+        data={data}
+        role={"admin"}
+        handleApprove={handleApprove}
+        handleDelete={handleDelete}
+      />
       <Button
         disabled={!isDataUpdated}
         onClick={requestOrders}

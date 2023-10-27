@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MdOutlineDoneAll } from "react-icons/md";
+import { MdDeleteOutline, MdOutlineDoneAll } from "react-icons/md";
 import { historyData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
@@ -27,7 +27,13 @@ const Checkbox = (props) => {
   );
 };
 
-export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
+export const Table = ({
+  data,
+  role,
+  handleApproveRequest,
+  handleOrdered,
+  handleDelete,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = data.filter(
@@ -92,9 +98,14 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
                     Ordered
                   </th>
                   {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                      Approved
-                    </th>
+                    <>
+                      <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                        Approved
+                      </th>
+                      <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                        Delete
+                      </th>
+                    </>
                   )}
                 </tr>
               </thead>
@@ -160,17 +171,29 @@ export const Table = ({ data, role, handleApproveRequest, handleOrdered }) => {
                         )}
                       </td>
                       {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          <Checkbox
-                            id={item.id}
-                            label={item.approvedRequest ? "Yes" : "No"}
-                            checked={item.approvedRequest}
-                            onClick={() => handleApproveRequest(item.id)}
-                            className={
-                              "bg-foreground flex justify-center items-center rounded-md"
-                            }
-                          />
-                        </td>
+                        <>
+                          <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                            <Checkbox
+                              id={item.id}
+                              label={item.approvedRequest ? "Yes" : "No"}
+                              checked={item.approvedRequest}
+                              onClick={() => handleApproveRequest(item.id)}
+                              className={
+                                "bg-foreground flex justify-center items-center rounded-md"
+                              }
+                            />
+                          </td>
+                          <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                            <Button
+                              icon={MdDeleteOutline}
+                              className={"w-8 h-8 m-0 bg-white text-red-500"}
+                              variant={"danger"}
+                              onClick={() => {
+                                handleDelete(item.id);
+                              }}
+                            />
+                          </td>
+                        </>
                       )}
                     </tr>
                   ))
