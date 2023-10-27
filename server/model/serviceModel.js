@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const serviceSchema = new Schema({
-    _id: {
-        type: Schema.Types.ObjectId,
+    
+    service: {
+        type: String,
         required: true,
     },
     accountNumber: {
