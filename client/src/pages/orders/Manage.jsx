@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, SearchInput, Text } from "../../components";
-import { cw } from "../../utils";
+import { cw, formatDate } from "../../utils";
 import { historyData as initialData } from "../../mock/history";
 import { MdDeleteOutline, MdOutlinePlaylistAdd } from "react-icons/md";
 
@@ -102,7 +102,7 @@ export const Table = ({ data, handleApprove, handleDelete }) => {
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.date}
+                        {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
