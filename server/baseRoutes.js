@@ -34,20 +34,14 @@ router.use("/role/", checkPermissionRoutes);
 
 //all routes for admin
 router.use("/admin/user", userRoutes);
-<<<<<<< HEAD
-router.use("/admin/order", orderRoutes);
-router.use("/admin/vendor", vendorRoutes);
-router.use("/admin/invoice", invoiceRoutes);
-router.use("/admin/payment", invoiceRoutes);
-
-
-=======
 router.use("/admin/order", adminOrderRoutes);
->>>>>>> server
+router.use("/admin/payment", paymentRoutes);
 
 //other routes
 router.use("/vendor", vendorRoutes);
 router.use("/invoice", invoiceRoutes);
 router.use("/purchaseOrder", purchaseOrderRoutes);
+
+
 
 module.exports = router;
