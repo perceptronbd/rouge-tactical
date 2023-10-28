@@ -11,7 +11,7 @@ const createInvoice = async (req, res) => {
     invoiceNumber,
     //receive vendor Id
     vendor,
-    item,
+    items,
     quantity,
     totalAmount,
     depositAmount,
@@ -38,7 +38,7 @@ const createInvoice = async (req, res) => {
       !date ||
       !invoiceNumber ||
       !vendor ||
-      !item ||
+      !items ||
       !quantity ||
       !totalAmount ||
       !depositAmount ||
@@ -53,7 +53,7 @@ const createInvoice = async (req, res) => {
       date: date,
       invoiceNumber: invoiceNumber,
       vendor: vendor,
-      item: item,
+      item: items,
       quantity: quantity,
       totalAmount: totalAmount,
       depositAmount: depositAmount,
@@ -103,7 +103,7 @@ const getAllInvoice = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       totalAmount: data.totalAmount,
       depositAmount: data.depositAmount,
@@ -160,7 +160,7 @@ const getInvoiceOfSelectedVendor = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       totalAmount: data.totalAmount,
       depositAmount: data.depositAmount,
@@ -189,7 +189,7 @@ const updateInvoice = async (req, res) => {
     date,
     vendor,
     invoiceNumber,
-    item,
+    items,
     quantity,
     totalAmount,
     depositAmount,
@@ -215,8 +215,11 @@ const updateInvoice = async (req, res) => {
     if (invoiceNumber != null && invoiceNumber !== "") {
       existingInvoice.invoiceNumber = invoiceNumber;
     }
-    if (item != null && item !== "") {
-      existingInvoice.item = item;
+    // if (item != null && item !== "") {
+    //   existingInvoice.item = item;
+    // }
+      if (items != null && items.length > 0) {
+      existingInvoice.items = items;
     }
     if (quantity != null && quantity !== "") {
       existingInvoice.quantity = quantity;
@@ -243,7 +246,7 @@ const updateInvoice = async (req, res) => {
       date: updatedInvoice.date,
       invoiceNumber: updatedInvoice.invoiceNumber,
       vendorId: updatedInvoice.vendor,
-      item: updatedInvoice.item,
+      item: updatedInvoice.items,
       quantity: updatedInvoice.quantity,
       totalAmount: updatedInvoice.totalAmount,
       depositAmount: updatedInvoice.depositAmount,
