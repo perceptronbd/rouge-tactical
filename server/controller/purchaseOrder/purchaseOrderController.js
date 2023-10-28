@@ -11,7 +11,7 @@ const createPurchaseOrder = async (req, res) => {
     date,
     orderNumber,
     size,
-    item,
+    items,
     quantity,
     price,
     totalAmount,
@@ -43,7 +43,7 @@ const createPurchaseOrder = async (req, res) => {
       !vendor ||
       !price ||
       !size ||
-      !item ||
+      !items ||
       !quantity ||
       !totalAmount ||
       !vendor ||
@@ -58,7 +58,7 @@ const createPurchaseOrder = async (req, res) => {
       date: date,
       orderNumber: orderNumber,
       size: size,
-      item: item,
+      item: items,
       quantity: quantity,
       price: price,
       totalAmount: totalAmount,
@@ -112,7 +112,7 @@ const getAllPurchaseOrder = async (req, res) => {
       date: data.date,
       orderNumber: data.orderNumber,
       size: data.size,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       price: data.price,
       totalAmount: data.totalAmount,
@@ -171,7 +171,7 @@ const getPurchaseOrderOfSelectedVendor = async (req, res) => {
       date: data.date,
       orderNumber: data.orderNumber,
       size: data.size,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       price: data.price,
       totalAmount: data.totalAmount,
@@ -204,7 +204,7 @@ const updatePurchaseOrder = async (req, res) => {
     date,
     orderNumber,
     size,
-    item,
+    items,
     quantity,
     price,
     totalAmount,
@@ -232,8 +232,11 @@ const updatePurchaseOrder = async (req, res) => {
     if (orderNumber != null && orderNumber !== "") {
       existingPurchaseOrder.orderNumber = orderNumber;
     }
-    if (item != null && item !== "") {
-      existingPurchaseOrder.item = item;
+    // if (item != null && item !== "") {
+    //   existingPurchaseOrder.item = item;
+    // }
+     if (items != null && items.length > 0) {
+      existingPurchaseOrder.items = items;
     }
     if (quantity != null && quantity !== "") {
       existingPurchaseOrder.quantity = quantity;
@@ -276,7 +279,7 @@ const updatePurchaseOrder = async (req, res) => {
       date: updatedPurchaseOrder.date,
       orderNumber: updatedPurchaseOrder.orderNumber,
       size: updatedPurchaseOrder.size,
-      item: updatedPurchaseOrder.item,
+      item: updatedPurchaseOrder.items,
       quantity: updatedPurchaseOrder.quantity,
       price: updatedPurchaseOrder.price,
       totalAmount: updatedPurchaseOrder.totalAmount,

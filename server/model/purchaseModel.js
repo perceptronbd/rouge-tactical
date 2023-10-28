@@ -15,10 +15,26 @@ const purchaseSchema = new Schema({
     required: true,
     unique: true,
   },
-  item: {
-    type: String,
-    required: true,
-  },
+  // item: {
+  //   type: String,
+  //   required: true,
+  // },
+   items: [
+    {
+      item: {
+        type: String,
+        required: true,
+      },
+      cost: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: String,
+        required: true,
+      },
+    }
+  ],
   size: {
     type: String,
     required: true,
