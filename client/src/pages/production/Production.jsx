@@ -46,7 +46,7 @@ export const Production = () => {
 
   return (
     <Container>
-      <section className="w-full">
+      <section className="w-full h-[540px]">
         <Table
           data={productionData}
           loading={isLoading}

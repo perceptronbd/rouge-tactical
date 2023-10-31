@@ -15,7 +15,7 @@ export const Table = ({ data, loading, setShowForm, setItemData }) => {
     <>
       {data ? (
         <article className="rounded-lg bg-accent-tertiary-light">
-          <div className="overflow-y-auto rounded-b-lg rounded-t-lg bg-accent-tertiary">
+          <div className="max-h-[360px] 3xl:max-h-[900px] overflow-y-auto rounded-b-lg rounded-t-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className="text-xs text-white border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
