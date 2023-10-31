@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, ContentModal, UpdateForm } from "../../components";
+import { Button, Container, ContentModal, UpdateForm } from "../../components";
 import { Table } from "./Table";
 import { productionData } from "../../mock/production";
 import { productionInputs } from "./productionInputs";
@@ -46,7 +46,7 @@ export const Production = () => {
 
   return (
     <Container>
-      <section className="w-full h-[540px]">
+      <section className="w-full h-[260px]">
         <Table
           data={productionData}
           loading={isLoading}
@@ -65,6 +65,9 @@ export const Production = () => {
       </section>
       <section className="w-full h-full">
         <OnboardingDoc role={"admin"} />
+      </section>
+      <section className="w-full">
+        <Button className={"m-0"}>Add Item</Button>
       </section>
     </Container>
   );
