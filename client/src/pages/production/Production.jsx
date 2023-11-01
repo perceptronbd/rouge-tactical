@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { Container, ContentModal, UpdateForm } from "../../components";
+import {
+  Button,
+  Container,
+  ContentModal,
+  Form,
+  UpdateForm,
+} from "../../components";
 import { Table } from "./Table";
 import { productionData } from "../../mock/production";
 import { productionInputs } from "./productionInputs";
@@ -8,6 +14,7 @@ import { OnboardingDoc } from "./OnboardingDoc";
 export const Production = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [showForm, setShowForm] = React.useState(false);
+  const [showUpdateForm, setShowUpdateForm] = React.useState(false);
   const [itemData, setItemData] = React.useState({});
 
   useEffect(() => {
@@ -39,6 +46,10 @@ export const Production = () => {
     setItemData(updatedItemData);
   };
 
+  const handleOpenForm = () => {
+    setShowForm(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(itemData);
@@ -46,14 +57,14 @@ export const Production = () => {
 
   return (
     <Container>
-      <section className="w-full">
+      <section className="w-full h-[260px]">
         <Table
           data={productionData}
           loading={isLoading}
-          setShowForm={setShowForm}
+          setShowForm={setShowUpdateForm}
           setItemData={setItemData}
         />
-        <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+        <ContentModal isOpen={showUpdateForm} setShowModal={setShowUpdateForm}>
           <UpdateForm
             formTitle={"Update"}
             inputFields={productionInputs}
@@ -62,6 +73,19 @@ export const Production = () => {
             onSubmit={handleSubmit}
           />
         </ContentModal>
+        <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+          <Form
+            formTitle={"Add Item"}
+            inputFields={productionInputs}
+            handleChange={handleItemData}
+            onSubmit={handleSubmit}
+          />
+        </ContentModal>
+      </section>
+      <section className="w-full">
+        <Button className={"m-0"} onClick={handleOpenForm}>
+          Add Item
+        </Button>
       </section>
       <section className="w-full h-full">
         <OnboardingDoc role={"admin"} />
