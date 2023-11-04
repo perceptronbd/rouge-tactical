@@ -4,5 +4,7 @@ const prodictionController = require ("../../controller/production/productionCon
 const { checkLogin } = require("../../middleware/token/checkLogin");
 
 router.post("/createProduction",checkLogin, prodictionController.createProduction);
+router.get("/getProduction",checkLogin, prodictionController.getAllProductions);
+
 
 module.exports = router;

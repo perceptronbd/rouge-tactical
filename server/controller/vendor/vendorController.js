@@ -122,5 +122,5 @@ const getAllVendor = async (req, res) => {
 
 module.exports = {
   createVendor,
-  getAllVendor,
+  getAllVendor
 };
