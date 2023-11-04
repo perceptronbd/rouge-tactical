@@ -1,50 +1,58 @@
-const multer = require("multer");
-const Doc = require("../../model/docModel");
-const fs = require("fs");
+const Doc = require('../../model/docModel');
+const fs = require('fs');
+const path = require('path'); // Import the 'path' module
 
-// Set up multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const userFolder = `uploads/${req.user._id}`;
-    if (!fs.existsSync(userFolder)) {
-      fs.mkdirSync(userFolder, { recursive: true });
-    }
-    cb(null, userFolder);
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${Date.now()}_${file.originalname}`;
-    cb(null, fileName);
-  },
-});
-
-const upload = multer({ storage: storage });
-
-const uploadFile = upload.single("file");
-
-// Handle file upload
-const handleFileUpload = async (req, res) => {
+exports.uploadFile = async (req, res) => {
   try {
-    // Create a new document entry in the collection
-    const doc = new Doc({
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      size: req.file.size,
-      uploadedBy: {
-        userId: req.user._id,
-        name: req.user.name,
-      },
-      filePath: req.file.filename,
+    // Access the uploaded file information
+    const { filename, originalname, mimetype, size } = req.file;
+
+    // Access the user's ID from the URL parameters
+    const userId = req.params.userId; // Assuming you have a URL parameter named userId
+
+    // Define the upload folder based on the user ID
+    const uploadPath = path.join(__dirname, '../../uploads', userId);
+
+    // Create the directory if it doesn't exist
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+
+    // Define the full file path, including the 'uploads' folder and user-specific folder
+    const fullFilePath = path.join(uploadPath, filename);
+
+    // Check if a file with the same originalname already exists in the 'userId' folder
+    const filesInFolder = fs.readdirSync(uploadPath);
+    const fileWithSameName = filesInFolder.find(file => {
+      const existingFilename = path.join(uploadPath, file);
+      return fs.existsSync(existingFilename) && file === filename;
     });
 
-    // Save the document to the collection
-    await doc.save();
+    if (fileWithSameName) {
+      // If a file with the same originalname exists, remove it
+      const filePathToRemove = path.join(uploadPath, fileWithSameName);
+      fs.unlinkSync(filePathToRemove);
+    }
 
-    res.status(201).send("File uploaded successfully");
-  } catch (error) {
-    res.status(500).send("Error uploading file");
+    // Move the uploaded file to the correct location
+    fs.renameSync(req.file.path, fullFilePath);
+
+    // Create a new document in the database with the correct 'filePath'
+    const newDoc = new Doc({
+      originalname,
+      mimetype,
+      size,
+      uploadedBy: {
+        user: userId,
+      },
+      filePath: fullFilePath, // Use the full file path
+    });
+
+    await newDoc.save();
+
+    res.status(201).json({ message: 'File uploaded successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-};
-
-module.exports = {
-  uploadFile: handleFileUpload,
 };

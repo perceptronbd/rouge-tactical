@@ -27,7 +27,7 @@ const docSchema = new Schema({
       ref: User, // Reference to the User schema
       required: true,
     },
-    name: String,
+    // name: String,
   },
   filePath: {
     type: String,
