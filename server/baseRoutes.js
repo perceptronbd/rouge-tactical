@@ -22,6 +22,9 @@ const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute");
 //all routes for payment
 const paymentRoutes = require("./route/payment/paymentRoute")
 
+//document upload
+const documentUploadRoutes = require("./route/document/documentUploadRoute")
+
 //all routes for authentication only for both admin and employee
 router.use("/auth/", authRoutes);
 
@@ -41,7 +44,7 @@ router.use("/admin/payment", paymentRoutes);
 router.use("/vendor", vendorRoutes);
 router.use("/invoice", invoiceRoutes);
 router.use("/purchaseOrder", purchaseOrderRoutes);
-
+router.use("/document", documentUploadRoutes);
 
 
 module.exports = router;

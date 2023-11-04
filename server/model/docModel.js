@@ -22,9 +22,12 @@ const docSchema = new Schema({
     required: true,
   },
   uploadedBy: {
-    userId: { type: Schema.Types.ObjectId, ref: User },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: User, // Reference to the User schema
+      required: true,
+    },
     name: String,
-    required: true,
   },
   filePath: {
     type: String,
