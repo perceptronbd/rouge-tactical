@@ -45,7 +45,7 @@ exports.uploadFile = async (req, res) => {
       uploadedBy: {
         user: userId,
       },
-      filePath: fullFilePath, // Use the full file path
+      filePath: fullFilePath, 
     });
 
     await newDoc.save();

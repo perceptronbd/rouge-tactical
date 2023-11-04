@@ -24,19 +24,18 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // Get the user ID from the URL parameters
-    const userId = req.params.userId;
+    // const userId = req.params.userId;
 
-    // Generate the filename as userId_time_originalname
-    const timestamp = Date.now();
+    // const timestamp = Date.now();
     const originalname = file.originalname;
-    const filename = `${userId}_${timestamp}_${originalname}`;
+    const filename = `${originalname}`;
     cb(null, filename);
   },
 });
 
 const upload = multer({ storage });
 
-// Define the file upload route with userId as a parameter
+
 router.put('/upload/:userId', upload.single('file'), checkLogin, documentUploadController.uploadFile);
 
 module.exports = router;
