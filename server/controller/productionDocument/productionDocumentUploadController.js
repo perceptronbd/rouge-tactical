@@ -1,4 +1,4 @@
-const Doc = require('../../model/docModel');
+const Doc = require('../../model/productionDocModel');
 const fs = require('fs');
 const path = require('path'); // Import the 'path' module
 
@@ -11,7 +11,7 @@ exports.uploadFile = async (req, res) => {
     const userId = req.params.userId; // Assuming you have a URL parameter named userId
 
     // Define the upload folder based on the user ID
-    const uploadPath = path.join(__dirname, '../../uploads/employee/', userId);
+    const uploadPath = path.join(__dirname, '../../uploads/production/', userId);
 
     // Create the directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
