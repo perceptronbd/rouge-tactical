@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { checkLogin } = require('../../middleware/token/checkLogin');
-const documentUploadController = require("../../controller/document/documentUploadController");
+const productionDocumentUploadController = require("../../controller/productionDocument/productionDocumentUploadController");
 const router = express.Router();
 const fs = require('fs');
 
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     const userId = req.params.userId;
 
     // Define the upload folder based on the user ID
-    const uploadPath = path.join(__dirname, 'uploads/employee/', userId);
+    const uploadPath = path.join(__dirname, 'uploads/production/', userId);
 
     // Create the directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
@@ -36,6 +36,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-router.put('/upload/:userId', upload.single('file'), checkLogin, documentUploadController.uploadFile);
+router.put('/upload/:userId', upload.single('file'), checkLogin, productionDocumentUploadController.uploadFile);
+
 
 module.exports = router;
