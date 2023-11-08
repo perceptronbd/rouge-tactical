@@ -5,6 +5,8 @@ import { capitalizeFirstLetter, formatDate } from "../../utils";
 import { vendorData } from "../../mock/vendor";
 
 export const PurchasePreview = ({ data }) => {
+  const vendor = vendorData.find((vendor) => vendor.name === data.vendor);
+
   return (
     <>
       {/* Logo & Contact */}
@@ -41,7 +43,7 @@ export const PurchasePreview = ({ data }) => {
       </div>
       {/* Invoice Number & Date */}
       <section className="flex gap-3 rounded-md bg-accent-tertiary-light text-white px-4 py-2 w-fit">
-        <Text type={"thin"}>Order: </Text>
+        <Text type={"thin"}>Order #: </Text>
         <Text type={"bold"}>{data.orderNumber}</Text>
       </section>
       <section className="flex justify-end">
@@ -55,23 +57,18 @@ export const PurchasePreview = ({ data }) => {
       {/* Vendor */}
       <section className="h-60 w-fit">
         <Text type={"bold"} variant={"h3"} className={"pb-2"}>
-          {vendorData.name}
+          {capitalizeFirstLetter(vendor.name)}
         </Text>
         <span className="flex justify-start items-center gap-2 pb-2">
           <FiPhoneCall className="font-bold w-4 h-4" />{" "}
-          <Text> 619-600-1024</Text>
+          <Text> {vendor.phone}</Text>
         </span>
         <span className="flex justify-start items-center gap-2 pb-2">
-          <FiLink className="font-bold w-4 h-4" />{" "}
-          <Text> www.rogue-tac.com</Text>
+          <FiLink className="font-bold w-4 h-4" /> <Text>{vendor.email}</Text>
         </span>
         <span className="flex justify-start items-start gap-2 pb-2">
           <FiMap className="font-bold w-4 h-4" />{" "}
-          <Text className={"w-60"}>
-            {" "}
-            Rogue Tactical - 07 FFL Precision Firearm Manufacturer 6861 Nancy
-            Ridge Dr. Suite B San Diego, CA 92121
-          </Text>
+          <Text className={"w-60"}>{vendor.address}</Text>
         </span>
       </section>
       <section className="w-full h-full" />
@@ -109,7 +106,9 @@ export const PurchasePreview = ({ data }) => {
         <div className="grid grid-cols-2 gap-2 p-2 border-b ">
           <Text type={"thin"}>Status:</Text>
           <div className="flex justify-end">
-            <Text type={"bold"}>{capitalizeFirstLetter(data.status)}</Text>
+            <Text type={"bold"}>
+              {data.status === "close" ? "Closed" : "Open"}
+            </Text>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-2 p-2 border-b">
