@@ -61,7 +61,7 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
             </p>
           </div>
           <div className="flex gap-4 justify-between border-b-2 font-bold">
-            <p className="w-16 text-textColor-light">{`Total`}</p>
+            <p className="w-16 text-textColor">{`Total`}</p>
             <p>{` ${calculateTotal()}`}</p>
           </div>
         </div>
