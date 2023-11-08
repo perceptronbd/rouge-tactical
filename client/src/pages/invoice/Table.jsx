@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-import { SearchInput, Text } from "../../components";
+import { SearchInput } from "../../components";
 import { formatDate } from "../../utils";
 
 export const Table = ({
@@ -34,7 +34,7 @@ export const Table = ({
 
   return (
     <>
-      {data ? (
+      {
         <article className="rounded-lg bg-accent-tertiary-light">
           <div className="flex justify-end p-2">
             <SearchInput value={searchQuery} onChange={handleSearch} />
@@ -82,7 +82,7 @@ export const Table = ({
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="11">
-                      <div className="font-bold text-xl text-foreground my-8 opacity-80">
+                      <div className="flex justify-center items-center font-bold text-xl text-foreground my-8 opacity-80 h-[150px] 3xl:h-[300px]">
                         No Data
                       </div>
                     </td>
@@ -90,8 +90,8 @@ export const Table = ({
                 ) : loading ? (
                   <tr className="text-center">
                     <td colSpan="11">
-                      <div className="font-bold text-xl text-foreground my-8 opacity-80">
-                        Loaging...
+                      <div className="flex justify-center items-center font-bold text-xl text-foreground my-8 opacity-80 h-[150px] 3xl:h-[300px]">
+                        Loading...
                       </div>
                     </td>
                   </tr>
@@ -158,13 +158,7 @@ export const Table = ({
             </table>
           </div>
         </article>
-      ) : (
-        <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
-          <Text h1 className={"text-textColor-light"}>
-            No Such Data
-          </Text>
-        </div>
-      )}
+      }
     </>
   );
 };
