@@ -2,7 +2,15 @@ import React from "react";
 import { cw } from "../../utils/cw";
 
 export const FormInput = (props) => {
-  const { id, onChange, className, errorMessage, label, ...inputProps } = props;
+  const {
+    id,
+    onChange,
+    className,
+    inputClassName,
+    errorMessage,
+    label,
+    ...inputProps
+  } = props;
 
   return (
     <div className={cw("relative my-2 w-72 rt-sm:w-52", className)}>
@@ -12,7 +20,8 @@ export const FormInput = (props) => {
         {...inputProps}
         onChange={onChange}
         className={cw(
-          "peer block border rounded-lg w-72 rt-sm:w-60 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent"
+          "peer block border rounded-lg w-72 rt-sm:w-60 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary placeholder:text-transparent",
+          inputClassName
         )}
       />
       {label && (
