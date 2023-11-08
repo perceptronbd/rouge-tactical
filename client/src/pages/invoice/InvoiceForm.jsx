@@ -60,8 +60,8 @@ export const InvoiceForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(true);
-    setModalMessage("Employee added successfully!");
-    setIsError(true);
+    setModalMessage("Invoice Added Successfully!");
+    setIsError(false);
     console.log(values);
   };
 

@@ -60,8 +60,8 @@ export const PurchaseForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(true);
-    setModalMessage("Employee added successfully!");
-    setIsError(true);
+    setModalMessage("Item Added Successfully!");
+    setIsError(false);
     console.log(values);
   };
 
