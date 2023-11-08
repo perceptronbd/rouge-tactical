@@ -202,7 +202,16 @@ export const EmployeeInfo = () => {
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
-  const [onboardingDocs, setOnboardingDocs] = useState([]);
+  const [onboardingDocs] = useState([
+    { id: 1, label: "Non Disclosure Agreement (NDA)" },
+    { id: 2, label: "New Employee Information Sheet" },
+    { id: 3, label: "Request for Live Scan Service" },
+    { id: 4, label: "Certificate fo Eligibility Information" },
+    { id: 5, label: "Certificate fo Eligibility Application" },
+    { id: 6, label: "Live Scan Locations" },
+    { id: 7, label: "Live Scan Locations" },
+    { id: 8, label: "Live Scan Locations" },
+  ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -243,7 +252,6 @@ export const EmployeeInfo = () => {
             setEmployeeInfo={setEmployeeData}
             setShowForm={setShowModal}
             setShowAddForm={setShowForm}
-            setOnboardingDocs={setOnboardingDocs}
           />
           <ContentModal isOpen={showForm} setShowModal={setShowForm}>
             <Form

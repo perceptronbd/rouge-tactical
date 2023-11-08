@@ -13,10 +13,9 @@ export const Table = ({
   setShowForm,
   setEmployeeInfo,
   setShowAddForm,
-  setOnboardingDocs,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+  // const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -34,18 +33,18 @@ export const Table = ({
     setEmployeeInfo(item);
   };
 
-  const handleRowClick = (index, item) => {
-    // Toggle the selected row and its onboarding status
-    setSelectedRowIndex(index);
-    const updatedItem = {
-      ...item,
-      onboardingComplete: !item.onboardingComplete,
-    };
-    const updatedData = [...data];
-    updatedData[index] = updatedItem;
-    console.log(updatedData, updatedItem);
-    setOnboardingDocs(item.onboardingDocs);
-  };
+  // const handleRowClick = (index, item) => {
+  //   // Toggle the selected row and its onboarding status
+  //   setSelectedRowIndex(index);
+  //   const updatedItem = {
+  //     ...item,
+  //     onboardingComplete: !item.onboardingComplete,
+  //   };
+  //   const updatedData = [...data];
+  //   updatedData[index] = updatedItem;
+  //   console.log(updatedData, updatedItem);
+  //   setOnboardingDocs(item.onboardingDocs);
+  // };
 
   const addUser = () => {
     setShowAddForm(true);
@@ -117,17 +116,8 @@ export const Table = ({
                     <tr
                       key={index}
                       className={cw(
-                        `border-b-2 cursor-pointer ${
-                          selectedRowIndex === index
-                            ? "bg-black"
-                            : "bg-accent-tertiary-light"
-                        } ${
-                          selectedRowIndex === index
-                            ? "text-white"
-                            : "text-foreground"
-                        } hover:bg-opacity-70 transition-all ease-in-out duration-300`
+                        `border-b-2 cursor-pointer ${"bg-accent-tertiary-light"} ${"text-foreground"} hover:bg-opacity-70 transition-all ease-in-out duration-300`
                       )}
-                      onClick={() => handleRowClick(index, item)}
                     >
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.name}
