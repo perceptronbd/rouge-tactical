@@ -7,19 +7,29 @@ const productionSchema = new mongoose.Schema({
         required: true
     },
     batch: {
-        type: Number,
+        type: String,
         required: true
     },
     quantity: {
-        type: Number,
+        type: String,
         required: true
     },
     range: {
-        type: [Number], // an array of numbers
+        min: {
+            type: String,
+            required: true
+        },
+        max: {
+            type: String,
+            required: true
+        }
+    },
+    style: {
+        type: String,
         required: true
     },
     serialNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     missing: {
