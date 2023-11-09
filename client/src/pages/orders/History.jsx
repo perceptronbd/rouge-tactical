@@ -67,6 +67,9 @@ export const Table = ({
                 <tr>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left rt-sm:w-32">
                     Date
+                  </th>{" "}
+                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                    Ordered By
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Item
@@ -89,19 +92,11 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Needed
                   </th>
-                  {role === "admin" && (
-                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                      Ordered By
-                    </th>
-                  )}
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Ordered
                   </th>
                   {role === "admin" && (
                     <>
-                      <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                        Approved
-                      </th>
                       <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                         Delete
                       </th>
@@ -128,6 +123,9 @@ export const Table = ({
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {item.orderedBy}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.item}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
@@ -145,14 +143,22 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.needed}
+                      <td
+                        className={cw("px-1 py-2 3xl:p-4 3xl:py-2 text-center")}
+                      >
+                        <span
+                          className={cw(
+                            "bg-white text-textColor px-2 text-sm font-semibold rounded-full",
+                            {
+                              "text-red-500": item.needed === "Soon",
+                              "text-yellow-500": item.needed === "Urgent",
+                            }
+                          )}
+                        >
+                          {item.needed}
+                        </span>
                       </td>
-                      {role === "admin" && (
-                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                          {item.orderedBy}
-                        </td>
-                      )}
+
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {role === "admin" ? (
                           <Checkbox
@@ -172,17 +178,6 @@ export const Table = ({
                       </td>
                       {role === "admin" && (
                         <>
-                          <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                            <Checkbox
-                              id={item.id}
-                              label={item.approvedRequest ? "Yes" : "No"}
-                              checked={item.approvedRequest}
-                              onClick={() => handleApproveRequest(item.id)}
-                              className={
-                                "bg-foreground flex justify-center items-center rounded-md"
-                              }
-                            />
-                          </td>
                           <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
                             <Button
                               icon={MdDeleteOutline}
@@ -242,6 +237,11 @@ export const History = () => {
     setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   const requestOrders = () => {
     if (updatedItems.length === 0) return;
 
@@ -265,6 +265,7 @@ export const History = () => {
         role={role}
         handleApproveRequest={handleApproveRequest}
         handleOrdered={handleOrdered}
+        handleDelete={handleDelete}
       />
       {role === "admin" && (
         <Button
