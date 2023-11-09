@@ -6,9 +6,9 @@ import { formatDate } from "../../utils";
 export const Table = ({
   data,
   loading,
-  setShowForm,
+  openForm,
   setInvoiceDetails,
-  setShowPreview,
+  openPreview,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
@@ -18,7 +18,7 @@ export const Table = ({
   );
 
   const showInvoicePreview = (item) => {
-    setShowPreview(true);
+    openPreview();
     setInvoiceDetails(item);
   };
 
@@ -28,7 +28,7 @@ export const Table = ({
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openForm();
     setInvoiceDetails(item);
   };
 

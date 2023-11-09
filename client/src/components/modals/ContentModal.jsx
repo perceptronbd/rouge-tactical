@@ -1,11 +1,11 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-export const ContentModal = ({ isOpen, setShowModal, children }) => {
+export const ContentModal = ({ isOpen, closeModal, children }) => {
   if (!isOpen) return null;
 
   const handleClick = () => {
-    setShowModal(false);
+    closeModal();
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { Button, FormInput, Modal, SelectInput } from "../../components";
+import { useModal } from "../../hooks";
 
 const inputFields = [
   {
@@ -112,9 +113,11 @@ const inputFields = [
 ];
 
 export const Form = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  // const [modalMessage, setModalMessage] = useState("");
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
   const [values, setValues] = useState({
     item: "",
     size: "",
@@ -142,9 +145,7 @@ export const Form = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setModalMessage("Employee added successfully!");
-    setIsError(true);
+    openModal("Item Added Successfully!", false);
     console.log(values);
   };
 
@@ -176,7 +177,7 @@ export const Form = () => {
       </Button>
       <Modal
         isOpen={showModal}
-        setShowModal={setShowModal}
+        closeModal={closeModal}
         modalMessage={modalMessage}
         isError={isError}
       />

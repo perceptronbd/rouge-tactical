@@ -3,7 +3,7 @@ import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
+export const Table = ({ data, loading, openEditForm, setPermitDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -33,7 +33,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openEditForm();
     setPermitDetails(item);
   };
 
