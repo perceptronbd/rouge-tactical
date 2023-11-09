@@ -76,4 +76,12 @@ export const permitsInput = [
     ],
     required: true,
   },
+  {
+    id: "alertPriorDeadline",
+    label: "Alert Prior Deadline (Days)",
+    name: "alertPriorDeadline",
+    type: "number",
+    placeholder: "Alert Prior Deadline (Days)",
+    required: true,
+  },
 ];
