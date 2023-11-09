@@ -145,8 +145,20 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.needed}
+                      <td
+                        className={cw("px-1 py-2 3xl:p-4 3xl:py-2 text-center")}
+                      >
+                        <span
+                          className={cw(
+                            "bg-white text-textColor px-2 text-sm font-semibold rounded-full",
+                            {
+                              "text-red-500": item.needed === "Soon",
+                              "text-yellow-500": item.needed === "Urgent",
+                            }
+                          )}
+                        >
+                          {item.needed}
+                        </span>
                       </td>
                       {role === "admin" && (
                         <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
