@@ -5,6 +5,10 @@ const { checkLogin } = require("../../middleware/token/checkLogin");
 
 router.post("/createProduction",checkLogin, prodictionController.createProduction);
 router.get("/getProduction",checkLogin, prodictionController.getAllProductions);
+router.put("/updateProduction",checkLogin, prodictionController.updateProduction);
+router.delete("/deleteProduction",checkLogin, prodictionController.deleteProduction);
+
+
 
 
 module.exports = router;

@@ -266,10 +266,84 @@ const updateInvoice = async (req, res) => {
   }
 };
 
+const updateProduction = async (req, res) => {
+  const {
+    productionId,
+    status,
+    batch,
+    quantity,
+    range,
+    style,
+    serialNumber,
+    missing,
+  } = req.body;
+
+  try {
+    const existingProduction = await Production.findOne({
+      _id: productionId,
+    });
+
+    if (!existingProduction) {
+      return res.status(404).json({ error: "No Production found" });
+    }
+
+    if (status != null && status !== "") {
+      existingProduction.status = status;
+    }
+    if (batch != null && batch !== "") {
+      existingProduction.batch = batch;
+    }
+    if (quantity != null && quantity !== "") {
+      existingProduction.quantity = quantity;
+    }
+    if (range != null && range !== "") {
+      existingProduction.range = range;
+    }
+    if (style != null && style !== "") {
+      existingProduction.style = style;
+    }
+    if (serialNumber != null && serialNumber !== "") {
+      existingProduction.serialNumber = serialNumber;
+    }
+    if (missing != null && missing !== "") {
+      existingProduction.missing = missing;
+    }
+
+    existingProduction.updatedAt = new Date();
+
+    const updatedProduction = await existingProduction.save();
+
+    const formattedUpdatedProduction = {
+      productionId: updatedProduction._id,
+      status: updatedProduction.status,
+      batch: updatedProduction.batch,
+      quantity: updatedProduction.quantity,
+      range: updatedProduction.range,
+      style: updatedProduction.style,
+      serialNumber: updatedProduction.serialNumber,
+      missing: updatedProduction.missing,
+      createdAt: updatedProduction.createdAt,
+      updatedAt: updatedProduction.updatedAt,
+    };
+
+    return res.status(200).json({
+      code: 200,
+      data: {
+        userId: req.userId,
+        updatedProductionData: formattedUpdatedProduction,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating production:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 module.exports = {
   createInvoice,
   getAllInvoice,
   getInvoiceOfSelectedVendor,
   updateInvoice,
+  updateProduction
 };
