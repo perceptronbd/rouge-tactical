@@ -242,6 +242,11 @@ export const History = () => {
     setUpdatedItems((prevItems) => [...prevItems, id]);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   const requestOrders = () => {
     if (updatedItems.length === 0) return;
 
@@ -265,6 +270,7 @@ export const History = () => {
         role={role}
         handleApproveRequest={handleApproveRequest}
         handleOrdered={handleOrdered}
+        handleDelete={handleDelete}
       />
       {role === "admin" && (
         <Button

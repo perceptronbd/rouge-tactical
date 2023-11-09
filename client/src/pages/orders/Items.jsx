@@ -4,17 +4,19 @@ import {
   BiSolidCheckboxChecked,
   BiCheckbox,
 } from "react-icons/bi";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { MdDeleteOutline, MdOutlinePlaylistAdd } from "react-icons/md";
 import { historyData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
+  role,
   handleRequest,
   handleNeededToggle,
   handleEdit,
   handleQuantityEdit,
+  handleDelete,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -71,6 +73,11 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Request
                   </th>
+                  {role === "admin" && (
+                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                      Delete
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -152,6 +159,18 @@ export const Table = ({
                           )}
                         </div>
                       </td>
+                      {role === "admin" && (
+                        <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                          <Button
+                            icon={MdDeleteOutline}
+                            className={"w-8 h-8 m-0 bg-white text-red-500"}
+                            variant={"danger"}
+                            onClick={() => {
+                              handleDelete(item.id);
+                            }}
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))
                 )}
@@ -257,6 +276,11 @@ export const Items = () => {
     }, 2000);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   return (
     <section className="bg-foreground w-full h-full p-4 rounded rounded-tl-none">
       <Table
@@ -267,6 +291,7 @@ export const Items = () => {
         handleNeededToggle={handleNeededToggle}
         handleEdit={handleEdit}
         handleQuantityEdit={handleQuantityEdit}
+        handleDelete={handleDelete}
       />
 
       <Button
