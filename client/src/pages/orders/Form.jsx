@@ -24,7 +24,7 @@ const inputFields = [
     id: "quantity",
     name: "quantity",
     label: "Quantity",
-    type: "text",
+    type: "number",
     placeholder: "Quantity",
     required: true,
     errorMessage: "Please enter a valid phone number",
@@ -37,19 +37,10 @@ const inputFields = [
     placeholder: "Price",
     required: true,
   },
+
   {
-    id: "total amount",
-    name: "total amount",
-    label: "Total Amount",
-    type: "number",
-    placeholder: "Total Amount",
-    required: true,
-    pattern: "[0-9]{10}",
-    errorMessage: "Please enter a valid phone number",
-  },
-  {
-    id: "deposit amount",
-    name: "deposit amount",
+    id: "depositAmount",
+    name: "depositAmount",
     label: "Deposit Amount",
     type: "number",
     placeholder: "Deposit Amount",
@@ -58,8 +49,18 @@ const inputFields = [
     errorMessage: "Please enter a valid phone number",
   },
   {
-    id: "delivered items",
-    name: "delivered items",
+    id: "totalAmount",
+    name: "totalAmount",
+    label: "Total Amount",
+    type: "number",
+    placeholder: "Total Amount",
+    required: true,
+    pattern: "[0-9]{10}",
+    errorMessage: "Please enter a valid phone number",
+  },
+  {
+    id: "deliveredItems",
+    name: "deliveredItems",
     label: "Delivered Items",
     type: "number",
     placeholder: "Delivered Items",
@@ -70,6 +71,7 @@ const inputFields = [
     id: "vendor",
     name: "vendor",
     label: "Vendor",
+    defaultValue: "Select Vendor",
     selectOpts: [
       { value: "id-1", name: "Vendor 1" },
       { value: "id-2", name: "Vendor 2" },
@@ -77,6 +79,7 @@ const inputFields = [
       { value: "id-4", name: "Vendor 4" },
       { value: "id-5", name: "Vendor 5" },
     ],
+    required: true,
   },
   {
     id: "date",
@@ -90,9 +93,10 @@ const inputFields = [
   },
 
   {
-    id: "substitute vendor",
-    name: "substitute vendor",
+    id: "substituteVendor",
+    name: "substituteVendor",
     label: "Substitute Vendor",
+    defaultValue: "Select Substitue Vendor",
     selectOpts: [
       { value: "id-1", name: "Sub-Vendor 1" },
       { value: "id-2", name: "Sub-Vendor 2" },
@@ -100,24 +104,25 @@ const inputFields = [
       { value: "id-4", name: "Sub-Vendor 4" },
       { value: "id-5", name: "Sub-Vendor 5" },
     ],
+    required: true,
   },
   {
     id: "needed",
     name: "needed",
     label: "Needed",
+    defaultValue: "Select",
     selectOpts: [
-      { value: "ASAP", name: "ASAP" },
+      { value: "Urgent", name: "Urgent" },
       { value: "Soon", name: "Soon" },
     ],
+    required: true,
   },
 ];
 
 export const Form = () => {
-  // const [showModal, setShowModal] = useState(false);
-  // const [isError, setIsError] = useState(false);
-  // const [modalMessage, setModalMessage] = useState("");
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
+
   const [values, setValues] = useState({
     item: "",
     size: "",
@@ -133,13 +138,23 @@ export const Form = () => {
   });
 
   const handleChange = (e) => {
-    console.log(e);
     if (e.target) {
-      console.log(e.target.value);
-      setValues({
-        ...values,
-        [e.target.name]: e.target.value,
-      });
+      const { name, value } = e.target;
+      let updatedValues = { ...values, [name]: value };
+
+      // Calculate totalAmount when quantity, price, or depositAmount changes
+      if (name === "quantity" || name === "price" || name === "depositAmount") {
+        const quantity = parseInt(updatedValues.quantity) || 0;
+        const price = parseFloat(updatedValues.price) || 0;
+        const depositAmount = parseFloat(updatedValues.depositAmount) || 0;
+
+        updatedValues.totalamount = (quantity * price - depositAmount).toFixed(
+          2
+        );
+      }
+
+      setValues(updatedValues);
+      console.log(updatedValues);
     }
   };
 
@@ -160,7 +175,7 @@ export const Form = () => {
             <SelectInput {...input} key={input.id} onChange={handleChange} />
           ) : input.id === "vendor" ? (
             <SelectInput {...input} key={input.id} onChange={handleChange} />
-          ) : input.id === "substitute vendor" ? (
+          ) : input.id === "substituteVendor" ? (
             <SelectInput {...input} key={input.id} onChange={handleChange} />
           ) : (
             <FormInput
@@ -168,10 +183,16 @@ export const Form = () => {
               {...input}
               onChange={handleChange}
               className={"my-3"}
+              value={
+                input.name === "totalAmount"
+                  ? values.totalamount
+                  : values[input.name]
+              }
             />
           );
         })}
       </div>
+
       <Button icon={MdOutlinePlaylistAdd} className={"w-48 m-0"}>
         Submit Request
       </Button>
