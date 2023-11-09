@@ -4,6 +4,7 @@ import { UserInfo } from "./UserInfo";
 import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
+import { useModal } from "../../hooks";
 
 const userInfo = {
   name: "Atifulislam Asif",
@@ -199,8 +200,10 @@ const usersData = [
 ];
 
 export const EmployeeInfo = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const { showModal, openModal, closeModal } = useModal();
+
+  //  const [showModal, setShowModal] = useState(false);
+  //const [showForm, setShowForm] = useState(false);
   const [employeeData, setEmployeeData] = useState({});
   const [onboardingDocs] = useState([
     { id: 1, label: "Non Disclosure Agreement (NDA)" },
@@ -250,10 +253,10 @@ export const EmployeeInfo = () => {
           <Table
             data={usersData}
             setEmployeeInfo={setEmployeeData}
-            setShowForm={setShowModal}
-            setShowAddForm={setShowForm}
+            openForm={openModal}
+            openAddForm={openModal}
           />
-          <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+          <ContentModal isOpen={showModal} closeModal={closeModal}>
             <Form
               formTitle={"Add Employee"}
               inputFields={employeeInfoInputs}
@@ -262,7 +265,7 @@ export const EmployeeInfo = () => {
             />
           </ContentModal>
 
-          <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+          <ContentModal isOpen={showModal} closeModal={closeModal}>
             <UpdateForm
               formTitle={"Update Employee Info"}
               inputFields={employeeInfoInputs}

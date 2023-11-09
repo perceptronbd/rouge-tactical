@@ -8,12 +8,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
-export const Table = ({
-  data,
-  setShowForm,
-  setEmployeeInfo,
-  setShowAddForm,
-}) => {
+export const Table = ({ data, openForm, setEmployeeInfo, openAddForm }) => {
   const [searchQuery, setSearchQuery] = useState("");
   // const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
@@ -29,7 +24,7 @@ export const Table = ({
 
   const handleEdit = (item) => {
     console.log("employee info:", item);
-    setShowForm(true);
+    openForm();
     setEmployeeInfo(item);
   };
 
@@ -47,7 +42,7 @@ export const Table = ({
   // };
 
   const addUser = () => {
-    setShowAddForm(true);
+    openAddForm();
   };
 
   return (

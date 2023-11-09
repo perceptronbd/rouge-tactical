@@ -13,6 +13,7 @@ import { serviceGraph, services } from "../../mock/service";
 import { Table } from "./Table";
 import { serviceInputs } from "./serviceInputs";
 import { invoiceGraph } from "../../mock/invoice";
+import { useModal } from "../../hooks";
 
 export const Payments = () => {
   const [data, setData] = useState(services);
@@ -20,7 +21,11 @@ export const Payments = () => {
 
   const [serviceDetails, setServiceDetails] = useState(null);
 
-  const [showForm, setShowForm] = useState(false);
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
 
   const filterOpts = [
     { id: "7 days", name: "7 days" },
@@ -88,7 +93,7 @@ export const Payments = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowForm(false);
+    closeForm();
     console.log(serviceDetails);
   };
 
@@ -120,12 +125,12 @@ export const Payments = () => {
             icon={AiOutlinePlus}
             variant={"ghost"}
             onClick={() => {
-              setShowForm(true);
+              openForm();
             }}
           >
             Add Service
           </Button>
-          <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+          <ContentModal isOpen={showForm} closeModal={closeForm}>
             <Form
               formTitle={"Add Service"}
               inputFields={serviceInputs}

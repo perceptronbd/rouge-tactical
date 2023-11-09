@@ -10,12 +10,22 @@ import { Table } from "./Table";
 import { productionData } from "../../mock/production";
 import { productionInputs } from "./productionInputs";
 import { OnboardingDoc } from "./OnboardingDoc";
+import { useModal } from "../../hooks";
 
 export const Production = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [showForm, setShowForm] = React.useState(false);
-  const [showUpdateForm, setShowUpdateForm] = React.useState(false);
   const [itemData, setItemData] = React.useState({});
+
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
+  const {
+    showModal: showUpdateForm,
+    openModal: openUpdateForm,
+    closeModal: closeUpdateForm,
+  } = useModal();
 
   useEffect(() => {
     setTimeout(() => {
@@ -47,7 +57,7 @@ export const Production = () => {
   };
 
   const handleOpenForm = () => {
-    setShowForm(true);
+    openForm();
   };
 
   const handleSubmit = (e) => {
@@ -61,10 +71,10 @@ export const Production = () => {
         <Table
           data={productionData}
           loading={isLoading}
-          setShowForm={setShowUpdateForm}
+          openUpdateForm={openUpdateForm}
           setItemData={setItemData}
         />
-        <ContentModal isOpen={showUpdateForm} setShowModal={setShowUpdateForm}>
+        <ContentModal isOpen={showUpdateForm} closeModal={closeUpdateForm}>
           <UpdateForm
             formTitle={"Update"}
             inputFields={productionInputs}
@@ -73,7 +83,7 @@ export const Production = () => {
             onSubmit={handleSubmit}
           />
         </ContentModal>
-        <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+        <ContentModal isOpen={showForm} closeModal={closeForm}>
           <Form
             formTitle={"Add Item"}
             inputFields={productionInputs}

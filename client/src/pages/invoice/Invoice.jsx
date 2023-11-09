@@ -20,6 +20,7 @@ import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
+import { useModal } from "../../hooks";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
@@ -34,12 +35,26 @@ export const Invoice = () => {
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
-  const [showPreview, setShowPreview] = useState(false);
-  const [showVendorForm, setShowVendorForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const {
+    showModal: showVendorModal,
+    openModal: openVendorModal,
+    closeModal: closeVendorModal,
+  } = useModal();
+
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
+
+  const {
+    showModal: showPreview,
+    openModal: openPreview,
+    closeModal: closePreview,
+  } = useModal();
+
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
 
   useEffect(() => {
     setLoading(true);
@@ -112,7 +127,7 @@ export const Invoice = () => {
   };
 
   const openVendorForm = () => {
-    setShowVendorForm(true);
+    openVendorModal();
   };
 
   const handleChange = (e) => {
@@ -123,10 +138,8 @@ export const Invoice = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setShowVendorForm(false);
-    setModalMessage("Process Successfull!");
-    setIsError(false);
+    closeVendorModal();
+    openModal("Process Successful!", false);
     console.log(invoiceDetails);
   };
 
@@ -175,9 +188,9 @@ export const Invoice = () => {
         <Table
           data={tableData}
           loading={loadingTable}
-          setShowForm={setShowEditForm}
+          openForm={openForm}
           setInvoiceDetails={setInvoiceDetails}
-          setShowPreview={setShowPreview}
+          openPreview={openPreview}
         />
       </div>
       <Button
@@ -191,7 +204,7 @@ export const Invoice = () => {
       </Button>
 
       {/* Pop up forms */}
-      <ContentModal isOpen={showVendorForm} setShowModal={setShowVendorForm}>
+      <ContentModal isOpen={showVendorModal} closeModal={closeVendorModal}>
         <Form
           formTitle={"Add Vendor"}
           inputFields={vendorInputs}
@@ -201,7 +214,7 @@ export const Invoice = () => {
         />
       </ContentModal>
 
-      <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
+      <ContentModal isOpen={showForm} closeModal={closeForm}>
         <UpdateForm
           formTitle={"Update Invoice"}
           inputFields={invoiceInputs}
@@ -213,14 +226,14 @@ export const Invoice = () => {
       </ContentModal>
       <Preview
         isOpen={showPreview}
-        setShowModal={setShowPreview}
+        closePreview={closePreview}
         data={invoiceDetails}
       >
         <InvoicePreview data={invoiceDetails} />
       </Preview>
       <Modal
         isOpen={showModal}
-        setShowModal={setShowModal}
+        closeModal={closeModal}
         modalMessage={modalMessage}
         isError={isError}
       />

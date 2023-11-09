@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { AiFillPrinter, AiOutlineDownload } from "react-icons/ai";
 import { Button, Checkbox, ContentModal } from "../../components";
 import { AddDocForm } from "./AddDocForm";
+import { useModal } from "../../hooks";
 
 export const OnboardingDoc = ({ data }) => {
   const [isChecked, setIsChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const { showModal, openModal, closeModal } = useModal();
 
   const handleCheckboxChange = () => {
     let checked = false;
@@ -18,7 +19,7 @@ export const OnboardingDoc = ({ data }) => {
   };
 
   const handleAddDoc = () => {
-    setShowModal(true);
+    openModal();
   };
 
   return (
@@ -62,7 +63,7 @@ export const OnboardingDoc = ({ data }) => {
           +
         </Button>
       </div>
-      <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+      <ContentModal isOpen={showModal} closeModal={closeModal}>
         <AddDocForm />
       </ContentModal>
     </article>

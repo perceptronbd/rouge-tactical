@@ -11,18 +11,33 @@ import { Table } from "./Table";
 import { maintenanceData } from "../../mock/maintenance";
 import { maintenanceInputs } from "./maintenanceInputs";
 import { adminFormInputs } from "./adminFormInputs";
+import { useModal } from "../../hooks";
 
 export const Maintenance = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [showAdminForm, setShowAdminForm] = useState(false);
   const [maintenanceDetails, setMaintenanceDetails] = useState({});
 
-  const openForm = () => {
-    setShowForm(true);
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
+  const {
+    showModal: showUpdateForm,
+    openModal: openUpdateForm,
+    closeModal: closeUpdateForm,
+  } = useModal();
+
+  const {
+    showModal: showAdminForm,
+    openModal: openAdminForm,
+    closeModal: closeAdminForm,
+  } = useModal();
+
+  const openFormModal = () => {
+    openForm();
   };
-  const openAdminForm = () => {
-    setShowAdminForm(true);
+  const openAdminFormModal = () => {
+    openAdminForm();
   };
 
   const handleChange = (e) => {
@@ -43,23 +58,23 @@ export const Maintenance = () => {
       <section className="w-full">
         <Table
           data={maintenanceData}
-          setShowForm={setShowModal}
+          openUpdateForm={openUpdateForm}
           setMaintenanceDetails={setMaintenanceDetails}
         />
         <div className="flex gap-2">
-          <Button icon={MdPlaylistAdd} onClick={openForm}>
+          <Button icon={MdPlaylistAdd} onClick={openFormModal}>
             Add New
           </Button>
           <Button
             icon={MdNotificationImportant}
             variant={"highlight"}
-            onClick={openAdminForm}
+            onClick={openAdminFormModal}
           >
             Notify Admin
           </Button>
         </div>
       </section>
-      <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+      <ContentModal isOpen={showUpdateForm} closeModal={closeUpdateForm}>
         <UpdateForm
           formTitle={"Update Maintenance"}
           inputFields={maintenanceInputs}
@@ -68,7 +83,7 @@ export const Maintenance = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+      <ContentModal isOpen={showForm} closeModal={closeForm}>
         <Form
           formTitle={"Add Maintenance"}
           inputFields={maintenanceInputs}
@@ -76,7 +91,7 @@ export const Maintenance = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal isOpen={showAdminForm} setShowModal={setShowAdminForm}>
+      <ContentModal isOpen={showAdminForm} closeModal={closeAdminForm}>
         <Form
           formTitle={"Notify Admin"}
           inputFields={adminFormInputs}

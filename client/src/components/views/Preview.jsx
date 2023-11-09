@@ -6,7 +6,7 @@ import { FiPrinter, FiDownload } from "react-icons/fi";
 import { Button } from "../buttons/Button";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-export const Preview = ({ isOpen, setShowModal, data, children }) => {
+export const Preview = ({ isOpen, closePreview, data, children }) => {
   const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const Preview = ({ isOpen, setShowModal, data, children }) => {
   };
 
   const handleClose = () => {
-    setShowModal(false);
+    closePreview();
     setShowPreview(false);
   };
 

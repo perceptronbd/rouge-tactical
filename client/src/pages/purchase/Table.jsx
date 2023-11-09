@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
-import { SearchInput, Text } from "../../components";
+import { SearchInput } from "../../components";
 import { formatDate } from "../../utils";
 
 export const Table = ({
   data,
   loading,
-  setShowForm,
+  openForm,
   setPurchaseDetails,
-  setShowPreview,
+  openPreview,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -28,12 +28,12 @@ export const Table = ({
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openForm();
     setPurchaseDetails(item);
   };
 
   const showInvoicePreview = (item) => {
-    setShowPreview(true);
+    openPreview();
     setPurchaseDetails(item);
   };
 

@@ -6,7 +6,7 @@ import { cw, formatDate } from "../../utils";
 export const Table = ({
   data,
   loading,
-  setShowForm,
+  openUpdateForm,
   setMaintenanceDetails,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,7 +39,7 @@ export const Table = ({
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openUpdateForm();
     setMaintenanceDetails(item);
   };
 
