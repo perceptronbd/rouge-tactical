@@ -62,6 +62,7 @@ export const maintenanceInputs = [
     id: "status",
     label: "Status",
     name: "status",
+    defaultValue: "Select a status",
     selectOpts: [
       { value: "in progress", name: "In Progress" },
       { value: "complete", name: "Complete" },
