@@ -11,7 +11,7 @@ const createInvoice = async (req, res) => {
     invoiceNumber,
     //receive vendor Id
     vendor,
-    item,
+    items,
     quantity,
     totalAmount,
     depositAmount,
@@ -38,7 +38,7 @@ const createInvoice = async (req, res) => {
       !date ||
       !invoiceNumber ||
       !vendor ||
-      !item ||
+      !items ||
       !quantity ||
       !totalAmount ||
       !depositAmount ||
@@ -53,7 +53,7 @@ const createInvoice = async (req, res) => {
       date: date,
       invoiceNumber: invoiceNumber,
       vendor: vendor,
-      item: item,
+      item: items,
       quantity: quantity,
       totalAmount: totalAmount,
       depositAmount: depositAmount,
@@ -103,7 +103,7 @@ const getAllInvoice = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       totalAmount: data.totalAmount,
       depositAmount: data.depositAmount,
@@ -160,7 +160,7 @@ const getInvoiceOfSelectedVendor = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
-      item: data.item,
+      item: data.items,
       quantity: data.quantity,
       totalAmount: data.totalAmount,
       depositAmount: data.depositAmount,
@@ -189,7 +189,7 @@ const updateInvoice = async (req, res) => {
     date,
     vendor,
     invoiceNumber,
-    item,
+    items,
     quantity,
     totalAmount,
     depositAmount,
@@ -215,8 +215,11 @@ const updateInvoice = async (req, res) => {
     if (invoiceNumber != null && invoiceNumber !== "") {
       existingInvoice.invoiceNumber = invoiceNumber;
     }
-    if (item != null && item !== "") {
-      existingInvoice.item = item;
+    // if (item != null && item !== "") {
+    //   existingInvoice.item = item;
+    // }
+      if (items != null && items.length > 0) {
+      existingInvoice.items = items;
     }
     if (quantity != null && quantity !== "") {
       existingInvoice.quantity = quantity;
@@ -243,7 +246,7 @@ const updateInvoice = async (req, res) => {
       date: updatedInvoice.date,
       invoiceNumber: updatedInvoice.invoiceNumber,
       vendorId: updatedInvoice.vendor,
-      item: updatedInvoice.item,
+      item: updatedInvoice.items,
       quantity: updatedInvoice.quantity,
       totalAmount: updatedInvoice.totalAmount,
       depositAmount: updatedInvoice.depositAmount,
@@ -266,10 +269,84 @@ const updateInvoice = async (req, res) => {
   }
 };
 
+const updateProduction = async (req, res) => {
+  const {
+    productionId,
+    status,
+    batch,
+    quantity,
+    range,
+    style,
+    serialNumber,
+    missing,
+  } = req.body;
+
+  try {
+    const existingProduction = await Production.findOne({
+      _id: productionId,
+    });
+
+    if (!existingProduction) {
+      return res.status(404).json({ error: "No Production found" });
+    }
+
+    if (status != null && status !== "") {
+      existingProduction.status = status;
+    }
+    if (batch != null && batch !== "") {
+      existingProduction.batch = batch;
+    }
+    if (quantity != null && quantity !== "") {
+      existingProduction.quantity = quantity;
+    }
+    if (range != null && range !== "") {
+      existingProduction.range = range;
+    }
+    if (style != null && style !== "") {
+      existingProduction.style = style;
+    }
+    if (serialNumber != null && serialNumber !== "") {
+      existingProduction.serialNumber = serialNumber;
+    }
+    if (missing != null && missing !== "") {
+      existingProduction.missing = missing;
+    }
+
+    existingProduction.updatedAt = new Date();
+
+    const updatedProduction = await existingProduction.save();
+
+    const formattedUpdatedProduction = {
+      productionId: updatedProduction._id,
+      status: updatedProduction.status,
+      batch: updatedProduction.batch,
+      quantity: updatedProduction.quantity,
+      range: updatedProduction.range,
+      style: updatedProduction.style,
+      serialNumber: updatedProduction.serialNumber,
+      missing: updatedProduction.missing,
+      createdAt: updatedProduction.createdAt,
+      updatedAt: updatedProduction.updatedAt,
+    };
+
+    return res.status(200).json({
+      code: 200,
+      data: {
+        userId: req.userId,
+        updatedProductionData: formattedUpdatedProduction,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating production:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 module.exports = {
   createInvoice,
   getAllInvoice,
   getInvoiceOfSelectedVendor,
   updateInvoice,
+  updateProduction
 };

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const User = require("./userModel");
-const docSchema = new Schema({
+const productionDocSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
     auto: true,
@@ -39,6 +39,6 @@ const docSchema = new Schema({
   },
 });
 
-const Doc = mongoose.model("Doc", docSchema);
+const ProductionDoc = mongoose.model("ProductionDoc", productionDocSchema);
 
-module.exports = Doc;
+module.exports = ProductionDoc;

@@ -19,6 +19,15 @@ const invoiceRoutes = require("./route/invoice/invoiceRoute");
 
 const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute");
 
+const productionRoutes = require("./route/production/productionRoute")
+
+//all routes for payment
+const paymentRoutes = require("./route/payment/paymentRoute")
+
+//document upload
+const documentUploadRoutes = require("./route/document/documentUploadRoute")
+const productionDocumentUploadRoutes = require("./route/productionDocument/productionDocumentUploadRoute")
+
 //all routes for authentication only for both admin and employee
 router.use("/auth/", authRoutes);
 
@@ -32,10 +41,15 @@ router.use("/role/", checkPermissionRoutes);
 //all routes for admin
 router.use("/admin/user", userRoutes);
 router.use("/admin/order", adminOrderRoutes);
+router.use("/admin/payment", paymentRoutes);
+router.use("/admin/production", productionRoutes);
+
 
 //other routes
 router.use("/vendor", vendorRoutes);
 router.use("/invoice", invoiceRoutes);
 router.use("/purchaseOrder", purchaseOrderRoutes);
+router.use("/document", documentUploadRoutes);
+router.use("/production-document", productionDocumentUploadRoutes);
 
 module.exports = router;
