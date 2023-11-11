@@ -15,7 +15,9 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
     const formattedUsers = existingUser.map((data) => ({
       userId: data._id,
       name: data.name,
-      workEmail: data.email,
+      personalEmail: data.personalEmail,
+      workEmail: data.workEmail,
+      preferredEmail: data.preferredEmail,
       phone: data.phone,
       DOB: data.DOB,
       position: data.position,
@@ -59,14 +61,14 @@ const addEmployee = async (req, res) => {
 
     const existingUser = await User.findOne({ _id: req.userId, role: "admin" });
     const existingEmployee = await User.findOne({
-      $or: [{ email : workEmail }, { personalEmail : personalEmail }],
+      $or: [{ workEmail: workEmail }, { personalEmail: personalEmail }],
     });
 
     console.log(existingUser);
     console.log(existingEmployee);
 
     if (existingEmployee) {
-      if (existingEmployee.email === workEmail) {
+      if (existingEmployee.workEmail === workEmail) {
         res.status(400).json({
           message:
             "Employee with such Organization email already exists! Please try with different Organization email",
@@ -76,7 +78,7 @@ const addEmployee = async (req, res) => {
           message:
             "Employee with such Personal email already exists! Please try with different Personal email",
         });
-      } 
+      }
       return;
     }
     var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
@@ -91,15 +93,16 @@ const addEmployee = async (req, res) => {
       const hashedPassword = await bcrypt.hash(decryptedPassword, 10);
       const newEmployee = new User({
         name: name,
-        email: workEmail,
+        workEmail: workEmail,
         personalEmail: personalEmail,
+        preferredEmail: personalEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
         position: position,
         role: role,
         emergencyContact: emergencyContact,
-        address :address,
+        address: address,
         startDate: startDate,
         endDate: endDate,
       });
@@ -115,6 +118,7 @@ const addEmployee = async (req, res) => {
           name: newEmployee.name,
           workEmail: newEmployee.email,
           personalEmail: newEmployee.personalEmail,
+          preferredEmail: newEmployee.preferredEmail,
           phone: newEmployee.phone,
           DOB: newEmployee.DOB,
           position: newEmployee.position,
