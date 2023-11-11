@@ -2,6 +2,7 @@ export const permitsData = [
   {
     id: 1,
     permit: "Permit 1",
+    expirationDate: "2023-09-30",
     form: "Form 1",
     renewalProcess: "Process 1",
     renewalDuration: "1 year",
@@ -13,6 +14,7 @@ export const permitsData = [
   {
     id: 2,
     permit: "Permit 2",
+    expirationDate: "2023-10-30",
     form: "Form 2",
     renewalProcess: "Process 2",
     renewalDuration: "6 months",
@@ -24,6 +26,7 @@ export const permitsData = [
   {
     id: 3,
     permit: "Permit 3",
+    expirationDate: "2023-12-31",
     form: "Form 3",
     renewalProcess: "Process 3",
     renewalDuration: "2 years",
@@ -36,6 +39,7 @@ export const permitsData = [
   {
     id: 4,
     permit: "Permit 4",
+    expirationDate: "2023-2-1",
     form: "Form 4",
     renewalProcess: "Process 4",
     renewalDuration: "1 year",
@@ -47,6 +51,7 @@ export const permitsData = [
   {
     id: 5,
     permit: "Permit 5",
+    expirationDate: "2023-3-31",
     form: "Form 5",
     renewalProcess: "Process 5",
     renewalDuration: "6 months",
@@ -58,6 +63,7 @@ export const permitsData = [
   {
     id: 6,
     permit: "Permit 6",
+    expirationDate: "2023-12-31",
     form: "Form 6",
     renewalProcess: "Process 6",
     renewalDuration: "2 years",
@@ -69,6 +75,7 @@ export const permitsData = [
   {
     id: 7,
     permit: "Permit 7",
+    expirationDate: "2023-12-31",
     form: "Form 7",
     renewalProcess: "Process 7",
     renewalDuration: "1 year",
@@ -80,6 +87,7 @@ export const permitsData = [
   {
     id: 8,
     permit: "Permit 8",
+    expirationDate: "2023-12-31",
     form: "Form 8",
     renewalProcess: "Process 8",
     renewalDuration: "6 months",
@@ -91,6 +99,7 @@ export const permitsData = [
   {
     id: 9,
     permit: "Permit 9",
+    expirationDate: "2023-12-31",
     form: "Form 9",
     renewalProcess: "Process 9",
     renewalDuration: "2 years",
@@ -102,6 +111,7 @@ export const permitsData = [
   {
     id: 10,
     permit: "Permit 10",
+    expirationDate: "2023-12-31",
     form: "Form 10",
     renewalProcess: "Process 10",
     renewalDuration: "1 year",
@@ -113,6 +123,7 @@ export const permitsData = [
   {
     id: 11,
     permit: "Permit 11",
+    expirationDate: "2023-12-31",
     form: "Form 11",
     renewalProcess: "Process 11",
     renewalDuration: "6 months",
@@ -124,6 +135,7 @@ export const permitsData = [
   {
     id: 12,
     permit: "Permit 12",
+    expirationDate: "2023-12-31",
     form: "Form 12",
     renewalProcess: "Process 12",
     renewalDuration: "2 years",
@@ -135,6 +147,7 @@ export const permitsData = [
   {
     id: 13,
     permit: "Permit 13",
+    expirationDate: "2023-12-31",
     form: "Form 13",
     renewalProcess: "Process 13",
     renewalDuration: "1 year",
@@ -146,6 +159,7 @@ export const permitsData = [
   {
     id: 14,
     permit: "Permit 14",
+    expirationDate: "2023-12-31",
     form: "Form 14",
     renewalProcess: "Process 14",
     renewalDuration: "6 months",
@@ -157,6 +171,7 @@ export const permitsData = [
   {
     id: 15,
     permit: "Permit 15",
+    expirationDate: "2023-12-31",
     form: "Form 15",
     renewalProcess: "Process 15",
     renewalDuration: "2 years",
@@ -168,6 +183,7 @@ export const permitsData = [
   {
     id: 16,
     permit: "Permit 16",
+    expirationDate: "2023-12-31",
     form: "Form 16",
     renewalProcess: "Process 16",
     renewalDuration: "1 year",
@@ -179,6 +195,7 @@ export const permitsData = [
   {
     id: 17,
     permit: "Permit 17",
+    expirationDate: "2023-12-31",
     form: "Form 17",
     renewalProcess: "Process 17",
     renewalDuration: "6 months",
@@ -190,6 +207,7 @@ export const permitsData = [
   {
     id: 18,
     permit: "Permit 18",
+    expirationDate: "2023-12-31",
     form: "Form 18",
     renewalProcess: "Process 18",
     renewalDuration: "2 years",
@@ -201,6 +219,7 @@ export const permitsData = [
   {
     id: 19,
     permit: "Permit 19",
+    expirationDate: "2023-12-31",
     form: "Form 19",
     renewalProcess: "Process 19",
     renewalDuration: "1 year",
@@ -212,6 +231,7 @@ export const permitsData = [
   {
     id: 20,
     permit: "Permit 20",
+    expirationDate: "2023-12-31",
     form: "Form 20",
     renewalProcess: "Process 20",
     renewalDuration: "6 months",

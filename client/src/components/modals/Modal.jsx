@@ -2,11 +2,11 @@ import React from "react";
 import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 import { BiCheckCircle } from "react-icons/bi";
 
-export const Modal = ({ isOpen, setShowModal, modalMessage, isError }) => {
+export const Modal = ({ isOpen, closeModal, modalMessage, isError }) => {
   if (!isOpen) return null;
 
   const handleClick = () => {
-    setShowModal(false);
+    closeModal();
   };
 
   return (

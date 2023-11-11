@@ -3,7 +3,7 @@ import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
-export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
+export const Table = ({ data, loading, openEditForm, setPermitDetails }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -33,7 +33,7 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openEditForm();
     setPermitDetails(item);
   };
 
@@ -51,6 +51,9 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                 <tr>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Permit
+                  </th>
+                  <th className="px-1 py-4 3xl:p-4 font-medium text-left">
+                    Expiration Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Form
@@ -107,6 +110,9 @@ export const Table = ({ data, loading, setShowForm, setPermitDetails }) => {
                     >
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.permit}
+                      </td>
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
+                        {formatDate(item.expirationDate)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.form}

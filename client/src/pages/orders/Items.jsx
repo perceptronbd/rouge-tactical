@@ -4,17 +4,19 @@ import {
   BiSolidCheckboxChecked,
   BiCheckbox,
 } from "react-icons/bi";
-import { MdOutlinePlaylistAdd } from "react-icons/md";
-import { historyData as initialData } from "../../mock/history";
+import { MdDeleteOutline, MdOutlinePlaylistAdd } from "react-icons/md";
+import { historyData } from "../../mock/history";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
 export const Table = ({
   data,
+  role,
   handleRequest,
   handleNeededToggle,
   handleEdit,
   handleQuantityEdit,
+  handleDelete,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -43,7 +45,7 @@ export const Table = ({
             <table className="w-full border-collapse rt-sm:text-xs">
               <thead className="text-xs text-white uppercase border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>
-                  <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
+                  <th className="px-4 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
                     Date
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
@@ -71,6 +73,11 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Request
                   </th>
+                  {role === "admin" && (
+                    <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
+                      Delete
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="text-white">
@@ -88,7 +95,7 @@ export const Table = ({
                       key={index}
                       className={`border-b-2 border-foreground bg-accent-tertiary-light hover:bg-accent-tertiary-hover transition-all ease-in-out duration-300`}
                     >
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-20">
+                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left rt-sm:w-20">
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
@@ -126,13 +133,13 @@ export const Table = ({
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.substituteVendor}
                       </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left transition-all ease-in-out duration-300">
+                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 transition-all ease-in-out duration-300">
                         <div
                           className={cw(
-                            ` bg-foreground font-semibold rounded-md px-2 py-1 text-center cursor-pointer`,
-                            item.needed === "Urgent"
-                              ? "text-red-500"
-                              : "text-yellow-500"
+                            ` bg-foreground font-semibold w-24 rounded-md px-2 py-1 text-center cursor-pointer`,
+                            item.needed === "Soon"
+                              ? "text-yellow-500"
+                              : "text-red-500"
                           )}
                           onClick={() => handleNeededToggle(item.id)}
                         >
@@ -152,6 +159,18 @@ export const Table = ({
                           )}
                         </div>
                       </td>
+                      {role === "admin" && (
+                        <td className="px-4 py-2 3xl:p-4 3xl:py-2 ">
+                          <Button
+                            icon={MdDeleteOutline}
+                            className={"w-8 h-8 m-0 bg-white text-red-500"}
+                            variant={"danger"}
+                            onClick={() => {
+                              handleDelete(item.id);
+                            }}
+                          />
+                        </td>
+                      )}
                     </tr>
                   ))
                 )}
@@ -171,7 +190,7 @@ export const Table = ({
 };
 
 export const Items = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState(historyData);
   const [updatedItems, setUpdatedItems] = useState([]);
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -257,6 +276,11 @@ export const Items = () => {
     }, 2000);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+  };
+
   return (
     <section className="bg-foreground w-full h-full p-4 rounded rounded-tl-none">
       <Table
@@ -267,7 +291,9 @@ export const Items = () => {
         handleNeededToggle={handleNeededToggle}
         handleEdit={handleEdit}
         handleQuantityEdit={handleQuantityEdit}
+        handleDelete={handleDelete}
       />
+
       <Button
         disabled={!isDataUpdated}
         onClick={requestOrders}

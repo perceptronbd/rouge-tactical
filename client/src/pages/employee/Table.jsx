@@ -8,15 +8,9 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { Button, SearchInput, Text } from "../../components";
 import { cw, formatDate } from "../../utils";
 
-export const Table = ({
-  data,
-  setShowForm,
-  setEmployeeInfo,
-  setShowAddForm,
-  setOnboardingDocs,
-}) => {
+export const Table = ({ data, openForm, setEmployeeInfo, openAddForm }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+  // const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -30,25 +24,25 @@ export const Table = ({
 
   const handleEdit = (item) => {
     console.log("employee info:", item);
-    setShowForm(true);
+    openForm();
     setEmployeeInfo(item);
   };
 
-  const handleRowClick = (index, item) => {
-    // Toggle the selected row and its onboarding status
-    setSelectedRowIndex(index);
-    const updatedItem = {
-      ...item,
-      onboardingComplete: !item.onboardingComplete,
-    };
-    const updatedData = [...data];
-    updatedData[index] = updatedItem;
-    console.log(updatedData, updatedItem);
-    setOnboardingDocs(item.onboardingDocs);
-  };
+  // const handleRowClick = (index, item) => {
+  //   // Toggle the selected row and its onboarding status
+  //   setSelectedRowIndex(index);
+  //   const updatedItem = {
+  //     ...item,
+  //     onboardingComplete: !item.onboardingComplete,
+  //   };
+  //   const updatedData = [...data];
+  //   updatedData[index] = updatedItem;
+  //   console.log(updatedData, updatedItem);
+  //   setOnboardingDocs(item.onboardingDocs);
+  // };
 
   const addUser = () => {
-    setShowAddForm(true);
+    openAddForm();
   };
 
   return (
@@ -78,7 +72,7 @@ export const Table = ({
                     Position
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
-                    Work Email
+                    Email
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-center">
                     Phone
@@ -117,17 +111,8 @@ export const Table = ({
                     <tr
                       key={index}
                       className={cw(
-                        `border-b-2 cursor-pointer ${
-                          selectedRowIndex === index
-                            ? "bg-black"
-                            : "bg-accent-tertiary-light"
-                        } ${
-                          selectedRowIndex === index
-                            ? "text-white"
-                            : "text-foreground"
-                        } hover:bg-opacity-70 transition-all ease-in-out duration-300`
+                        `border-b-2 cursor-pointer ${"bg-accent-tertiary-light"} ${"text-foreground"} hover:bg-opacity-70 transition-all ease-in-out duration-300`
                       )}
-                      onClick={() => handleRowClick(index, item)}
                     >
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
                         {item.name}
@@ -136,7 +121,7 @@ export const Table = ({
                         {item.position}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.workEmail}
+                        {item.preferredEmail}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.phone}

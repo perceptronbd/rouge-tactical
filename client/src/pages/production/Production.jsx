@@ -1,14 +1,31 @@
 import React, { useEffect } from "react";
-import { Container, ContentModal, UpdateForm } from "../../components";
+import {
+  Button,
+  Container,
+  ContentModal,
+  Form,
+  UpdateForm,
+} from "../../components";
 import { Table } from "./Table";
 import { productionData } from "../../mock/production";
 import { productionInputs } from "./productionInputs";
 import { OnboardingDoc } from "./OnboardingDoc";
+import { useModal } from "../../hooks";
 
 export const Production = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [showForm, setShowForm] = React.useState(false);
   const [itemData, setItemData] = React.useState({});
+
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
+  const {
+    showModal: showUpdateForm,
+    openModal: openUpdateForm,
+    closeModal: closeUpdateForm,
+  } = useModal();
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,6 +56,10 @@ export const Production = () => {
     setItemData(updatedItemData);
   };
 
+  const handleOpenForm = () => {
+    openForm();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(itemData);
@@ -46,14 +67,14 @@ export const Production = () => {
 
   return (
     <Container>
-      <section className="w-full">
+      <section className="w-full h-[260px]">
         <Table
           data={productionData}
           loading={isLoading}
-          setShowForm={setShowForm}
+          openUpdateForm={openUpdateForm}
           setItemData={setItemData}
         />
-        <ContentModal isOpen={showForm} setShowModal={setShowForm}>
+        <ContentModal isOpen={showUpdateForm} closeModal={closeUpdateForm}>
           <UpdateForm
             formTitle={"Update"}
             inputFields={productionInputs}
@@ -62,6 +83,19 @@ export const Production = () => {
             onSubmit={handleSubmit}
           />
         </ContentModal>
+        <ContentModal isOpen={showForm} closeModal={closeForm}>
+          <Form
+            formTitle={"Add Item"}
+            inputFields={productionInputs}
+            handleChange={handleItemData}
+            onSubmit={handleSubmit}
+          />
+        </ContentModal>
+      </section>
+      <section className="w-full">
+        <Button className={"m-0"} onClick={handleOpenForm}>
+          Add Item
+        </Button>
       </section>
       <section className="w-full h-full">
         <OnboardingDoc role={"admin"} />

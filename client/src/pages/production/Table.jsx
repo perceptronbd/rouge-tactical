@@ -2,12 +2,12 @@ import React from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { Text } from "../../components";
 
-export const Table = ({ data, loading, setShowForm, setItemData }) => {
+export const Table = ({ data, loading, openUpdateForm, setItemData }) => {
   const COLORS = ["#9F97F7", "#0088FE", "#00C49F", "#FFB44F"];
 
   const handleEdit = (item) => {
     console.log(item);
-    setShowForm(true);
+    openUpdateForm();
     setItemData(item);
   };
 
@@ -15,7 +15,7 @@ export const Table = ({ data, loading, setShowForm, setItemData }) => {
     <>
       {data ? (
         <article className="rounded-lg bg-accent-tertiary-light">
-          <div className="overflow-y-auto rounded-b-lg rounded-t-lg bg-accent-tertiary">
+          <div className="max-h-[260px] 3xl:max-h-[900px] overflow-y-auto rounded-b-lg rounded-t-lg bg-accent-tertiary">
             <table className="w-full border-collapse">
               <thead className="text-xs text-white border-b-2 border-background bg-accent-tertiary sticky top-0">
                 <tr>

@@ -20,4 +20,12 @@ export const adminFormInputs = [
       { value: "asif", name: "Asif" },
     ],
   },
+  {
+    id: "alertPriorDeadline",
+    label: "Alert Prior Deadline (Days)",
+    name: "alertPriorDeadline",
+    type: "number",
+    placeholder: "Alert Prior Deadline (Days)",
+    required: true,
+  },
 ];

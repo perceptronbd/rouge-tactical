@@ -10,16 +10,24 @@ import {
 } from "../../components";
 import { permitsInput } from "./permitsInput";
 import { MdPostAdd } from "react-icons/md";
+import { useModal } from "../../hooks";
 
 export const Permits = () => {
   //data states
   const [permitsDetails, setPermitsDetails] = useState(null);
   //modal states
-  const [showPermitsForm, setShowPermitsForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
+  const {
+    showModal: showPermits,
+    openModal: openPermits,
+    closeModal: closePermits,
+  } = useModal();
+  const {
+    showModal: showEditForm,
+    openModal: openEditForm,
+    closeModal: closeEditForm,
+  } = useModal();
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -27,20 +35,17 @@ export const Permits = () => {
   };
 
   const openPermitsFrom = () => {
-    setShowPermitsForm(true);
+    openPermits();
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setModalMessage("Process Successfull!");
-    setIsError(false);
-    console.log(permitsDetails);
+    openModal("Process Successfull!", false);
   };
 
   return (
     <section className={"w-full p-2 h-full bg-foreground rounded-xl"}>
-      <ContentModal isOpen={showPermitsForm} setShowModal={setShowPermitsForm}>
+      <ContentModal isOpen={showPermits} closeModal={closePermits}>
         <Form
           formTitle={"Add Permit"}
           inputFields={permitsInput}
@@ -48,7 +53,7 @@ export const Permits = () => {
           onSubmit={onSubmit}
         />
       </ContentModal>
-      <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
+      <ContentModal isOpen={showEditForm} closeModal={closeEditForm}>
         <UpdateForm
           formTitle={"Update Permit"}
           inputFields={permitsInput}
@@ -59,14 +64,14 @@ export const Permits = () => {
       </ContentModal>
       <Modal
         isOpen={showModal}
-        setShowModal={setShowModal}
-        message={modalMessage}
+        closeModal={closeModal}
+        modalMessage={modalMessage}
         isError={isError}
       />
       <div>
         <Table
           data={permitsData}
-          setShowForm={setShowEditForm}
+          openEditForm={openEditForm}
           setPermitDetails={setPermitsDetails}
         />
       </div>

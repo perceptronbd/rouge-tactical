@@ -20,6 +20,7 @@ import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { purchaseInputs } from "./purchaseInputs";
 import { PurchasePreview } from "./PurchasePreview";
+import { useModal } from "../../hooks";
 
 export const Purchase = () => {
   const navaigate = useNavigate();
@@ -33,13 +34,28 @@ export const Purchase = () => {
   const [loading, setLoading] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
+
   //modal states
-  const [showPreview, setShowPreview] = useState(false);
-  const [showVendorForm, setShowVendorForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const {
+    showModal: showVendorModal,
+    openModal: openVendorModal,
+    closeModal: closeVendorModal,
+  } = useModal();
+
+  const {
+    showModal: showForm,
+    openModal: openForm,
+    closeModal: closeForm,
+  } = useModal();
+
+  const {
+    showModal: showPreview,
+    openModal: openPreview,
+    closeModal: closePreview,
+  } = useModal();
+
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
 
   useEffect(() => {
     setLoading(true);
@@ -110,7 +126,7 @@ export const Purchase = () => {
   };
 
   const openVendorForm = () => {
-    setShowVendorForm(true);
+    openVendorModal();
   };
 
   const handleChange = (e) => {
@@ -121,10 +137,9 @@ export const Purchase = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setShowVendorForm(false);
-    setModalMessage("Process Successfull!");
-    setIsError(false);
+
+    closeVendorModal();
+    openModal("Purchase Order Updated Successfully", false);
     console.log(purchaseDetails);
   };
 
@@ -177,9 +192,9 @@ export const Purchase = () => {
         <Table
           data={tableData}
           loading={loadingTable}
-          setShowForm={setShowEditForm}
+          openForm={openForm}
           setPurchaseDetails={setPurchaseDetails}
-          setShowPreview={setShowPreview}
+          openPreview={openPreview}
         />
       </div>
       <Button
@@ -191,7 +206,7 @@ export const Purchase = () => {
       </Button>
 
       {/* Pop up forms */}
-      <ContentModal isOpen={showVendorForm} setShowModal={setShowVendorForm}>
+      <ContentModal isOpen={showVendorModal} closeModal={closeVendorModal}>
         <Form
           formTitle={"Add Vendor"}
           inputFields={vendorInputs}
@@ -201,7 +216,7 @@ export const Purchase = () => {
         />
       </ContentModal>
 
-      <ContentModal isOpen={showEditForm} setShowModal={setShowEditForm}>
+      <ContentModal isOpen={showForm} closeModal={closeForm}>
         <UpdateForm
           formTitle={"Update Purchase Order"}
           inputFields={purchaseInputs}
@@ -212,14 +227,14 @@ export const Purchase = () => {
       </ContentModal>
       <Preview
         isOpen={showPreview}
-        setShowModal={setShowPreview}
+        closePreview={closePreview}
         data={purchaseDetails}
       >
         <PurchasePreview data={purchaseDetails} />
       </Preview>
       <Modal
         isOpen={showModal}
-        setShowModal={setShowModal}
+        closeModal={closeModal}
         modalMessage={modalMessage}
         isError={isError}
       />

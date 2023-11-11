@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { Text } from "../../components";
 import { formatDate } from "../../utils";
 
 export const UserInfo = ({ data }) => {
+  const [email, setEmail] = useState(data.preferredEmail);
+  const [loading, setLoading] = useState(false);
+
+  const toggleEmail = () => {
+    setLoading(true);
+    if (email === data.personalEmail) {
+      setEmail(data.workEmail);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    } else {
+      setEmail(data.personalEmail);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
+
   return (
     <article className="w-fit h-42 flex gap-8 border rounded p-3">
       <div className="bg-accent-secondary w-32 h-32  flex font-thin justify-center items-center rounded">
@@ -29,7 +47,20 @@ export const UserInfo = ({ data }) => {
           <Text className={"text-accent-secondary rounded-full"} type={"bold"}>
             {data.position}
           </Text>
-          <Text>{data.email}</Text>
+          <button
+            className="px-4 rounded-md w-48 bg-accent-tertiary text-white"
+            onClick={() => {
+              toggleEmail();
+            }}
+          >
+            <>
+              {loading ? (
+                <span className="opacity-75">laoding...</span>
+              ) : (
+                <span>{email}</span>
+              )}
+            </>
+          </button>
           <Text>{data.phone}</Text>
           <Text>{formatDate(data.DOB)}</Text>
         </div>
