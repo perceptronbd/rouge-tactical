@@ -11,12 +11,9 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // Decrypt the password from the request body
-    var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
-    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-    console.log(decryptedPassword);
 
     const existingUser = await User.findOne({ preferredEmail: email });
-    console.log(existingUser);
+    console.log("existingUser", existingUser);
 
     if (!existingUser) {
       res.status(401).json({ error: "User with such email doesn't exist" });
@@ -24,7 +21,7 @@ const loginUser = async (req, res) => {
       const hashedPassword = existingUser.password;
 
       // Compare the decrypted password with the stored hashed password
-      bcrypt.compare(decryptedPassword, hashedPassword).then((match) => {
+      bcrypt.compare(password, hashedPassword).then((match) => {
         if (!match) {
           res
             .status(400)
