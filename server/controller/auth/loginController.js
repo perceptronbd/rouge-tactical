@@ -15,7 +15,8 @@ const loginUser = async (req, res) => {
     var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
     console.log(decryptedPassword);
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ preferredEmail: email });
+    console.log(existingUser);
 
     if (!existingUser) {
       res.status(401).json({ error: "User with such email doesn't exist" });
