@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormInput, Button, LinkText, Modal } from "../../components";
 import { useAuth } from "../../contexts/AuthContext";
 import { loginAPI } from "../../api/auth/login";
+import { useModal } from "../../hooks/useModal";
 
 export const Login = () => {
   const [values, setValues] = useState({
@@ -9,9 +10,8 @@ export const Login = () => {
     password: "",
   });
 
-  const [errMsg, setErrMsg] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
 
   const { login } = useAuth();
 
@@ -47,9 +47,7 @@ export const Login = () => {
       if (response.code === 200) {
         login(response);
       } else {
-        setIsError(true);
-        setErrMsg(response.error);
-        setShowModal(true);
+        openModal(response.message, true);
       }
     } catch (error) {
       console.log(error);
@@ -87,9 +85,9 @@ export const Login = () => {
           </Button>
           <Modal
             isOpen={showModal}
-            setShowModal={setShowModal}
+            closeModal={closeModal}
             isError={isError}
-            modalMessage={errMsg}
+            modalMessage={modalMessage}
           ></Modal>
         </form>
       </section>
