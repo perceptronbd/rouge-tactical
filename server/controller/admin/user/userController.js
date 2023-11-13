@@ -44,7 +44,6 @@ const addEmployee = async (req, res) => {
       phone,
       workEmail,
       personalEmail,
-      preferredEmail,
       password,
       DOB,
       position,
@@ -68,13 +67,11 @@ const addEmployee = async (req, res) => {
     if (existingEmployee) {
       if (existingEmployee.workEmail === workEmail) {
         res.status(400).json({
-          message:
-            "Employee with such Organization email already exists! Please try with different Organization email",
+          message: "Provided Work Email is already registered!",
         });
       } else if (existingEmployee.personalEmail === personalEmail) {
         res.status(400).json({
-          message:
-            "Employee with such Personal email already exists! Please try with different Personal email",
+          message: "Provided Personal Email is already registered!",
         });
       }
       return;
@@ -93,7 +90,7 @@ const addEmployee = async (req, res) => {
         name: name,
         workEmail: workEmail,
         personalEmail: personalEmail,
-        preferredEmail: preferredEmail,
+        preferredEmail: workEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
