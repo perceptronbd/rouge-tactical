@@ -54,8 +54,7 @@ const createUser = async (req, res) => {
       await newUser.save();
       console.log("newUser", newUser);
 
-      res.json({
-        code: 200,
+      res.status(200).json({
         data: {
           userId: newUser._id,
           name: newUser.name,
