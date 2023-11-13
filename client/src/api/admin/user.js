@@ -24,10 +24,13 @@ export const createUser = async (data) => {
   }
 };
 
-export const updateUser = async (id, data) => {
+export const updateUser = async (userId, data) => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).put("/user/updateEmployee/" + id, data);
+    const res = await authURL(token).put(
+      "/user/updateEmployee/" + userId,
+      data
+    );
 
     return res;
   } catch (error) {
