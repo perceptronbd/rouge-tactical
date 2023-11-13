@@ -11,7 +11,12 @@ import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
 import { useModal } from "../../hooks";
-import { createUser, getAllUsers, updateUser } from "../../api/admin/user";
+import {
+  createUser,
+  deleteUser,
+  getAllUsers,
+  updateUser,
+} from "../../api/admin/user";
 import { useAuth } from "../../contexts/AuthContext";
 
 const DEFAULT_PASSWORD = "RT12345!";
@@ -103,6 +108,22 @@ export const EmployeeInfo = () => {
     }
   };
 
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      deleteUser(employeeData.userId).then((res) => {
+        if (res.status === 200) {
+          openModal(res.data.message, false);
+          closeUpdateForm();
+          fetchAllUsers();
+        } else openModal(res.data.message, true);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchAllUsers = () => {
     getAllUsers()
       .then((res) => {
@@ -145,6 +166,7 @@ export const EmployeeInfo = () => {
               data={employeeData}
               handleChange={handleChange}
               onSubmit={handleUpdateUser}
+              handleDelete={handleDeleteUser}
             />
           </ContentModal>
         </section>

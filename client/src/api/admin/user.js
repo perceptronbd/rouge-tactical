@@ -38,3 +38,15 @@ export const updateUser = async (userId, data) => {
     return error.response;
   }
 };
+
+export const deleteUser = async (userId) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).delete("/user/deleteEmployee/" + userId);
+
+    return res;
+  } catch (error) {
+    console.log("error status code:", error);
+    return error.response;
+  }
+};
