@@ -29,11 +29,8 @@ const getProfileDataOfLoggedInEmployee = async (req, res) => {
     }));
 
     // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        employeeProfileData: formattedUsers,
-      },
+    res.status(200).json({
+      data: formattedUsers,
     });
   } catch (error) {
     console.error("Error fetching users data:", error);
