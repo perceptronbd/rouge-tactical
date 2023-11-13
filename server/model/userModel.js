@@ -29,19 +29,19 @@ const userSchema = new Schema({
   },
   personalEmail: {
     type: String,
-    required: [true, "Please add a email"],
+    required: [true, "Please add a personal email"],
     unique: true,
     trim: true,
   },
   workEmail: {
     type: String,
+    required: [true, "Please add a work email"],
     unique: true,
     trim: true,
   },
   preferredEmail: {
     type: String,
-    required: [true, "Please add a email"],
-    unique: true,
+    required: [true, "Please add a preferred email"],
     trim: true,
   },
   DOB: {

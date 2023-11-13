@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   }, [user, token]);
 
   const login = (data) => {
-    setUser(data.data.userData);
+    setUser(data.userData);
     setToken(data.token);
   };
 

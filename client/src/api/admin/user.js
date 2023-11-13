@@ -1,12 +1,9 @@
 import { authURL } from "../axiosInstance/authURL";
-import { baseURL } from "../axiosInstance/baseURL";
 
 export const getAllUsers = async () => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).get("/admin/user/getAllUserData");
-
-    console.log("res", res.data);
+    const res = await authURL(token).get("/user/getAllUserData");
 
     return res.data;
   } catch (error) {
@@ -16,12 +13,38 @@ export const getAllUsers = async () => {
 };
 
 export const createUser = async (data) => {
+  const token = sessionStorage.getItem("token");
   try {
-    const res = await baseURL.post("/auth/registration", data);
+    const res = await authURL(token).post("/user/addEmployee", data);
 
-    console.log("res", res.data);
+    return res;
+  } catch (error) {
+    console.log("error status code:", error);
+    return error.response;
+  }
+};
 
-    return res.data;
+export const updateUser = async (userId, data) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).put(
+      "/user/updateEmployee/" + userId,
+      data
+    );
+
+    return res;
+  } catch (error) {
+    console.log("error status code:", error);
+    return error.response;
+  }
+};
+
+export const deleteUser = async (userId) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).delete("/user/deleteEmployee/" + userId);
+
+    return res;
   } catch (error) {
     console.log("error status code:", error);
     return error.response;

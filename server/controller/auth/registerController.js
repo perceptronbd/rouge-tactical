@@ -21,25 +21,24 @@ const createUser = async (req, res) => {
       endDate,
     } = req.body;
 
-    console.log(req.body);
+    console.log("req payload:", req.body);
 
-    const existingUser = await User.findOne({ email: workEmail });
-    console.log(existingUser);
-    var bytes = CryptoJS.AES.decrypt(password, SECRET_KEY);
-    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
-    console.log(decryptedPassword);
+    const existingUser = await User.findOne({ workEmail });
+    console.log("existingUser", existingUser);
 
     // Check if a user with the same email or employee ID already exists
 
     if (existingUser) {
       res.status(400).json({ message: "User with this email already exists" });
     } else {
-      const hashedPassword = await bcrypt.hash(decryptedPassword, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
+      console.log("hashedPassword", hashedPassword);
 
       const newUser = new User({
         name: name,
-        email: workEmail,
         personalEmail: personalEmail,
+        workEmail: workEmail,
+        preferredEmail: workEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
@@ -52,14 +51,15 @@ const createUser = async (req, res) => {
 
       // Save the new user to the database
       await newUser.save();
-      console.log(newUser);
+      console.log("newUser", newUser);
 
-      res.json({
-        code: 200,
+      res.status(200).json({
         data: {
           userId: newUser._id,
           name: newUser.name,
-          workEmail: newUser.email,
+          personalEmail: newUser.personalEmail,
+          workEmail: newUser.workEmail,
+          preferredEmail: newUser.preferredEmail,
           phone: newUser.phone,
           DOB: newUser.DOB,
           position: newUser.position,

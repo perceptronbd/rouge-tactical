@@ -1,13 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { Text } from "../../components";
 import { formatDate } from "../../utils";
+import { togglePreferredEmail } from "../../api/auth/profile";
 
 export const UserInfo = ({ data }) => {
   const [email, setEmail] = useState(data.preferredEmail);
   const [loading, setLoading] = useState(false);
 
   const toggleEmail = () => {
+    const token = sessionStorage.getItem("token");
+    try {
+      setLoading(true);
+      togglePreferredEmail(token).then(
+        (response) => {
+          console.log(response.preferredEmail);
+          setEmail(response.preferredEmail);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     setLoading(true);
     if (email === data.personalEmail) {
       setEmail(data.workEmail);

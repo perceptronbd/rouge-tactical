@@ -11,7 +11,12 @@ import { Table } from "./Table";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { employeeInfoInputs } from "./employeeInfoInputs";
 import { useModal } from "../../hooks";
-import { createUser, getAllUsers } from "../../api/admin/user";
+import {
+  createUser,
+  deleteUser,
+  getAllUsers,
+  updateUser,
+} from "../../api/admin/user";
 import { useAuth } from "../../contexts/AuthContext";
 
 const DEFAULT_PASSWORD = "RT12345!";
@@ -22,7 +27,8 @@ export const EmployeeInfo = () => {
   const [employeeData, setEmployeeData] = useState({});
   const [allExistingUsers, setAllExistingUsers] = useState([]);
 
-  const { showModal, openModal, closeModal } = useModal();
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
   const {
     showModal: showAddForm,
     openModal: openAddForm,
@@ -62,7 +68,7 @@ export const EmployeeInfo = () => {
     setEmployeeData(updatedEmployeeData);
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleAddUser = async (e) => {
     e.preventDefault();
 
     if (!employeeData.password) {
@@ -72,15 +78,11 @@ export const EmployeeInfo = () => {
     try {
       createUser(employeeData)
         .then((res) => {
-          if (res.status === 500) {
-            openModal("Something went wrong. Please try again later.", true);
-          } else if (res.status === 400) {
-            openModal("User with the same email already exists.", true);
-          } else if (res.status === 200) {
-            openModal("Employee added successfully.", false);
+          if (res.status === 200) {
+            openModal(res.data.message, false);
             closeAddForm();
             fetchAllUsers();
-          }
+          } else openModal(res.data.message, true);
         })
         .catch((err) => {
           console.log(err);
@@ -90,10 +92,42 @@ export const EmployeeInfo = () => {
     }
   };
 
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      updateUser(employeeData.userId, employeeData).then((res) => {
+        if (res.status === 200) {
+          openModal(res.data.message, false);
+          closeUpdateForm();
+          fetchAllUsers();
+        } else openModal(res.data.message, true);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      deleteUser(employeeData.userId).then((res) => {
+        if (res.status === 200) {
+          openModal(res.data.message, false);
+          closeUpdateForm();
+          fetchAllUsers();
+        } else openModal(res.data.message, true);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fetchAllUsers = () => {
     getAllUsers()
       .then((res) => {
-        setAllExistingUsers(res.data.allUserProfileData);
+        setAllExistingUsers(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -121,7 +155,7 @@ export const EmployeeInfo = () => {
               formTitle="Add Employee"
               inputFields={employeeInfoInputs}
               handleChange={handleChange}
-              onSubmit={handleFormSubmit}
+              onSubmit={handleAddUser}
             />
           </ContentModal>
 
@@ -131,12 +165,19 @@ export const EmployeeInfo = () => {
               inputFields={employeeInfoInputs}
               data={employeeData}
               handleChange={handleChange}
-              onSubmit={handleFormSubmit}
+              onSubmit={handleUpdateUser}
+              handleDelete={handleDeleteUser}
             />
           </ContentModal>
         </section>
       )}
       <OnboardingDoc data={onboardingDocs} />
+      <Modal
+        isOpen={showModal}
+        closeModal={closeModal}
+        isError={isError}
+        modalMessage={modalMessage}
+      />
     </Container>
   );
 };

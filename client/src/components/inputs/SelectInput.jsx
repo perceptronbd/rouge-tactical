@@ -21,6 +21,7 @@ export const SelectInput = (props) => {
         id={id}
         name={name}
         {...inputProps}
+        value={value}
         onChange={onChange}
         className={cw(
           `peer block border rounded-lg rt-sm:w-60 w-72 p-2 focus:outline-none focus:ring-1 focus:border-accent-tertiary `,

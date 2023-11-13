@@ -1,6 +1,5 @@
 const User = require("../../../model/userModel");
 
-
 const getProfileDataOfLoggedInEmployee = async (req, res) => {
   console.log(req.userId);
   console.log(req.email);
@@ -30,11 +29,8 @@ const getProfileDataOfLoggedInEmployee = async (req, res) => {
     }));
 
     // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        employeeProfileData: formattedUsers,
-      },
+    res.status(200).json({
+      data: formattedUsers,
     });
   } catch (error) {
     console.error("Error fetching users data:", error);
@@ -42,4 +38,35 @@ const getProfileDataOfLoggedInEmployee = async (req, res) => {
   }
 };
 
-module.exports = { getProfileDataOfLoggedInEmployee };
+const togglePreferredEmail = async (req, res) => {
+  try {
+    console.log("togglePreferredEmail");
+    console.log(req.userId);
+    console.log(req.email);
+
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Toggle the preferredEmail
+    if (user.preferredEmail === user.personalEmail) {
+      user.preferredEmail = user.workEmail;
+    } else {
+      user.preferredEmail = user.personalEmail;
+    }
+
+    // Save the updated user model
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+module.exports = { getProfileDataOfLoggedInEmployee, togglePreferredEmail };

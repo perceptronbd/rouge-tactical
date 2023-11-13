@@ -5,6 +5,7 @@ import { Text } from "../texts/Text";
 import { Button } from "../buttons/Button";
 import { SelectInput } from "../inputs/SelectInput";
 import { FormInput } from "../inputs/FormInput";
+import { formatDateToYYYYMMDD } from "../../utils";
 
 const generateInputs = (inputFields, data, handleChange) => {
   return inputFields.map((input) => {
@@ -18,6 +19,16 @@ const generateInputs = (inputFields, data, handleChange) => {
           {...input}
           onChange={handleChange}
           value={value}
+        />
+      );
+    } else if (input.type === "date") {
+      const formattedDate = formatDateToYYYYMMDD(value);
+      return (
+        <FormInput
+          key={input.id}
+          {...input}
+          onChange={handleChange}
+          value={formattedDate}
         />
       );
     } else {
