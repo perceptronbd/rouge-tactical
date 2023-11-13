@@ -131,7 +131,86 @@ const addEmployee = async (req, res) => {
   }
 };
 
+const updateEmployee = async (req, res) => {
+  const userId = req.params.userId;
+  const {
+    name,
+    phone,
+    personalEmail,
+    workEmail,
+    preferredEmail,
+    DOB,
+    position,
+    role,
+    emergencyContact,
+    address,
+    startDate,
+    endDate,
+  } = req.body;
+
+  try {
+    const existingUser = await User.findById(userId);
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (name != null && name !== "") {
+      existingUser.name = name;
+    }
+    if (phone != null && phone !== "") {
+      existingUser.phone = phone;
+    }
+    if (personalEmail != null && personalEmail !== "") {
+      existingUser.personalEmail = personalEmail;
+    }
+    if (workEmail != null && workEmail !== "") {
+      existingUser.workEmail = workEmail;
+    }
+    if (preferredEmail != null && preferredEmail !== "") {
+      existingUser.preferredEmail = preferredEmail;
+    }
+    if (DOB != null && DOB !== "") {
+      existingUser.DOB = DOB;
+    }
+    if (position != null && position !== "") {
+      existingUser.position = position;
+    }
+    if (role != null && role !== "") {
+      existingUser.role = role;
+    }
+    if (emergencyContact != null) {
+      existingUser.emergencyContact = {
+        name: emergencyContact.name || existingUser.emergencyContact.name,
+        phone: emergencyContact.phone || existingUser.emergencyContact.phone,
+      };
+    }
+    if (address != null && address !== "") {
+      existingUser.address = address;
+    }
+    if (startDate != null && startDate !== "") {
+      existingUser.startDate = startDate;
+    }
+    if (endDate != null && endDate !== "") {
+      existingUser.endDate = endDate;
+    }
+
+    existingUser.updatedAt = new Date();
+
+    const updatedUser = await existingUser.save();
+
+    return res.status(200).json({
+      data: updatedUser,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   getProfileDataOfAllExistingUser,
   addEmployee,
+  updateEmployee,
 };
