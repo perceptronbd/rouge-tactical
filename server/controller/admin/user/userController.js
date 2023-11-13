@@ -21,6 +21,7 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
       phone: data.phone,
       DOB: data.DOB,
       position: data.position,
+      address: data.address,
       role: data.role,
       emergencyContact: data.emergencyContact,
       startDate: data.startDate,
