@@ -3,9 +3,7 @@ import { authURL } from "../axiosInstance/authURL";
 export const getAllUsers = async () => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).get("/admin/user/getAllUserData");
-
-    console.log("res", res.data);
+    const res = await authURL(token).get("/user/getAllUserData");
 
     return res.data;
   } catch (error) {
@@ -17,9 +15,19 @@ export const getAllUsers = async () => {
 export const createUser = async (data) => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).post("/admin/user/addEmployee", data);
+    const res = await authURL(token).post("/user/addEmployee", data);
 
-    console.log("res", res.data);
+    return res;
+  } catch (error) {
+    console.log("error status code:", error);
+    return error.response;
+  }
+};
+
+export const updateUser = async (id, data) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).put("/user/updateEmployee/" + id, data);
 
     return res;
   } catch (error) {
