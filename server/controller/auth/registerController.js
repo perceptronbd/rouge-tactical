@@ -19,7 +19,6 @@ const createUser = async (req, res) => {
       emergencyContact,
       startDate,
       endDate,
-      preferredEmail,
     } = req.body;
 
     console.log("req payload:", req.body);
