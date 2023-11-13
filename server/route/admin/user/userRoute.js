@@ -14,5 +14,10 @@ router.put(
   checkLogin,
   userController.updateEmployee
 );
+router.delete(
+  "/deleteEmployee/:userId",
+  checkLogin,
+  userController.deleteEmployee
+);
 
 module.exports = router;
