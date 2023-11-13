@@ -26,11 +26,8 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
       startDate: data.startDate,
       endDate: data.endDate,
     }));
-    res.json({
-      code: 200,
-      data: {
-        allUserProfileData: formattedUsers,
-      },
+    res.status(200).json({
+      data: formattedUsers,
     });
   } catch (error) {
     console.error("Error fetching users data:", error);
@@ -47,6 +44,7 @@ const addEmployee = async (req, res) => {
       phone,
       workEmail,
       personalEmail,
+      preferredEmail,
       password,
       DOB,
       position,
@@ -95,7 +93,7 @@ const addEmployee = async (req, res) => {
         name: name,
         workEmail: workEmail,
         personalEmail: personalEmail,
-        preferredEmail: personalEmail,
+        preferredEmail: preferredEmail,
         password: hashedPassword,
         phone: phone,
         DOB: DOB,
@@ -137,4 +135,7 @@ const addEmployee = async (req, res) => {
   }
 };
 
-module.exports = { getProfileDataOfAllExistingUser, addEmployee };
+module.exports = {
+  getProfileDataOfAllExistingUser,
+  addEmployee,
+};

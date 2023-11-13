@@ -93,7 +93,7 @@ export const EmployeeInfo = () => {
   const fetchAllUsers = () => {
     getAllUsers()
       .then((res) => {
-        setAllExistingUsers(res.data.allUserProfileData);
+        setAllExistingUsers(res.data);
       })
       .catch((error) => {
         console.log(error);
