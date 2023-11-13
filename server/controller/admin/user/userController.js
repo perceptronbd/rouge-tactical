@@ -109,8 +109,7 @@ const addEmployee = async (req, res) => {
       await newEmployee.save();
       console.log(newEmployee);
 
-      res.json({
-        code: 200,
+      res.status(200).json({
         data: {
           userId: newEmployee._id,
           name: newEmployee.name,
