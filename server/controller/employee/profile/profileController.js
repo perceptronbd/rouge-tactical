@@ -65,7 +65,7 @@ const togglePreferredEmail = async (req, res) => {
     // Save the updated user model
     const updatedUser = await user.save();
 
-    res.json(updatedUser);
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
