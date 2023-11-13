@@ -1,5 +1,4 @@
 import { authURL } from "../axiosInstance/authURL";
-import { baseURL } from "../axiosInstance/baseURL";
 
 export const getAllUsers = async () => {
   const token = sessionStorage.getItem("token");
@@ -16,8 +15,9 @@ export const getAllUsers = async () => {
 };
 
 export const createUser = async (data) => {
+  const token = sessionStorage.getItem("token");
   try {
-    const res = await baseURL.post("/auth/registration", data);
+    const res = await authURL(token).post("/admin/user/addEmployee", data);
 
     console.log("res", res.data);
 
