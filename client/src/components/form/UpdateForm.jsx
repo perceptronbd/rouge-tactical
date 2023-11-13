@@ -23,7 +23,6 @@ const generateInputs = (inputFields, data, handleChange) => {
       );
     } else if (input.type === "date") {
       const formattedDate = formatDateToYYYYMMDD(value);
-      console.log(formattedDate);
       return (
         <FormInput
           key={input.id}
