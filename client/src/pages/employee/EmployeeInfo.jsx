@@ -22,7 +22,8 @@ export const EmployeeInfo = () => {
   const [employeeData, setEmployeeData] = useState({});
   const [allExistingUsers, setAllExistingUsers] = useState([]);
 
-  const { showModal, openModal, closeModal } = useModal();
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
   const {
     showModal: showAddForm,
     openModal: openAddForm,
@@ -72,15 +73,11 @@ export const EmployeeInfo = () => {
     try {
       createUser(employeeData)
         .then((res) => {
-          if (res.status === 500) {
-            openModal("Something went wrong. Please try again later.", true);
-          } else if (res.status === 400) {
-            openModal("User with the same email already exists.", true);
-          } else if (res.status === 200) {
-            openModal("Employee added successfully.", false);
+          if (res.status === 200) {
+            openModal(res.data.message, false);
             closeAddForm();
             fetchAllUsers();
-          }
+          } else openModal(res.data.message, true);
         })
         .catch((err) => {
           console.log(err);
@@ -137,6 +134,12 @@ export const EmployeeInfo = () => {
         </section>
       )}
       <OnboardingDoc data={onboardingDocs} />
+      <Modal
+        isOpen={showModal}
+        closeModal={closeModal}
+        isError={isError}
+        modalMessage={modalMessage}
+      />
     </Container>
   );
 };
