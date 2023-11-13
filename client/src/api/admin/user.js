@@ -21,7 +21,7 @@ export const createUser = async (data) => {
 
     console.log("res", res.data);
 
-    return res.data;
+    return res;
   } catch (error) {
     console.log("error status code:", error);
     return error.response;
