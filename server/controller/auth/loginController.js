@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
     console.log("existingUser", existingUser);
 
     if (!existingUser) {
-      res.status(401).json({ error: "User with such email doesn't exist" });
+      res.status(401).json({ message: "User with such email doesn't exist" });
     } else {
       const hashedPassword = existingUser.password;
 
@@ -25,19 +25,16 @@ const loginUser = async (req, res) => {
         if (!match) {
           res
             .status(400)
-            .json({ error: "Wrong Email and Password Combination!" });
+            .json({ message: "Wrong Email and Password Combination!" });
         } else {
           const accessToken = createTokens(existingUser);
 
           // Set the access-token in the authorization header
           res.setHeader("Authorization", `Bearer ${accessToken}`);
 
-          res.json({
-            code: 200,
+          res.status(200).json({
             token: accessToken,
-            data: {
-              userData: existingUser,
-            },
+            userData: existingUser,
             message: "User logged In successfully",
           });
         }
