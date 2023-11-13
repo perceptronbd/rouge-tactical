@@ -7,11 +7,11 @@ export const loginAPI = async (email, password) => {
       password,
     });
 
-    console.log("res", res.data);
+    console.log("res", res);
 
-    return res.data;
+    return res;
   } catch (error) {
-    console.log("error status code:", error.response.status);
-    return error.response.data;
+    console.log("error status:", error.response);
+    return error.response;
   }
 };

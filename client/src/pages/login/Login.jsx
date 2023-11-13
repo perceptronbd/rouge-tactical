@@ -44,13 +44,13 @@ export const Login = () => {
     try {
       const response = await loginAPI(values.email, values.password);
 
-      if (response.code === 200) {
-        login(response);
+      if (response.status === 200) {
+        login(response.data);
       } else {
-        openModal(response.message, true);
+        openModal(response.data.message, true);
       }
     } catch (error) {
-      console.log(error);
+      console.log("error", error);
     }
   };
 
@@ -59,8 +59,6 @@ export const Login = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-
-    console.log(e.target.value);
   };
 
   return (
