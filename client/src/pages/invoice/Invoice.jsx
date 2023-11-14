@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
@@ -142,7 +142,7 @@ export const Invoice = () => {
         icon={MdPostAdd}
         className={"my-2 3xl:my-4"}
         onClick={() => {
-          navaigate("/invoice/new");
+          navaigate("/invoice/new", { state: allVendors });
         }}
       >
         New Invoice

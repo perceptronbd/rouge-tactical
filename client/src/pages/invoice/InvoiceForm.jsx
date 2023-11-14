@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { MdOutlineArrowBackIosNew, MdOutlinePlaylistAdd } from "react-icons/md";
 import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
-import { vendorData } from "../../mock/vendor";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BiSolidAddToQueue } from "react-icons/bi";
 
 export const InvoiceForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const allVendors = location.state;
 
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -124,7 +126,7 @@ export const InvoiceForm = () => {
               id="vendor"
               name="vendor"
               label="Vendor"
-              selectOpts={vendorData}
+              selectOpts={allVendors}
               required={true}
               className={"col-span-2"}
               value={values.vendor}
