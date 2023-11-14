@@ -61,7 +61,56 @@ const createMaintenance = async (req, res) => {
     }
 };
 
+const getAllMaintenance = async (req, res) => {
+    console.log(req.userId);
+    console.log(req.email);
+
+    try {
+        // Assuming you have a user model
+        const existingUser = await User.findOne({
+            _id: req.userId,
+        });
+
+        if (!existingUser) {
+            return res.status(404).json({ error: "No User found!" });
+        }
+
+        const allMaintenance = await Maintenance.find().sort({ date: -1 });
+
+        if (!allMaintenance) {
+            return res.status(400).json({
+                error: "No Maintenance records found!",
+            });
+        }
+
+        const formattedMaintenance = allMaintenance.map((data) => ({
+            id: data._id,
+            machine: data.machine,
+            condition: data.condition,
+            location: data.location,
+            assignedTo: data.assignedTo,
+            lastMaintenanceDate: data.lastMaintenanceDate,
+            maintenanceInterval: data.maintenanceInterval,
+            nextMaintenanceDate: data.nextMaintenanceDate,
+            notes: data.notes,
+            status: data.status,
+        }));
+
+        res.json({
+            code: 200,
+            data: {
+                userId: req.userId,
+                data: formattedMaintenance,
+            },
+        });
+    } catch (error) {
+        console.error("Error fetching maintenance list:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 
 module.exports = {
     createMaintenance,
+    getAllMaintenance
 }
