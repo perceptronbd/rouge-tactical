@@ -165,6 +165,7 @@ export const Invoice = () => {
           inputFields={invoiceInputs}
           icon={BsPersonFillAdd}
           data={invoiceDetails}
+          selectOpts={allVendors}
           handleChange={handleChange}
           onSubmit={submitUpdateInvoice}
         />
