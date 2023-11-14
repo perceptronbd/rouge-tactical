@@ -6,6 +6,7 @@ const { checkLogin } = require("../../middleware/token/checkLogin");
 
 router.post("/createMaintenance",checkLogin, maintenanceController.createMaintenance);
 router.get("/getMaintenance",checkLogin, maintenanceController.getAllMaintenance);
+router.delete("/deleteMaintenance",checkLogin, maintenanceController.deleteMaintenance);
 
 
 

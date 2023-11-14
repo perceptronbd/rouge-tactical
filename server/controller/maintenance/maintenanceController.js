@@ -110,7 +110,31 @@ const getAllMaintenance = async (req, res) => {
 };
 
 
+const deleteMaintenance = async (req, res) => {
+    try {
+        // Get the maintenance ID from the request parameters
+        const { maintenanceId } = req.body;
+
+        // Find the maintenance by its ID and remove it
+        const deletedMaintenance = await Maintenance.findByIdAndRemove(maintenanceId);
+
+        if (!deletedMaintenance) {
+            return res.status(404).json({ error: "Maintenance not found" });
+        }
+
+        // If the maintenance was successfully deleted, return a success response
+        res.status(200).json({
+            code: 200,
+            message: "Maintenance deleted successfully",
+        });
+    } catch (error) {
+        console.error("Error deleting maintenance:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 module.exports = {
     createMaintenance,
-    getAllMaintenance
+    getAllMaintenance,
+    deleteMaintenance
 }
