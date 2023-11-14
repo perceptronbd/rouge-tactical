@@ -10,7 +10,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 app.use(express.json()); //needed for json data
 //for communicating with frontend
 var corsOptions = {
@@ -24,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static("uploads"));
 
 //base routes
-app.use("/api/v1", baseRoutes)
+app.use("/api/v1", baseRoutes);
 app.get("/", (req, res) => {
   res.send(":)");
 });

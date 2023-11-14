@@ -27,25 +27,22 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: [true, "Please add a email"],
-    unique: true,
-    trim: true,
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please enter a valid email",
-    ],
-  },
   personalEmail: {
     type: String,
-    // required: [true, "Please add a personal email"],
+    required: [true, "Please add a personal email"],
     unique: true,
     trim: true,
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please enter a valid email",
-    ],
+  },
+  workEmail: {
+    type: String,
+    required: [true, "Please add a work email"],
+    unique: true,
+    trim: true,
+  },
+  preferredEmail: {
+    type: String,
+    required: [true, "Please add a preferred email"],
+    trim: true,
   },
   DOB: {
     type: Date,
@@ -66,7 +63,7 @@ const userSchema = new Schema({
     },
     phone: String,
   },
-   address: {
+  address: {
     type: String,
   },
   startDate: {
