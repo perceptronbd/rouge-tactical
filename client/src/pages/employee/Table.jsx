@@ -17,6 +17,12 @@ export const Table = ({
   const [searchQuery, setSearchQuery] = useState("");
   // const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
+  const checkIsUser = (id) => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
+    return user._id === id;
+  };
+
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
@@ -28,7 +34,6 @@ export const Table = ({
   };
 
   const handleEdit = (item) => {
-    console.log("employee info:", item);
     openUpdateForm();
     setEmployeeInfo(item);
   };
@@ -112,55 +117,59 @@ export const Table = ({
                     </td>
                   </tr>
                 ) : (
-                  filteredData.map((item, index) => (
-                    <tr
-                      key={index}
-                      className={cw(
-                        `border-b-2 cursor-pointer ${"bg-accent-tertiary-light"} ${"text-foreground"} hover:bg-opacity-70 transition-all ease-in-out duration-300`
-                      )}
-                    >
-                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.name}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.position}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.preferredEmail}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.phone}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm rt-sm:w-20 whitespace-nowrap">
-                        {formatDate(item.DOB)}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm flex flex-col gap-1">
-                        <span>{item.emergencyContact.name}</span>
-                        <span>{item.emergencyContact.phone}</span>
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
-                        {formatDate(item.startDate)}
-                      </td>
-                      <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
-                        {formatDate(item.endDate)}
-                      </td>
+                  filteredData.map((item, index) =>
+                    checkIsUser(item.userId) ? (
+                      ""
+                    ) : (
+                      <tr
+                        key={index}
+                        className={cw(
+                          `border-b-2 cursor-pointer ${"bg-accent-tertiary-light"} ${"text-foreground"} hover:bg-opacity-70 transition-all ease-in-out duration-300`
+                        )}
+                      >
+                        <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-left">
+                          {item.name}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                          {item.position}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                          {item.preferredEmail}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
+                          {item.phone}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm rt-sm:w-20 whitespace-nowrap">
+                          {formatDate(item.DOB)}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm flex flex-col gap-1">
+                          <span>{item.emergencyContact.name}</span>
+                          <span>{item.emergencyContact.phone}</span>
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
+                          {formatDate(item.startDate)}
+                        </td>
+                        <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm whitespace-nowrap">
+                          {formatDate(item.endDate)}
+                        </td>
 
-                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-center text-foreground transition-all ease-in-out duration-300">
-                        <div className=" flex justify-center items-center text-2xl">
-                          {item.onboardingComplete ? (
-                            <BiSolidCheckboxChecked />
-                          ) : (
-                            <BiCheckbox />
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
-                        <button onClick={() => handleEdit(item)}>
-                          <BiSolidMessageSquareEdit size={"1.5rem"} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
+                        <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-center text-foreground transition-all ease-in-out duration-300">
+                          <div className=" flex justify-center items-center text-2xl">
+                            {item.onboardingComplete ? (
+                              <BiSolidCheckboxChecked />
+                            ) : (
+                              <BiCheckbox />
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right text-foreground hover:text-accent-secondary transition-all ease-in-out duration-300">
+                          <button onClick={() => handleEdit(item)}>
+                            <BiSolidMessageSquareEdit size={"1.5rem"} />
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  )
                 )}
               </tbody>
             </table>
