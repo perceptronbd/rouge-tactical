@@ -33,7 +33,7 @@ const createMaintenance = async (req, res) => {
             });
         }
 
-        const newMaintenanceData = {
+        const data = {
             machine: machine,
             condition: condition,
             location: location,
@@ -45,15 +45,13 @@ const createMaintenance = async (req, res) => {
             status: status,
         };
 
-        const newMaintenance = new Maintenance(newMaintenanceData);
+        const newMaintenance = new Maintenance(data);
 
         await newMaintenance.save();
 
-        res.json({
-            code: 200,
-            data: {
-                newMaintenanceData
-            }
+        res.status(200).json({
+            
+            data
         });
     } catch (error) {
         console.error("Error creating Maintenance:", error);
