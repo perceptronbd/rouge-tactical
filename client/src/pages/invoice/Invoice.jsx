@@ -20,21 +20,38 @@ import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
-import { useModal } from "../../hooks";
+import { useModal, useDataStates } from "../../hooks";
+import { createVendor } from "../../api";
+import { BiMessageAltDots } from "react-icons/bi";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
   //data states
-  const [agingSummary, setAgingSummary] = useState(null);
-  const [selectedVendor, setSelectedVendor] = useState(null);
-  const [vendorDetails, setVendorDetails] = useState(null);
-  const [tableData, setTableData] = useState(data);
-  const [invoiceDetails, setInvoiceDetails] = useState(null);
+  // const [agingSummary, setAgingSummary] = useState(null);
+  // const [selectedVendor, setSelectedVendor] = useState(null);
+  // const [vendorDetails, setVendorDetails] = useState(null);
+  // const [tableData, setTableData] = useState(data);
+  // const [invoiceDetails, setInvoiceDetails] = useState(null);
   //loading states
-  const [loading, setLoading] = useState(false);
-  const [loadingTable, setLoadingTable] = useState(false);
-  const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [loadingTable, setLoadingTable] = useState(false);
+  // const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
   //modal states
+
+  const {
+    transactionDetails: invoiceDetails,
+    selectedVendor,
+    vendorDetails,
+    tableData,
+    agingSummary,
+    loading,
+    loadingTable,
+    loadingAgingSummary,
+    handleVendorChange,
+    handleChange,
+    setTransactionDetails: setInvoiceDetails,
+  } = useDataStates({ data, vendorData });
+
   const {
     showModal: showVendorModal,
     openModal: openVendorModal,
@@ -56,91 +73,107 @@ export const Invoice = () => {
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
 
-  useEffect(() => {
-    setLoading(true);
+  // useEffect(() => {
+  //   setLoading(true);
 
-    setTimeout(() => {
-      const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
-      console.log(vendor);
-      if (!vendor) {
-        setLoading(false);
-        setTableData(data);
-        setSelectedVendor(null);
-        setVendorDetails(null);
-        return;
-      }
-      setLoading(false);
-      setVendorDetails(vendor);
-    }, 1000);
-  }, [selectedVendor]);
+  //   setTimeout(() => {
+  //     const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
+  //     console.log(vendor);
+  //     if (!vendor) {
+  //       setLoading(false);
+  //       setTableData(data);
+  //       setSelectedVendor(null);
+  //       setVendorDetails(null);
+  //       return;
+  //     }
+  //     setLoading(false);
+  //     setVendorDetails(vendor);
+  //   }, 1000);
+  // }, [selectedVendor]);
 
-  useEffect(() => {
-    if (vendorDetails) {
-      setLoadingTable(true);
-      setLoadingAgingSummary(true);
-      setTimeout(() => {
-        const invoice = data.filter(
-          (invoice) => invoice.vendor === vendorDetails.name
-        );
-        setLoadingTable(false);
-        setLoadingAgingSummary(false);
-        setTableData(invoice);
+  // useEffect(() => {
+  //   if (vendorDetails) {
+  //     setLoadingTable(true);
+  //     setLoadingAgingSummary(true);
+  //     setTimeout(() => {
+  //       const invoice = data.filter(
+  //         (invoice) => invoice.vendor === vendorDetails.name
+  //       );
+  //       setLoadingTable(false);
+  //       setLoadingAgingSummary(false);
+  //       setTableData(invoice);
 
-        const currentDate = new Date();
-        const summary = {
-          current: 0,
-          "0 - 30": 0,
-          "31 - 60": 0,
-          "61 - 90": 0,
-          "> 90": 0,
-        };
+  //       const currentDate = new Date();
+  //       const summary = {
+  //         current: 0,
+  //         "0 - 30": 0,
+  //         "31 - 60": 0,
+  //         "61 - 90": 0,
+  //         "> 90": 0,
+  //       };
 
-        invoice.forEach((item) => {
-          const updatedAt = new Date(item.date);
-          const daysDifference = Math.floor(
-            (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
-          );
+  //       invoice.forEach((item) => {
+  //         const updatedAt = new Date(item.date);
+  //         const daysDifference = Math.floor(
+  //           (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
+  //         );
 
-          if (daysDifference <= 1) {
-            summary["current"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 30) {
-            summary["0 - 30"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 60) {
-            summary["31 - 60"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 90) {
-            summary["61 - 90"] += item.totalAmount - item.depositedAmount;
-          } else {
-            summary["> 90"] += item.totalAmount - item.depositedAmount;
-          }
-        });
+  //         if (daysDifference <= 1) {
+  //           summary["current"] += item.totalAmount - item.depositedAmount;
+  //         } else if (daysDifference <= 30) {
+  //           summary["0 - 30"] += item.totalAmount - item.depositedAmount;
+  //         } else if (daysDifference <= 60) {
+  //           summary["31 - 60"] += item.totalAmount - item.depositedAmount;
+  //         } else if (daysDifference <= 90) {
+  //           summary["61 - 90"] += item.totalAmount - item.depositedAmount;
+  //         } else {
+  //           summary["> 90"] += item.totalAmount - item.depositedAmount;
+  //         }
+  //       });
 
-        setAgingSummary(summary);
+  //       setAgingSummary(summary);
 
-        console.log(summary);
-      }, 1000);
-    }
-  }, [vendorDetails]);
+  //       console.log(summary);
+  //     }, 1000);
+  //   }
+  // }, [vendorDetails]);
 
-  const handleVendorChange = (event) => {
-    setSelectedVendor(parseInt(event.target.value));
-    console.log(event.target.value);
-  };
+  // const handleVendorChange = (event) => {
+  //   setSelectedVendor(parseInt(event.target.value));
+  //   console.log(event.target.value);
+  // };
+
+  // const handleChange = (e) => {
+  //   console.log(e.target.value);
+  //   console.log(e.target.value);
+  //   setInvoiceDetails({ ...invoiceDetails, [e.target.name]: e.target.value });
+  // };
 
   const openVendorForm = () => {
     openVendorModal();
   };
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.value);
-    setInvoiceDetails({ ...invoiceDetails, [e.target.name]: e.target.value });
+  const submitAddVendor = async (e) => {
+    e.preventDefault();
   };
 
-  const onSubmit = (e) => {
+  const submitUpdateInvoice = async (e) => {
     e.preventDefault();
-    closeVendorModal();
-    openModal("Process Successful!", false);
-    console.log(invoiceDetails);
+    try {
+      console.log(invoiceDetails);
+      createVendor(invoiceDetails).then((res) => {
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          closeVendorModal();
+          openModal(message, false);
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -210,7 +243,7 @@ export const Invoice = () => {
           inputFields={vendorInputs}
           icon={BsPersonFillAdd}
           handleChange={handleChange}
-          onSubmit={onSubmit}
+          onSubmit={submitAddVendor}
         />
       </ContentModal>
 
@@ -221,7 +254,7 @@ export const Invoice = () => {
           icon={BsPersonFillAdd}
           data={invoiceDetails}
           handleChange={handleChange}
-          onSubmit={onSubmit}
+          onSubmit={submitUpdateInvoice}
         />
       </ContentModal>
       <Preview
