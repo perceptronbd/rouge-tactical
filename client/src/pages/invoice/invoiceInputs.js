@@ -1,5 +1,3 @@
-import { vendorData } from "../../mock/vendor";
-
 export const invoiceInputs = [
   {
     id: "date",
@@ -21,7 +19,8 @@ export const invoiceInputs = [
     id: "vendor",
     name: "vendor",
     label: "Vendor",
-    selectOpts: vendorData,
+    defaultValue: "Select Vendor",
+    selectOpts: [],
     required: true,
   },
   {
