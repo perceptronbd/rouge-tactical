@@ -102,7 +102,7 @@ const getAllVendor = async (req, res) => {
     }
 
     const formattedVendors = existingVendor.map((data) => ({
-      vendorId: data._id,
+      id: data._id,
       name: data.name,
       contact: data.contact,
       phone: data.phone,
