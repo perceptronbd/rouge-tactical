@@ -16,9 +16,10 @@ export const getAllVendors = async () => {
   const token = sessionStorage.getItem("token");
   try {
     const res = await authURL(token).get("/vendor/getAllVendor");
-    return res.data;
+    return res;
   } catch (error) {
     console.log("error:", error.response);
+
     return error.response;
   }
 };
