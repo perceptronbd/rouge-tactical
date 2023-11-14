@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { getAllVendors } from "../api";
 
-export const useDataStates = ({ data, vendorData }) => {
+export const useDataStates = ({ data }) => {
   //data states
   const [agingSummary, setAgingSummary] = useState(null);
+  const [allVendors, setAllVendors] = useState([]);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorDetails, setVendorDetails] = useState(null);
   const [tableData, setTableData] = useState([]);
@@ -14,20 +16,32 @@ export const useDataStates = ({ data, vendorData }) => {
 
   useEffect(() => {
     setLoading(true);
-
-    setTimeout(() => {
-      const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
-      if (!vendor) {
-        setLoading(false);
-        setTableData(data);
-        setSelectedVendor(null);
-        setVendorDetails(null);
-        return;
-      }
+    const vendor = allVendors.find((vendor) => {
+      return vendor.id === selectedVendor;
+    });
+    if (!vendor) {
       setLoading(false);
-      setVendorDetails(vendor);
-    }, 1000);
-  }, [selectedVendor, data, vendorData]);
+      setTableData(data);
+      setSelectedVendor(null);
+      setVendorDetails(null);
+      return;
+    }
+    setLoading(false);
+    setVendorDetails(vendor);
+  }, [selectedVendor, data, allVendors]);
+
+  useEffect(() => {
+    const fetchAllVendors = async () => {
+      try {
+        getAllVendors().then((res) => {
+          setAllVendors(res.data.data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllVendors();
+  }, []);
 
   useEffect(() => {
     if (vendorDetails) {
@@ -75,7 +89,7 @@ export const useDataStates = ({ data, vendorData }) => {
   }, [vendorDetails, data]);
 
   const handleVendorChange = (event) => {
-    setSelectedVendor(parseInt(event.target.value));
+    setSelectedVendor(event.target.value);
   };
 
   const handleChange = (e) => {
@@ -87,6 +101,7 @@ export const useDataStates = ({ data, vendorData }) => {
 
   return {
     transactionDetails,
+    allVendors,
     selectedVendor,
     vendorDetails,
     tableData,
