@@ -9,6 +9,8 @@ const employeeProfileRoutes = require("./route/employee/profile/profileRoute");
 
 const userRoutes = require("./route/admin/user/userRoute");
 
+const toggleEMailRoute = require("./route/employee/profile/profileRoute");
+
 const vendorRoutes = require("./route/vendor/vendorRoute");
 
 const adminOrderRoutes = require("./route/admin/order/orderRoute");
@@ -19,18 +21,19 @@ const invoiceRoutes = require("./route/invoice/invoiceRoute");
 
 const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute");
 
-const productionRoutes = require("./route/production/productionRoute")
+const productionRoutes = require("./route/production/productionRoute");
 
 //all routes for payment
-const paymentRoutes = require("./route/payment/paymentRoute")
+const paymentRoutes = require("./route/payment/paymentRoute");
 
 //document upload
-const documentUploadRoutes = require("./route/document/documentUploadRoute")
-const productionDocumentUploadRoutes = require("./route/productionDocument/productionDocumentUploadRoute")
+const documentUploadRoutes = require("./route/document/documentUploadRoute");
+const productionDocumentUploadRoutes = require("./route/productionDocument/productionDocumentUploadRoute");
 
 //all routes for authentication only for both admin and employee
 router.use("/auth/", authRoutes);
 
+router.use("/employee/toggleEmail", toggleEMailRoute);
 //all routes for employee
 router.use("/employee/profile", employeeProfileRoutes);
 router.use("/employee/order", employeeOrderRoutes);
@@ -43,7 +46,6 @@ router.use("/admin/user", userRoutes);
 router.use("/admin/order", adminOrderRoutes);
 router.use("/admin/payment", paymentRoutes);
 router.use("/admin/production", productionRoutes);
-
 
 //other routes
 router.use("/vendor", vendorRoutes);

@@ -50,11 +50,10 @@ const authRole = (allowedRoles) => {
         });
         next();
       } else {
-       
         res.status(403).json({
           code: 403,
           data: {
-             role: userRole,
+            role: userRole,
             message: "Forbidden route: You don't have access to this path!",
           },
         });
