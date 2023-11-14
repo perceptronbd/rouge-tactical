@@ -24,11 +24,9 @@ const createVendor = async (req, res) => {
     });
 
     if (existingVendor) {
-      return res
-        .status(400)
-        .json({
-          message: "Vendor with the same name or email already exists!",
-        });
+      return res.status(400).json({
+        message: "Vendor with the same name or email already exists!",
+      });
     }
 
     const existingUser = await User.findOne({
@@ -94,12 +92,12 @@ const getAllVendor = async (req, res) => {
     });
     const existingVendor = await Vendor.find().sort({ date: -1 });
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     if (!existingVendor) {
       return res.status(400).json({
-        error: "No Vendor found!",
+        message: "No Vendor found!",
       });
     }
 
@@ -115,16 +113,13 @@ const getAllVendor = async (req, res) => {
       invoices: data.invoices,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        vendorData: formattedVendors,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedVendors,
     });
   } catch (error) {
     console.error("Error fetching vendor list:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
