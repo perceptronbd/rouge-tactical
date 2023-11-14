@@ -24,12 +24,12 @@ const createMaintenance = async (req, res) => {
         });
 
         if (!existingUser) {
-            return res.status(404).json({ error: "No User found" });
+            return res.status(404).json({ message: "No User found" });
         }
 
         if (!machine || !condition || !maintenanceInterval || !status) {
             return res.status(400).json({
-                error: "All required fields must be provided for creating Maintenance"
+                message: "All required fields must be provided for creating Maintenance"
             });
         }
 
@@ -51,11 +51,13 @@ const createMaintenance = async (req, res) => {
 
         res.status(200).json({
             
-            data
+            data,
+            message:"Maintenance data created successfully."
+
         });
     } catch (error) {
         console.error("Error creating Maintenance:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
