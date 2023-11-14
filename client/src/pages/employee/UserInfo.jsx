@@ -44,7 +44,7 @@ export const UserInfo = ({ data }) => {
       <div className="bg-accent-secondary w-32 h-32  flex font-thin justify-center items-center rounded">
         <CiUser size={"6rem"} className="text-accent-primary" />
       </div>
-      <section className="h-full flex gap-4">
+      <section className="h-full w-fit flex gap-4">
         <div>
           <Text className={"text-textColor-light"}>Name</Text>
           <Text className={"text-textColor-light"}>Position</Text>
@@ -65,7 +65,7 @@ export const UserInfo = ({ data }) => {
             {data.position}
           </Text>
           <button
-            className="px-4 rounded-md w-48 bg-accent-tertiary text-white"
+            className="px-4 rounded-md w-52 bg-accent-tertiary text-white"
             onClick={() => {
               toggleEmail();
             }}
