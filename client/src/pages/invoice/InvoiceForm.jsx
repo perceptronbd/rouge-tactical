@@ -3,6 +3,7 @@ import { MdOutlineArrowBackIosNew, MdOutlinePlaylistAdd } from "react-icons/md";
 import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiSolidAddToQueue } from "react-icons/bi";
+import { useModal } from "../../hooks";
 
 export const InvoiceForm = () => {
   const navigate = useNavigate();
@@ -10,9 +11,13 @@ export const InvoiceForm = () => {
 
   const allVendors = location.state;
 
-  const [showModal, setShowModal] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  // const [modalMessage, setModalMessage] = useState("");
+
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
+
   const [values, setValues] = useState({
     date: "",
     invoiceNumber: "",
@@ -78,9 +83,7 @@ export const InvoiceForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setModalMessage("Invoice Added Successfully!");
-    setIsError(false);
+    openModal("Invoice created successfully!", false);
     console.log(values);
   };
 
@@ -228,7 +231,7 @@ export const InvoiceForm = () => {
         </Button>
         <Modal
           isOpen={showModal}
-          setShowModal={setShowModal}
+          closeModal={closeModal}
           modalMessage={modalMessage}
           isError={isError}
         />
