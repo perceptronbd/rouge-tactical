@@ -68,10 +68,6 @@ export const Invoice = () => {
 
   const submitAddVendor = async (e) => {
     e.preventDefault();
-  };
-
-  const submitUpdateInvoice = async (e) => {
-    e.preventDefault();
     try {
       console.log(invoiceDetails);
       createVendor(invoiceDetails).then((res) => {
@@ -87,6 +83,10 @@ export const Invoice = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const submitUpdateInvoice = async (e) => {
+    e.preventDefault();
   };
 
   return (
