@@ -18,6 +18,19 @@ const createVendor = async (req, res) => {
   } = req.body;
 
   try {
+    // Check if the email or name already exists in the database
+    const existingVendor = await Vendor.findOne({
+      $or: [{ name: name }, { email: email }],
+    });
+
+    if (existingVendor) {
+      return res
+        .status(400)
+        .json({
+          message: "Vendor with the same name or email already exists!",
+        });
+    }
+
     const existingUser = await User.findOne({
       _id: req.userId,
     });
