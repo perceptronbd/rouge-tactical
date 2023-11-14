@@ -16,19 +16,18 @@ import {
 } from "../../components";
 import { Table } from "./Table";
 import { data } from "../../mock/invoice";
-import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
 import { useModal, useDataStates } from "../../hooks";
 import { createVendor } from "../../api";
-import { BiMessageAltDots } from "react-icons/bi";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
 
   const {
     transactionDetails: invoiceDetails,
+    allVendors,
     selectedVendor,
     vendorDetails,
     tableData,
@@ -39,7 +38,7 @@ export const Invoice = () => {
     handleVendorChange,
     handleChange,
     setTransactionDetails: setInvoiceDetails,
-  } = useDataStates({ data, vendorData });
+  } = useDataStates({ data });
 
   const {
     showModal: showVendorModal,
@@ -102,7 +101,7 @@ export const Invoice = () => {
               defaultValue="View All"
               value={selectedVendor}
               onChange={handleVendorChange}
-              selectOpts={vendorData}
+              selectOpts={allVendors}
             />
 
             <Button
