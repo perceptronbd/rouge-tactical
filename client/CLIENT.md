@@ -1,3 +1,0 @@
-# Client
-
-## Rougue Tactical Client
