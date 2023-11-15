@@ -28,10 +28,10 @@ const createInvoice = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found" });
+      return res.status(404).json({ message: "No User found" });
     }
     if (!existingVendor) {
-      return res.status(404).json({ error: "No Vendor found" });
+      return res.status(404).json({ message: "No Vendor found" });
     }
 
     if (
@@ -45,7 +45,7 @@ const createInvoice = async (req, res) => {
       !delivered
     ) {
       return res.status(400).json({
-        error: "All required fields must be provided for creating Invoice!",
+        message: "All required fields must be provided for creating Invoice!",
       });
     }
 
@@ -62,16 +62,14 @@ const createInvoice = async (req, res) => {
       createdAt: Date.now(),
     };
 
-    const newInvoice = new Invoice(newInvoiceData)
+    const newInvoice = new Invoice(newInvoiceData);
 
     await newInvoice.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        newInvoiceData: newInvoice,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newInvoice,
+      message: "Invoice created successfully!",
     });
   } catch (error) {
     console.error("Error creating invoice:", error);
@@ -207,8 +205,6 @@ const updateInvoice = async (req, res) => {
       return res.status(404).json({ error: "No Invoice found" });
     }
 
-    
-
     if (date != null && date !== "") {
       existingInvoice.date = date;
     }
@@ -218,7 +214,7 @@ const updateInvoice = async (req, res) => {
     // if (item != null && item !== "") {
     //   existingInvoice.item = item;
     // }
-      if (items != null && items.length > 0) {
+    if (items != null && items.length > 0) {
       existingInvoice.items = items;
     }
     if (quantity != null && quantity !== "") {
@@ -342,11 +338,10 @@ const updateProduction = async (req, res) => {
   }
 };
 
-
 module.exports = {
   createInvoice,
   getAllInvoice,
   getInvoiceOfSelectedVendor,
   updateInvoice,
-  updateProduction
+  updateProduction,
 };
