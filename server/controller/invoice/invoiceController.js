@@ -45,7 +45,7 @@ const createInvoice = async (req, res) => {
       !delivered
     ) {
       return res.status(400).json({
-        message: "All required fields must be provided for creating Invoice!",
+        message: "All required fields must be provided!",
       });
     }
 
