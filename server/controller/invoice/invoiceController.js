@@ -12,11 +12,8 @@ const createInvoice = async (req, res) => {
     //receive vendor Id
     vendor,
     items,
-    quantity,
     totalAmount,
-    depositAmount,
-    delivered,
-    status,
+    depositedAmount,
   } = req.body;
 
   try {
@@ -39,10 +36,8 @@ const createInvoice = async (req, res) => {
       !invoiceNumber ||
       !vendor ||
       !items ||
-      !quantity ||
       !totalAmount ||
-      !depositAmount ||
-      !delivered
+      !depositedAmount
     ) {
       return res.status(400).json({
         message: "All required fields must be provided!",
@@ -54,11 +49,8 @@ const createInvoice = async (req, res) => {
       invoiceNumber: invoiceNumber,
       vendor: vendor,
       item: items,
-      quantity: quantity,
       totalAmount: totalAmount,
-      depositAmount: depositAmount,
-      delivered: delivered,
-      status: status,
+      depositAmount: depositedAmount,
       createdAt: Date.now(),
     };
 
@@ -73,7 +65,7 @@ const createInvoice = async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating invoice:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
