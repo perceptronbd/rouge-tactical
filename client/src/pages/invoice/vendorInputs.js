@@ -16,8 +16,6 @@ export const vendorInputs = [
     type: "text",
     placeholder: "Contact",
     required: true,
-    pattern: "[a-zA-Z ]{2,30}",
-    errorMessage: "Please enter a valid contact number",
   },
   {
     id: "phone",
