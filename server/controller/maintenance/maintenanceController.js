@@ -133,8 +133,56 @@ const deleteMaintenance = async (req, res) => {
     }
 };
 
+const updateMaintenance = async (req, res) => {
+    try {
+        // Get maintenance ID and status from the request body
+        const { id, status } = req.body;
+
+        // Find maintenance by ID
+        const existingMaintenance = await Maintenance.findById(id);
+
+        if(status == "in progress"){
+           return res.status(200).json({message:"status updated to in progress"})
+        }
+
+        if (!existingMaintenance) {
+            return res.status(404).json({ error: "Maintenance not found" });
+        }
+
+        // Update the status
+        existingMaintenance.status = status;
+
+        // If the status is "complete," update lastMaintenanceDate and calculate nextMaintenanceDate
+        if (status === "complete") {
+            existingMaintenance.lastMaintenanceDate = new Date();
+
+            // Calculate nextMaintenanceDate by adding maintenanceInterval to the current date
+            const currentDate = new Date();
+            const maintenanceInterval = existingMaintenance.maintenanceInterval;
+            const nextMaintenanceDate = new Date(currentDate.getTime() + maintenanceInterval * 24 * 60 * 60 * 1000);
+            
+            existingMaintenance.nextMaintenanceDate = nextMaintenanceDate;
+        }
+
+        // Save the updated maintenance
+        const updatedMaintenance = await existingMaintenance.save();
+
+        // Send the updated maintenance data as a response
+        res.status(200).json({
+            code: 200,
+            data: {
+                updatedMaintenance
+            },
+        });
+    } catch (error) {
+        console.error("Error updating maintenance:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 module.exports = {
     createMaintenance,
     getAllMaintenance,
-    deleteMaintenance
+    deleteMaintenance,
+    updateMaintenance
 }
