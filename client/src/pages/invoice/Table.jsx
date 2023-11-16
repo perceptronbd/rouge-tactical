@@ -11,11 +11,18 @@ export const Table = ({
   openPreview,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+
+  let filteredData = [];
+
+  if (Array.isArray(data)) {
+    filteredData = data.filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  } else {
+    console.error("'data' is not an array.");
+  }
 
   const showInvoicePreview = (item) => {
     openPreview();
