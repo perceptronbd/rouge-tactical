@@ -22,7 +22,7 @@ const loginUser = async (req, res) => {
         if (personalEmail.personalEmail === email) {
           return res
             .status(401)
-            .json({ message: "Please provide personal email." });
+            .json({ message: "Please provide work email." });
         }
       }
 
@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
         if (workEmail.workEmail === email) {
           return res
             .status(401)
-            .json({ message: "Please provide work email." });
+            .json({ message: "Please provide personal email." });
         }
       }
 
