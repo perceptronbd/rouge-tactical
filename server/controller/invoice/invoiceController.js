@@ -6,15 +6,8 @@ const createInvoice = async (req, res) => {
   console.log(req.userId);
   console.log(req.email);
 
-  const {
-    date,
-    invoiceNumber,
-    //receive vendor Id
-    vendor,
-    items,
-    totalAmount,
-    depositedAmount,
-  } = req.body;
+  const { date, invoiceNumber, vendor, items, totalAmount, depositedAmount } =
+    req.body;
 
   try {
     const existingUser = await User.findOne({
@@ -48,6 +41,7 @@ const createInvoice = async (req, res) => {
       date: date,
       invoiceNumber: invoiceNumber,
       vendor: vendor,
+      vendorName: existingVendor.name,
       item: items,
       totalAmount: totalAmount,
       depositAmount: depositedAmount,
@@ -79,7 +73,7 @@ const getAllInvoice = async (req, res) => {
     });
     const existingInvoice = await Invoice.find().sort({ date: -1 });
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     if (!existingInvoice) {
@@ -93,8 +87,8 @@ const getAllInvoice = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
+      vendorName: data.vendorName,
       item: data.items,
-      quantity: data.quantity,
       totalAmount: data.totalAmount,
       depositAmount: data.depositAmount,
       delivered: data.delivered,
@@ -103,16 +97,13 @@ const getAllInvoice = async (req, res) => {
       updateAt: data.updatedAt,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        invoiceData: formattedInvoices,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedInvoices,
     });
   } catch (error) {
     console.error("Error fetching invoice list:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
