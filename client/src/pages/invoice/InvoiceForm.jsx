@@ -4,16 +4,13 @@ import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { useModal } from "../../hooks";
+import { createInvoice } from "../../api/universal/invoice";
 
 export const InvoiceForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const allVendors = location.state;
-
-  // const [showModal, setShowModal] = useState(false);
-  // const [isError, setIsError] = useState(false);
-  // const [modalMessage, setModalMessage] = useState("");
 
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
@@ -81,10 +78,21 @@ export const InvoiceForm = () => {
     setAdditionalFields([...additionalFields, { id: additionalFields.length }]);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    openModal("Invoice created successfully!", false);
-    console.log(values);
+    try {
+      console.log(values);
+      createInvoice(values).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {}
   };
 
   return (
