@@ -23,6 +23,8 @@ const purchaseOrderRoutes = require("./route/purchaseOrder/purchaseOrderRoute");
 
 const productionRoutes = require("./route/production/productionRoute");
 
+const maintenanceRoutes = require("./route/maintenance/maintenanceRoute")
+
 //all routes for payment
 const paymentRoutes = require("./route/payment/paymentRoute");
 
@@ -46,6 +48,9 @@ router.use("/admin/user", userRoutes);
 router.use("/admin/order", adminOrderRoutes);
 router.use("/admin/payment", paymentRoutes);
 router.use("/admin/production", productionRoutes);
+router.use("/admin/maintenance", maintenanceRoutes);
+
+
 
 //other routes
 router.use("/vendor", vendorRoutes);
