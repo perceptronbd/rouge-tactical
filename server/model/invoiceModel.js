@@ -22,10 +22,10 @@ const invoiceSchema = new Schema({
     ref: Vendor,
     required: true,
   },
-  // item: {
-  //   type: String,
-  //   required: true,
-  // },
+  vendorName: {
+    type: String,
+    required: true,
+  },
   items: [
     {
       item: {
