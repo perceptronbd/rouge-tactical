@@ -141,13 +141,21 @@ const updateMaintenance = async (req, res) => {
         // Find maintenance by ID
         const existingMaintenance = await Maintenance.findById(id);
 
-        if(status == "in progress"){
-           return res.status(200).json({message:"status updated to in progress"})
-        }
-
+        
         if (!existingMaintenance) {
             return res.status(404).json({ error: "Maintenance not found" });
         }
+
+        if(status === "in progress"){
+            existingMaintenance.status = "in progress"
+            const updatedMaintenance = await existingMaintenance.save();
+
+           return res.status(200).json({message:"status updated to in progress",
+                                        data:updateMaintenance
+        })
+           
+        }
+
 
         // Update the status
         existingMaintenance.status = status;
