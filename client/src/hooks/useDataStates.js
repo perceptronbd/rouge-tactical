@@ -48,9 +48,10 @@ export const useDataStates = ({ data }) => {
       setLoadingTable(true);
       setLoadingAgingSummary(true);
       setTimeout(() => {
-        const transaction = data.filter(
-          (transaction) => transaction.vendor === vendorDetails.name
-        );
+        const transaction = data.filter((transaction) => {
+          console.log("transaction:", transaction);
+          return transaction.vendorName === vendorDetails.name;
+        });
         setLoadingTable(false);
         setLoadingAgingSummary(false);
         setTableData(transaction);
