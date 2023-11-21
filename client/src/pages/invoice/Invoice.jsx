@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdPostAdd } from "react-icons/md";
 import { BsPersonFillAdd } from "react-icons/bs";
@@ -15,15 +15,16 @@ import {
   Preview,
 } from "../../components";
 import { Table } from "./Table";
-import { data } from "../../mock/invoice";
 import { vendorInputs } from "./vendorInputs";
 import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
 import { useModal, useDataStates } from "../../hooks";
-import { createVendor } from "../../api";
+import { createVendor, getAllInvoices } from "../../api";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
+
+  const [allInvoices, setAllInvoices] = useState([]);
 
   const {
     transactionDetails: invoiceDetails,
@@ -38,7 +39,7 @@ export const Invoice = () => {
     handleVendorChange,
     handleChange,
     setTransactionDetails: setInvoiceDetails,
-  } = useDataStates({ data });
+  } = useDataStates({ data: allInvoices });
 
   const {
     showModal: showVendorModal,
@@ -60,6 +61,25 @@ export const Invoice = () => {
 
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
+
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        getAllInvoices().then((res) => {
+          const code = res.status;
+          const message = res.data.message;
+          if (code === 200) {
+            setAllInvoices(res.data.data);
+          } else {
+            console.log(message);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchInvoices();
+  }, []);
 
   const openVendorForm = () => {
     openVendorModal();
