@@ -10,6 +10,8 @@ export const Table = ({
   setInvoiceDetails,
   openPreview,
 }) => {
+  console.log("data", data);
+
   const [searchQuery, setSearchQuery] = useState("");
 
   let filteredData = [];
@@ -60,7 +62,7 @@ export const Table = ({
                     Invoice #
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
-                    Item
+                    Items
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Quantity
@@ -116,7 +118,7 @@ export const Table = ({
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.vendor}
+                        {item.vendorName}
                       </td>
                       <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
                         <button
@@ -126,29 +128,37 @@ export const Table = ({
                           {item.invoiceNumber}
                         </button>
                       </td>
-
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.item}
+                        {item.items.map((item, index) => (
+                          <span className="flex flex-col" key={index}>
+                            {item.item}
+                          </span>
+                        ))}
                       </td>
+
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.quantity}
+                        {item.items.map((item, index) => (
+                          <span className="flex flex-col" key={index}>
+                            {item.unitCost}
+                          </span>
+                        ))}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.totalAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.depositedAmount}
+                        {item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.totalAmount - item.depositedAmount}
+                        {item.totalAmount - item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.status === "close" ? "Closed" : "Open"}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
-                        {item.updatedAt === "NaN-NaN-NaN"
+                        {item.status === "open"
                           ? "- - -"
-                          : formatDate(item.updatedAt)}
+                          : formatDate(item.updateAt)}
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right">
                         <button
