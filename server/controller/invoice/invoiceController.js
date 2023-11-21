@@ -64,6 +64,7 @@ const createInvoice = async (req, res) => {
       remainingAmount: remainingAmount,
       totalAmount: totalAmount,
       depositAmount: depositedAmount,
+      status: "open",
       createdAt: Date.now(),
     };
 
