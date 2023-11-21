@@ -42,6 +42,10 @@ const invoiceSchema = new Schema({
       },
     },
   ],
+  remainingAmount: {
+    type: String,
+    required: true,
+  },
   totalAmount: {
     type: String,
     required: true,
