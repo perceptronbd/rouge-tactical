@@ -28,11 +28,15 @@ const invoiceSchema = new Schema({
         type: String,
         required: true,
       },
-      cost: {
+      unitCost: {
         type: String,
         required: true,
       },
       quantity: {
+        type: String,
+        required: true,
+      },
+      subTotal: {
         type: String,
         required: true,
       },
