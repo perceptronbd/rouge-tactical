@@ -92,7 +92,9 @@ export const InvoiceForm = () => {
           openModal(message, true);
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
