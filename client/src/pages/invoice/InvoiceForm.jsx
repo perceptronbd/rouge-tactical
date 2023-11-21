@@ -20,6 +20,7 @@ export const InvoiceForm = () => {
     invoiceNumber: "",
     vendor: "",
     items: [{ item: "", quantity: "", unitCost: "", subTotal: "" }],
+    remainingAmount: "",
     totalAmount: "",
     depositedAmount: "",
     status: "",
@@ -64,11 +65,16 @@ export const InvoiceForm = () => {
       .map((item) => parseFloat(item.subTotal))
       .filter((subtotal) => !isNaN(subtotal));
     const depositedAmount = parseFloat(updatedValues.depositedAmount);
-    const totalAmount =
+    const remainingAmount =
       (subTotals.length > 0
         ? subTotals.reduce((acc, subtotal) => acc + subtotal, 0)
         : 0) - (isNaN(depositedAmount) ? 0 : depositedAmount);
+    const totalAmount =
+      subTotals.length > 0
+        ? subTotals.reduce((acc, subtotal) => acc + subtotal, 0)
+        : 0;
 
+    updatedValues.remainingAmount = remainingAmount.toFixed(2);
     updatedValues.totalAmount = totalAmount.toFixed(2);
     setValues(updatedValues);
   };
@@ -222,6 +228,17 @@ export const InvoiceForm = () => {
               required={true}
               value={values.depositedAmount}
               onChange={handleChange}
+            />
+            <FormInput
+              id="remainingAmount"
+              name="remainingAmount"
+              label="Remaining Amount"
+              type="text"
+              placeholder="Remaining Amount"
+              required={true}
+              value={values.remainingAmount}
+              onChange={handleChange}
+              readOnly={true}
             />
             <FormInput
               id="totalAmount"
