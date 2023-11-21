@@ -64,7 +64,7 @@ const createInvoice = async (req, res) => {
 
     res.status(200).json({
       userId: req.userId,
-      data: newInvoice,
+      data: newInvoiceData,
       message: "Invoice created successfully!",
     });
   } catch (error) {
