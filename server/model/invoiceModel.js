@@ -4,11 +4,6 @@ const Schema = mongoose.Schema;
 const Vendor = require("./vendorModel");
 
 const invoiceSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-    auto: true,
-    required: true,
-  },
   date: {
     type: Date,
     required: true,
@@ -16,6 +11,7 @@ const invoiceSchema = new Schema({
   invoiceNumber: {
     type: String,
     required: true,
+    unique: true,
   },
   vendor: {
     type: Schema.Types.ObjectId,
