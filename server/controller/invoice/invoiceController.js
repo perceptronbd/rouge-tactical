@@ -37,6 +37,16 @@ const createInvoice = async (req, res) => {
       });
     }
 
+    const existingInvoice = await Invoice.findOne({
+      invoiceNumber: invoiceNumber,
+    });
+
+    if (existingInvoice) {
+      return res.status(400).json({
+        message: "An invoice with the same invoice number already exists!",
+      });
+    }
+
     const newInvoiceData = {
       date: date,
       invoiceNumber: invoiceNumber,
