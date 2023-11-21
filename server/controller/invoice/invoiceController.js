@@ -6,8 +6,15 @@ const createInvoice = async (req, res) => {
   console.log(req.userId);
   console.log(req.email);
 
-  const { date, invoiceNumber, vendor, items, totalAmount, depositedAmount } =
-    req.body;
+  const {
+    date,
+    invoiceNumber,
+    vendor,
+    items,
+    remainingAmount,
+    totalAmount,
+    depositedAmount,
+  } = req.body;
 
   try {
     const existingUser = await User.findOne({
@@ -29,6 +36,7 @@ const createInvoice = async (req, res) => {
       !invoiceNumber ||
       !vendor ||
       !items ||
+      !remainingAmount ||
       !totalAmount ||
       !depositedAmount
     ) {
@@ -53,6 +61,7 @@ const createInvoice = async (req, res) => {
       vendor: vendor,
       vendorName: existingVendor.name,
       items: items,
+      remainingAmount: remainingAmount,
       totalAmount: totalAmount,
       depositAmount: depositedAmount,
       createdAt: Date.now(),
@@ -100,6 +109,7 @@ const getAllInvoice = async (req, res) => {
       vendorName: data.vendorName,
       items: data.items,
       totalAmount: data.totalAmount,
+      remainingAmount: data.remainingAmount,
       depositAmount: data.depositAmount,
       delivered: data.delivered,
       status: data.status,
