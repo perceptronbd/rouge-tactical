@@ -18,7 +18,9 @@ const generateInputs = (inputFields, data, selectOpts, handleChange) => {
           key={input.id}
           {...input}
           onChange={handleChange}
-          selectOpts={selectOpts}
+          selectOpts={
+            input.selectOpts.length === 0 ? selectOpts : input.selectOpts
+          }
           value={value}
         />
       );

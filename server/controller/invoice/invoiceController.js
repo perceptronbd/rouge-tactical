@@ -206,7 +206,7 @@ const updateInvoice = async (req, res) => {
     });
 
     if (!existingInvoice) {
-      return res.status(404).json({ error: "No Invoice found" });
+      return res.status(404).json({ message: "No Invoice found" });
     }
 
     if (date != null && date !== "") {
@@ -257,15 +257,13 @@ const updateInvoice = async (req, res) => {
     };
 
     return res.status(200).json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        updatedInvoiceData: formattedUpdatedInvoice,
-      },
+      userId: req.userId,
+      data: formattedUpdatedInvoice,
+      message: "Invoice updated successfully!",
     });
   } catch (error) {
     console.error("Error updating invoice:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -287,7 +285,7 @@ const updateProduction = async (req, res) => {
     });
 
     if (!existingProduction) {
-      return res.status(404).json({ error: "No Production found" });
+      return res.status(404).json({ message: "No Production found" });
     }
 
     if (status != null && status !== "") {
@@ -338,7 +336,28 @@ const updateProduction = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating production:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const deleteInvoice = async (req, res) => {
+  const { invoiceId } = req.body;
+
+  try {
+    // Find the invoice by ID and delete it
+    const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
+
+    if (!deletedInvoice) {
+      return res.status(404).json({ message: "Invoice not found" });
+    }
+
+    return res.status(200).json({
+      message: "Invoice deleted successfully!",
+      deletedInvoiceId: deletedInvoice._id,
+    });
+  } catch (error) {
+    console.error("Error deleting invoice:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -347,5 +366,6 @@ module.exports = {
   getAllInvoice,
   getInvoiceOfSelectedVendor,
   updateInvoice,
+  deleteInvoice,
   updateProduction,
 };
