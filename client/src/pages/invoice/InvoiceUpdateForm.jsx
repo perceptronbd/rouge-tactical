@@ -1,33 +1,48 @@
-import React, { useState } from "react";
-import { MdOutlineArrowBackIosNew, MdOutlinePlaylistAdd } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { MdDeleteOutline, MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BiSolidAddToQueue } from "react-icons/bi";
+import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { useModal } from "../../hooks";
 import { createInvoice } from "../../api/universal/invoice";
 
-export const InvoiceForm = () => {
+export const InvoiceUpdateForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const allVendors = location.state;
+  const { item: invoiceData, vendorData } = location.state;
 
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
 
   const [values, setValues] = useState({
-    date: "",
-    invoiceNumber: "",
-    vendor: "",
-    items: [{ item: "", quantity: "", unitCost: "", subTotal: "" }],
-    remainingAmount: "",
-    totalAmount: "",
-    depositedAmount: "",
-    status: "",
-    updatedAt: "",
+    date: invoiceData.date || "",
+    invoiceNumber: invoiceData.invoiceNumber || "",
+    vendor: invoiceData.vendorId || "",
+    items: invoiceData.items || [
+      { item: "", quantity: "", unitCost: "", subTotal: "" },
+    ],
+    remainingAmount: invoiceData.remainingAmount || "",
+    totalAmount: invoiceData.totalAmount || "",
+    depositedAmount: invoiceData.depositAmount || "",
+    status: invoiceData.status || "",
+    updatedAt: invoiceData.updateAt || "",
   });
 
-  const [additionalFields, setAdditionalFields] = useState([]); // Store additional fields
+  const [additionalFields, setAdditionalFields] = useState([]);
+
+  useEffect(() => {
+    if (invoiceData.items.length > 0) {
+      const additionalFields = [];
+      for (let i = 0; i < invoiceData.items.length - 1; i++) {
+        additionalFields.push(invoiceData.items[i]);
+      }
+      setAdditionalFields([
+        ...additionalFields,
+        { id: additionalFields.length },
+      ]);
+    }
+  }, [invoiceData.items]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,7 +125,7 @@ export const InvoiceForm = () => {
         className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded"
       >
         <div className="w-full flex justify-between items-start">
-          <Text variant={"h2"}>New Invoice</Text>
+          <Text variant={"h2"}>Update Invoice</Text>
           <Button
             icon={MdOutlineArrowBackIosNew}
             className={"w-10 m-0"}
@@ -145,7 +160,7 @@ export const InvoiceForm = () => {
               id="vendor"
               name="vendor"
               label="Vendor"
-              selectOpts={allVendors}
+              selectOpts={vendorData}
               required={true}
               className={"col-span-2"}
               value={values.vendor}
@@ -253,9 +268,19 @@ export const InvoiceForm = () => {
             />
           </div>
         </section>
-        <Button icon={MdOutlinePlaylistAdd} className={"w-48 m-0"}>
-          Add New
-        </Button>
+
+        <div className="flex gap-4">
+          <Button
+            icon={BiMessageSquareEdit}
+            className={"m-0"}
+            variant={"success"}
+          >
+            Update
+          </Button>
+          <Button icon={MdDeleteOutline} className={"m-0"} variant={"danger"}>
+            Delete
+          </Button>
+        </div>
         <Modal
           isOpen={showModal}
           closeModal={closeModal}

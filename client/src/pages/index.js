@@ -9,6 +9,7 @@ export { Orders } from "./orders/Orders";
 //Invoice
 export { Invoice } from "./invoice/Invoice";
 export { InvoiceForm } from "./invoice/InvoiceForm";
+export { InvoiceUpdateForm } from "./invoice/InvoiceUpdateForm";
 //purchase
 export { Purchase } from "./purchase/Purchase";
 export { PurchaseForm } from "./purchase/PurchaseForm";

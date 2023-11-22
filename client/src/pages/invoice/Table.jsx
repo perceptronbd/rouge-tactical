@@ -2,20 +2,31 @@ import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput } from "../../components";
 import { formatDate } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 export const Table = ({
   data,
   loading,
-  openForm,
   setInvoiceDetails,
   openPreview,
+  vendorData,
 }) => {
+  console.log("data", data);
+
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+  const navigate = useNavigate();
+
+  let filteredData = [];
+
+  if (Array.isArray(data)) {
+    filteredData = data.filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  } else {
+    console.error("'data' is not an array.");
+  }
 
   const showInvoicePreview = (item) => {
     openPreview();
@@ -27,9 +38,7 @@ export const Table = ({
   };
 
   const handleEdit = (item) => {
-    console.log(item);
-    openForm();
-    setInvoiceDetails(item);
+    navigate("/invoice/update", { state: { item, vendorData } });
   };
 
   return (
@@ -53,7 +62,7 @@ export const Table = ({
                     Invoice #
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
-                    Item
+                    Items
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Quantity
@@ -78,7 +87,7 @@ export const Table = ({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-white">
+              <tbody className="text-white ">
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="11">
@@ -109,7 +118,7 @@ export const Table = ({
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.vendor}
+                        {item.vendorName}
                       </td>
                       <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
                         <button
@@ -119,29 +128,37 @@ export const Table = ({
                           {item.invoiceNumber}
                         </button>
                       </td>
-
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.item}
+                        {item.items.map((item, index) => (
+                          <span className="flex flex-col" key={index}>
+                            {item.item}
+                          </span>
+                        ))}
                       </td>
+
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.quantity}
+                        {item.items.map((item, index) => (
+                          <span className="flex flex-col" key={index}>
+                            {item.unitCost}
+                          </span>
+                        ))}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.totalAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.depositedAmount}
+                        {item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.totalAmount - item.depositedAmount}
+                        {item.totalAmount - item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.status === "close" ? "Closed" : "Open"}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
-                        {item.updatedAt === "NaN-NaN-NaN"
+                        {item.status === "open"
                           ? "- - -"
-                          : formatDate(item.updatedAt)}
+                          : formatDate(item.updateAt)}
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right">
                         <button

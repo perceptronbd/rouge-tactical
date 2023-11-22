@@ -4,6 +4,7 @@ import {
   Home,
   Invoice,
   InvoiceForm,
+  InvoiceUpdateForm,
   Login,
   Maintenance,
   Orders,
@@ -38,6 +39,7 @@ function App() {
         <Route path="orders" element={<Orders />} />
         <Route path="invoice" element={<Invoice />} />
         <Route path="invoice/new" element={<InvoiceForm />} />
+        <Route path="invoice/update" element={<InvoiceUpdateForm />} />
         <Route path="purchase" element={<Purchase />} />
         <Route path="purchase/new" element={<PurchaseForm />} />
         <Route path="permits" element={<Permits />} />

@@ -9,14 +9,11 @@ const createInvoice = async (req, res) => {
   const {
     date,
     invoiceNumber,
-    //receive vendor Id
     vendor,
     items,
-    quantity,
+    remainingAmount,
     totalAmount,
-    depositAmount,
-    delivered,
-    status,
+    depositedAmount,
   } = req.body;
 
   try {
@@ -28,10 +25,10 @@ const createInvoice = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found" });
+      return res.status(404).json({ message: "No User found" });
     }
     if (!existingVendor) {
-      return res.status(404).json({ error: "No Vendor found" });
+      return res.status(404).json({ message: "No Vendor found" });
     }
 
     if (
@@ -39,13 +36,22 @@ const createInvoice = async (req, res) => {
       !invoiceNumber ||
       !vendor ||
       !items ||
-      !quantity ||
+      !remainingAmount ||
       !totalAmount ||
-      !depositAmount ||
-      !delivered
+      !depositedAmount
     ) {
       return res.status(400).json({
-        error: "All required fields must be provided for creating Invoice!",
+        message: "All required fields must be provided!",
+      });
+    }
+
+    const existingInvoice = await Invoice.findOne({
+      invoiceNumber: invoiceNumber,
+    });
+
+    if (existingInvoice) {
+      return res.status(400).json({
+        message: "An invoice with the same invoice number already exists!",
       });
     }
 
@@ -53,29 +59,27 @@ const createInvoice = async (req, res) => {
       date: date,
       invoiceNumber: invoiceNumber,
       vendor: vendor,
-      item: items,
-      quantity: quantity,
+      vendorName: existingVendor.name,
+      items: items,
+      remainingAmount: remainingAmount,
       totalAmount: totalAmount,
-      depositAmount: depositAmount,
-      delivered: delivered,
-      status: status,
+      depositAmount: depositedAmount,
+      status: "open",
       createdAt: Date.now(),
     };
 
-    const newInvoice = new Invoice(newInvoiceData)
+    const newInvoice = new Invoice(newInvoiceData);
 
     await newInvoice.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        newInvoiceData: newInvoice,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newInvoiceData,
+      message: "Invoice created successfully!",
     });
   } catch (error) {
     console.error("Error creating invoice:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -89,7 +93,7 @@ const getAllInvoice = async (req, res) => {
     });
     const existingInvoice = await Invoice.find().sort({ date: -1 });
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     if (!existingInvoice) {
@@ -103,9 +107,10 @@ const getAllInvoice = async (req, res) => {
       date: data.date,
       invoiceNumber: data.invoiceNumber,
       vendorId: data.vendor,
-      item: data.items,
-      quantity: data.quantity,
+      vendorName: data.vendorName,
+      items: data.items,
       totalAmount: data.totalAmount,
+      remainingAmount: data.remainingAmount,
       depositAmount: data.depositAmount,
       delivered: data.delivered,
       status: data.status,
@@ -113,16 +118,13 @@ const getAllInvoice = async (req, res) => {
       updateAt: data.updatedAt,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        invoiceData: formattedInvoices,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedInvoices,
     });
   } catch (error) {
     console.error("Error fetching invoice list:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -207,8 +209,6 @@ const updateInvoice = async (req, res) => {
       return res.status(404).json({ error: "No Invoice found" });
     }
 
-    
-
     if (date != null && date !== "") {
       existingInvoice.date = date;
     }
@@ -218,7 +218,7 @@ const updateInvoice = async (req, res) => {
     // if (item != null && item !== "") {
     //   existingInvoice.item = item;
     // }
-      if (items != null && items.length > 0) {
+    if (items != null && items.length > 0) {
       existingInvoice.items = items;
     }
     if (quantity != null && quantity !== "") {
@@ -342,11 +342,10 @@ const updateProduction = async (req, res) => {
   }
 };
 
-
 module.exports = {
   createInvoice,
   getAllInvoice,
   getInvoiceOfSelectedVendor,
   updateInvoice,
-  updateProduction
+  updateProduction,
 };

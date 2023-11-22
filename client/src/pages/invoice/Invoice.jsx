@@ -11,40 +11,38 @@ import {
   SelectInput,
   Vendor,
   AgingSummary,
-  UpdateForm,
   Preview,
 } from "../../components";
 import { Table } from "./Table";
-import { data } from "../../mock/invoice";
-import { vendorData } from "../../mock/vendor";
 import { vendorInputs } from "./vendorInputs";
-import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
-import { useModal } from "../../hooks";
+import { useModal, useDataStates } from "../../hooks";
+import { createVendor, getAllInvoices } from "../../api";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
-  //data states
-  const [agingSummary, setAgingSummary] = useState(null);
-  const [selectedVendor, setSelectedVendor] = useState(null);
-  const [vendorDetails, setVendorDetails] = useState(null);
-  const [tableData, setTableData] = useState(data);
-  const [invoiceDetails, setInvoiceDetails] = useState(null);
-  //loading states
-  const [loading, setLoading] = useState(false);
-  const [loadingTable, setLoadingTable] = useState(false);
-  const [loadingAgingSummary, setLoadingAgingSummary] = useState(false);
-  //modal states
+
+  const [allInvoices, setAllInvoices] = useState([]);
+
+  const {
+    transactionDetails: invoiceDetails,
+    allVendors,
+    selectedVendor,
+    vendorDetails,
+    tableData,
+    agingSummary,
+    loading,
+    loadingTable,
+    loadingAgingSummary,
+    handleVendorChange,
+    handleChange,
+    setTransactionDetails: setInvoiceDetails,
+  } = useDataStates({ data: allInvoices });
+
   const {
     showModal: showVendorModal,
     openModal: openVendorModal,
     closeModal: closeVendorModal,
-  } = useModal();
-
-  const {
-    showModal: showForm,
-    openModal: openForm,
-    closeModal: closeForm,
   } = useModal();
 
   const {
@@ -57,90 +55,45 @@ export const Invoice = () => {
     useModal();
 
   useEffect(() => {
-    setLoading(true);
-
-    setTimeout(() => {
-      const vendor = vendorData.find((vendor) => vendor.id === selectedVendor);
-      console.log(vendor);
-      if (!vendor) {
-        setLoading(false);
-        setTableData(data);
-        setSelectedVendor(null);
-        setVendorDetails(null);
-        return;
-      }
-      setLoading(false);
-      setVendorDetails(vendor);
-    }, 1000);
-  }, [selectedVendor]);
-
-  useEffect(() => {
-    if (vendorDetails) {
-      setLoadingTable(true);
-      setLoadingAgingSummary(true);
-      setTimeout(() => {
-        const invoice = data.filter(
-          (invoice) => invoice.vendor === vendorDetails.name
-        );
-        setLoadingTable(false);
-        setLoadingAgingSummary(false);
-        setTableData(invoice);
-
-        const currentDate = new Date();
-        const summary = {
-          current: 0,
-          "0 - 30": 0,
-          "31 - 60": 0,
-          "61 - 90": 0,
-          "> 90": 0,
-        };
-
-        invoice.forEach((item) => {
-          const updatedAt = new Date(item.date);
-          const daysDifference = Math.floor(
-            (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
-          );
-
-          if (daysDifference <= 1) {
-            summary["current"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 30) {
-            summary["0 - 30"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 60) {
-            summary["31 - 60"] += item.totalAmount - item.depositedAmount;
-          } else if (daysDifference <= 90) {
-            summary["61 - 90"] += item.totalAmount - item.depositedAmount;
+    const fetchInvoices = async () => {
+      try {
+        getAllInvoices().then((res) => {
+          const code = res.status;
+          const message = res.data.message;
+          if (code === 200) {
+            setAllInvoices(res.data.data);
           } else {
-            summary["> 90"] += item.totalAmount - item.depositedAmount;
+            console.log(message);
           }
         });
-
-        setAgingSummary(summary);
-
-        console.log(summary);
-      }, 1000);
-    }
-  }, [vendorDetails]);
-
-  const handleVendorChange = (event) => {
-    setSelectedVendor(parseInt(event.target.value));
-    console.log(event.target.value);
-  };
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchInvoices();
+  }, []);
 
   const openVendorForm = () => {
     openVendorModal();
   };
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.value);
-    setInvoiceDetails({ ...invoiceDetails, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = (e) => {
+  const submitAddVendor = async (e) => {
     e.preventDefault();
-    closeVendorModal();
-    openModal("Process Successful!", false);
-    console.log(invoiceDetails);
+    try {
+      console.log(invoiceDetails);
+      createVendor(invoiceDetails).then((res) => {
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          closeVendorModal();
+          openModal(message, false);
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -156,7 +109,7 @@ export const Invoice = () => {
               defaultValue="View All"
               value={selectedVendor}
               onChange={handleVendorChange}
-              selectOpts={vendorData}
+              selectOpts={allVendors}
             />
 
             <Button
@@ -184,20 +137,20 @@ export const Invoice = () => {
           loading={loadingAgingSummary}
         />
       </section>
-      <div>
+      <div className=" h-[310px] 3xl:h-[560px]">
         <Table
           data={tableData}
           loading={loadingTable}
-          openForm={openForm}
           setInvoiceDetails={setInvoiceDetails}
           openPreview={openPreview}
+          vendorData={allVendors}
         />
       </div>
       <Button
         icon={MdPostAdd}
         className={"my-2 3xl:my-4"}
         onClick={() => {
-          navaigate("/invoice/new");
+          navaigate("/invoice/new", { state: allVendors });
         }}
       >
         New Invoice
@@ -210,20 +163,10 @@ export const Invoice = () => {
           inputFields={vendorInputs}
           icon={BsPersonFillAdd}
           handleChange={handleChange}
-          onSubmit={onSubmit}
+          onSubmit={submitAddVendor}
         />
       </ContentModal>
 
-      <ContentModal isOpen={showForm} closeModal={closeForm}>
-        <UpdateForm
-          formTitle={"Update Invoice"}
-          inputFields={invoiceInputs}
-          icon={BsPersonFillAdd}
-          data={invoiceDetails}
-          handleChange={handleChange}
-          onSubmit={onSubmit}
-        />
-      </ContentModal>
       <Preview
         isOpen={showPreview}
         closePreview={closePreview}

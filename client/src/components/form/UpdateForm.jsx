@@ -7,7 +7,7 @@ import { SelectInput } from "../inputs/SelectInput";
 import { FormInput } from "../inputs/FormInput";
 import { formatDateToYYYYMMDD } from "../../utils";
 
-const generateInputs = (inputFields, data, handleChange) => {
+const generateInputs = (inputFields, data, selectOpts, handleChange) => {
   return inputFields.map((input) => {
     const nameParts = input.name.split(".");
     const value = nameParts.reduce((obj, part) => (obj ? obj[part] : ""), data);
@@ -18,6 +18,7 @@ const generateInputs = (inputFields, data, handleChange) => {
           key={input.id}
           {...input}
           onChange={handleChange}
+          selectOpts={selectOpts}
           value={value}
         />
       );
@@ -48,6 +49,7 @@ export const UpdateForm = ({
   formTitle,
   inputFields,
   data,
+  selectOpts,
   handleChange,
   onSubmit,
   handleDelete,
@@ -56,7 +58,12 @@ export const UpdateForm = ({
     console.log(data);
   }, [data]);
 
-  const inputComponents = generateInputs(inputFields, data, handleChange);
+  const inputComponents = generateInputs(
+    inputFields,
+    data,
+    selectOpts,
+    handleChange
+  );
 
   return (
     <>

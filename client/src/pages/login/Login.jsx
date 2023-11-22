@@ -77,7 +77,7 @@ export const Login = () => {
           {inputs.map((input) => (
             <FormInput key={input.id} {...input} onChange={handleChange} />
           ))}
-          <LinkText to={"/forgot-password"}>Forgot password?</LinkText>
+          {/* <LinkText to={"/forgot-password"}>Forgot password?</LinkText> */}
           <Button variant={"ghost"} className={"w-full"}>
             Login
           </Button>
