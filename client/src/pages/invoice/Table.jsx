@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { SearchInput } from "../../components";
 import { formatDate } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 export const Table = ({
   data,
   loading,
-  openForm,
   setInvoiceDetails,
   openPreview,
+  vendorData,
 }) => {
   console.log("data", data);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   let filteredData = [];
 
@@ -36,9 +38,7 @@ export const Table = ({
   };
 
   const handleEdit = (item) => {
-    console.log(item);
-    openForm();
-    setInvoiceDetails(item);
+    navigate("/invoice/update", { state: { item, vendorData } });
   };
 
   return (
@@ -87,7 +87,7 @@ export const Table = ({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-white">
+              <tbody className="text-white ">
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="11">

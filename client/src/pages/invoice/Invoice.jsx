@@ -11,12 +11,10 @@ import {
   SelectInput,
   Vendor,
   AgingSummary,
-  UpdateForm,
   Preview,
 } from "../../components";
 import { Table } from "./Table";
 import { vendorInputs } from "./vendorInputs";
-import { invoiceInputs } from "./invoiceInputs";
 import { InvoicePreview } from "./InvoicePreview";
 import { useModal, useDataStates } from "../../hooks";
 import { createVendor, getAllInvoices } from "../../api";
@@ -45,12 +43,6 @@ export const Invoice = () => {
     showModal: showVendorModal,
     openModal: openVendorModal,
     closeModal: closeVendorModal,
-  } = useModal();
-
-  const {
-    showModal: showForm,
-    openModal: openForm,
-    closeModal: closeForm,
   } = useModal();
 
   const {
@@ -104,10 +96,6 @@ export const Invoice = () => {
     }
   };
 
-  const submitUpdateInvoice = async (e) => {
-    e.preventDefault();
-  };
-
   return (
     <section className="bg-foreground w-full h-full p-4 rounded">
       <section className="h-70 mb-2 flex justify-between">
@@ -153,9 +141,9 @@ export const Invoice = () => {
         <Table
           data={tableData}
           loading={loadingTable}
-          openForm={openForm}
           setInvoiceDetails={setInvoiceDetails}
           openPreview={openPreview}
+          vendorData={allVendors}
         />
       </div>
       <Button
@@ -179,17 +167,6 @@ export const Invoice = () => {
         />
       </ContentModal>
 
-      <ContentModal isOpen={showForm} closeModal={closeForm}>
-        <UpdateForm
-          formTitle={"Update Invoice"}
-          inputFields={invoiceInputs}
-          icon={BsPersonFillAdd}
-          data={invoiceDetails}
-          selectOpts={allVendors}
-          handleChange={handleChange}
-          onSubmit={submitUpdateInvoice}
-        />
-      </ContentModal>
       <Preview
         isOpen={showPreview}
         closePreview={closePreview}
