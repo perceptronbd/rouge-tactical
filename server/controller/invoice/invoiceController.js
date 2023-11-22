@@ -259,6 +259,7 @@ const updateInvoice = async (req, res) => {
     return res.status(200).json({
       userId: req.userId,
       data: formattedUpdatedInvoice,
+      message: "Invoice updated successfully!",
     });
   } catch (error) {
     console.error("Error updating invoice:", error);
