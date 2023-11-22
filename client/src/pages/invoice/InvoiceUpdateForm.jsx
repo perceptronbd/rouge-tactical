@@ -4,18 +4,25 @@ import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { useModal } from "../../hooks";
-import { createInvoice } from "../../api/universal/invoice";
+import { updateInvoice } from "../../api/universal/invoice";
+import { formatDateToYYYYMMDD } from "../../utils";
 
 export const InvoiceUpdateForm = () => {
+  const statusOpts = [
+    { value: "open", name: "Open" },
+    { value: "close", name: "Close" },
+  ];
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const { item: invoiceData, vendorData } = location.state;
-
+  console.log("invoiceData", invoiceData);
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
 
   const [values, setValues] = useState({
+    invoiceId: invoiceData.invoiceId || "",
     date: invoiceData.date || "",
     invoiceNumber: invoiceData.invoiceNumber || "",
     vendor: invoiceData.vendorId || "",
@@ -26,7 +33,6 @@ export const InvoiceUpdateForm = () => {
     totalAmount: invoiceData.totalAmount || "",
     depositedAmount: invoiceData.depositAmount || "",
     status: invoiceData.status || "",
-    updatedAt: invoiceData.updateAt || "",
   });
 
   const [additionalFields, setAdditionalFields] = useState([]);
@@ -95,15 +101,14 @@ export const InvoiceUpdateForm = () => {
   };
 
   const addField = () => {
-    // Add an additional form input field to the list
     setAdditionalFields([...additionalFields, { id: additionalFields.length }]);
   };
 
-  const onSubmit = async (e) => {
+  const onUpdate = async (e) => {
     e.preventDefault();
     try {
       console.log(values);
-      createInvoice(values).then((res) => {
+      updateInvoice(values).then((res) => {
         console.log(res);
         const code = res.status;
         const message = res.data.message;
@@ -118,19 +123,18 @@ export const InvoiceUpdateForm = () => {
     }
   };
 
+  const onDelete = async (e) => {};
+
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded"
-      >
+      <form className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded">
         <div className="w-full flex justify-between items-start">
           <Text variant={"h2"}>Update Invoice</Text>
           <Button
             icon={MdOutlineArrowBackIosNew}
             className={"w-10 m-0"}
             onClick={() => {
-              navigate(-1);
+              navigate("/invoice");
             }}
           />
         </div>
@@ -143,7 +147,7 @@ export const InvoiceUpdateForm = () => {
               type="date"
               placeholder="Date"
               required={true}
-              value={values.date}
+              value={formatDateToYYYYMMDD(values.date)}
               onChange={handleChange}
             />
             <FormInput
@@ -265,6 +269,16 @@ export const InvoiceUpdateForm = () => {
               value={values.totalAmount}
               onChange={handleChange}
               readOnly={true}
+            />{" "}
+            <SelectInput
+              id="status"
+              name="status"
+              label="Status"
+              selectOpts={statusOpts}
+              required={true}
+              value={values.status}
+              defaultValue={"Select Vendor"}
+              onChange={handleChange}
             />
           </div>
         </section>
@@ -274,10 +288,16 @@ export const InvoiceUpdateForm = () => {
             icon={BiMessageSquareEdit}
             className={"m-0"}
             variant={"success"}
+            onClick={onUpdate}
           >
             Update
           </Button>
-          <Button icon={MdDeleteOutline} className={"m-0"} variant={"danger"}>
+          <Button
+            icon={MdDeleteOutline}
+            className={"m-0"}
+            variant={"danger"}
+            onClick={onDelete}
+          >
             Delete
           </Button>
         </div>

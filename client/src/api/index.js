@@ -5,4 +5,8 @@ export {
   deleteUser,
 } from "../api/admin/user";
 export { getAllVendors, createVendor } from "../api/admin/vendor";
-export { createInvoice, getAllInvoices } from "../api/universal/invoice";
+export {
+  createInvoice,
+  updateInvoice,
+  getAllInvoices,
+} from "../api/universal/invoice";
