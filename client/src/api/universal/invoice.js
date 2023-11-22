@@ -23,6 +23,17 @@ export const updateInvoice = async (data) => {
   }
 };
 
+export const deleteInvoice = async (data) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).put("/invoice/deleteInvoice", data);
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const getAllInvoices = async (data) => {
   const token = sessionStorage.getItem("token");
   try {

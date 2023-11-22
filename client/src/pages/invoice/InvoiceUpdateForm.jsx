@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { MdDeleteOutline, MdOutlineArrowBackIosNew } from "react-icons/md";
-import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
+import {
+  Button,
+  ContentModal,
+  FormInput,
+  Modal,
+  SelectInput,
+  Text,
+} from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { useModal } from "../../hooks";
-import { updateInvoice } from "../../api/universal/invoice";
+import { deleteInvoice, updateInvoice } from "../../api/universal/invoice";
 import { formatDateToYYYYMMDD } from "../../utils";
 
 export const InvoiceUpdateForm = () => {
@@ -17,9 +24,15 @@ export const InvoiceUpdateForm = () => {
   const location = useLocation();
 
   const { item: invoiceData, vendorData } = location.state;
-  console.log("invoiceData", invoiceData);
+
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
+
+  const {
+    showModal: showConfirmDelete,
+    openModal: openConfirmDelete,
+    closeModal: closeConfirmDelete,
+  } = useModal();
 
   const [values, setValues] = useState({
     invoiceId: invoiceData.invoiceId || "",
@@ -107,7 +120,6 @@ export const InvoiceUpdateForm = () => {
   const onUpdate = async (e) => {
     e.preventDefault();
     try {
-      console.log(values);
       updateInvoice(values).then((res) => {
         console.log(res);
         const code = res.status;
@@ -123,11 +135,32 @@ export const InvoiceUpdateForm = () => {
     }
   };
 
-  const onDelete = async (e) => {};
+  const onDelete = () => {
+    openConfirmDelete();
+  };
+
+  const confirmDelete = (e) => {
+    e.preventDefault();
+    try {
+      deleteInvoice(values).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+          navigate("/invoice");
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
-      <form className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded">
+      <article className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded">
         <div className="w-full flex justify-between items-start">
           <Text variant={"h2"}>Update Invoice</Text>
           <Button
@@ -301,13 +334,21 @@ export const InvoiceUpdateForm = () => {
             Delete
           </Button>
         </div>
+        <ContentModal
+          isOpen={showConfirmDelete}
+          closeModal={closeConfirmDelete}
+        >
+          <Button variant={"ghost"} onClick={confirmDelete}>
+            Confirm Delete?
+          </Button>
+        </ContentModal>
         <Modal
           isOpen={showModal}
           closeModal={closeModal}
           modalMessage={modalMessage}
           isError={isError}
         />
-      </form>
+      </article>
     </>
   );
 };
