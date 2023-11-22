@@ -149,7 +149,7 @@ export const Invoice = () => {
           loading={loadingAgingSummary}
         />
       </section>
-      <div>
+      <div className=" h-[310px] 3xl:h-[560px]">
         <Table
           data={tableData}
           loading={loadingTable}
