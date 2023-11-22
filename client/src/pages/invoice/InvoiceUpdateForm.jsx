@@ -148,9 +148,10 @@ export const InvoiceUpdateForm = () => {
         const message = res.data.message;
         if (code === 200) {
           openModal(message, false);
-          navigate("/invoice");
+          closeConfirmDelete();
         } else {
           openModal(message, true);
+          closeConfirmDelete();
         }
       });
     } catch (error) {
