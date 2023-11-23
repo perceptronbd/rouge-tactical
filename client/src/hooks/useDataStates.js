@@ -49,7 +49,6 @@ export const useDataStates = ({ data }) => {
       setLoadingAgingSummary(true);
       setTimeout(() => {
         const transaction = data.filter((transaction) => {
-          console.log("transaction:", transaction);
           return transaction.vendorName === vendorDetails.name;
         });
         setLoadingTable(false);
@@ -66,26 +65,27 @@ export const useDataStates = ({ data }) => {
         };
 
         transaction.forEach((item) => {
-          const updatedAt = new Date(item.date);
+          const date = new Date(item.date);
           const daysDifference = Math.floor(
-            (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
+            (currentDate - date) / (1000 * 60 * 60 * 24)
           );
 
           if (daysDifference <= 1) {
-            summary["current"] += item.totalAmount - item.depositedAmount;
+            summary["current"] += parseFloat(item.remainingAmount);
           } else if (daysDifference <= 30) {
-            summary["0 - 30"] += item.totalAmount - item.depositedAmount;
+            summary["0 - 30"] += parseFloat(item.remainingAmount);
           } else if (daysDifference <= 60) {
-            summary["31 - 60"] += item.totalAmount - item.depositedAmount;
+            summary["31 - 60"] += parseFloat(item.remainingAmount);
           } else if (daysDifference <= 90) {
-            summary["61 - 90"] += item.totalAmount - item.depositedAmount;
+            summary["61 - 90"] += parseFloat(item.remainingAmount);
           } else {
-            summary["> 90"] += item.totalAmount - item.depositedAmount;
+            summary["> 90"] += parseFloat(item.remainingAmount);
           }
         });
 
         setAgingSummary(summary);
-      }, 1000);
+        console.log("summary:", summary);
+      }, 500);
     }
   }, [vendorDetails, data]);
 
