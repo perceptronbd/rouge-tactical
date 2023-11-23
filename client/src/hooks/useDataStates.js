@@ -84,8 +84,36 @@ export const useDataStates = ({ data }) => {
         });
 
         setAgingSummary(summary);
-        console.log("summary:", summary);
       }, 500);
+    } else {
+      const currentDate = new Date();
+      const summary = {
+        current: 0,
+        "0 - 30": 0,
+        "31 - 60": 0,
+        "61 - 90": 0,
+        "> 90": 0,
+      };
+
+      data.forEach((item) => {
+        const date = new Date(item.date);
+        const daysDifference = Math.floor(
+          (currentDate - date) / (1000 * 60 * 60 * 24)
+        );
+
+        if (daysDifference <= 1) {
+          summary["current"] += parseFloat(item.remainingAmount);
+        } else if (daysDifference <= 30) {
+          summary["0 - 30"] += parseFloat(item.remainingAmount);
+        } else if (daysDifference <= 60) {
+          summary["31 - 60"] += parseFloat(item.remainingAmount);
+        } else if (daysDifference <= 90) {
+          summary["61 - 90"] += parseFloat(item.remainingAmount);
+        } else {
+          summary["> 90"] += parseFloat(item.remainingAmount);
+        }
+      });
+      setAgingSummary(summary);
     }
   }, [vendorDetails, data]);
 

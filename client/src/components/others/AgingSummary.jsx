@@ -11,6 +11,8 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
     return total.toFixed(2);
   };
 
+  console.log("agingSummary", agingSummary);
+
   return (
     <section className="px-4 py-2 flex flex-col gap-2 w-80 h-full 3xl:h-56 border rounded">
       <div>Aging Summary</div>
@@ -18,12 +20,12 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
         <div className="w-full h-40 flex justify-center items-center">
           loading...
         </div>
-      ) : agingSummary && data ? (
+      ) : agingSummary ? (
         <div className="bg-background p-2 rounded">
           <div className="flex gap-4 justify-between border-b-2">
             <p className="w-16 text-textColor-light">Current</p>
             <p>
-              {agingSummary["current"] === 0
+              {agingSummary["current"] <= 0
                 ? ". . ."
                 : `$ ${agingSummary["current"].toFixed(2)}`}
             </p>
