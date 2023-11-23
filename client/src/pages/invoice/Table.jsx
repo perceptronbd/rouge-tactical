@@ -11,8 +11,6 @@ export const Table = ({
   openPreview,
   vendorData,
 }) => {
-  console.log("data", data);
-
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
