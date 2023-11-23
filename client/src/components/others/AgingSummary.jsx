@@ -23,7 +23,7 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
           <div className="flex gap-4 justify-between border-b-2">
             <p className="w-16 text-textColor-light">Current</p>
             <p>
-              {agingSummary["0 - 30"] === 0
+              {agingSummary["current"] === 0
                 ? ". . ."
                 : `$ ${agingSummary["current"].toFixed(2)}`}
             </p>
