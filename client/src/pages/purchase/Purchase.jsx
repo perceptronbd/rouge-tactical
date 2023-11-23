@@ -118,6 +118,38 @@ export const Purchase = () => {
 
         console.log(summary);
       }, 1000);
+    } else {
+      const currentDate = new Date();
+      const summary = {
+        current: 0,
+        "0 - 30": 0,
+        "31 - 60": 0,
+        "61 - 90": 0,
+        "> 90": 0,
+      };
+
+      purchaseData.forEach((item) => {
+        const updatedAt = new Date(item.date);
+        const daysDifference = Math.floor(
+          (currentDate - updatedAt) / (1000 * 60 * 60 * 24)
+        );
+
+        if (daysDifference <= 1) {
+          summary["current"] += item.totalAmount - item.depositedAmount;
+        } else if (daysDifference <= 30) {
+          summary["0 - 30"] += item.totalAmount - item.depositedAmount;
+        } else if (daysDifference <= 60) {
+          summary["31 - 60"] += item.totalAmount - item.depositedAmount;
+        } else if (daysDifference <= 90) {
+          summary["61 - 90"] += item.totalAmount - item.depositedAmount;
+        } else {
+          summary["> 90"] += item.totalAmount - item.depositedAmount;
+        }
+      });
+
+      setAgingSummary(summary);
+
+      console.log(summary);
     }
   }, [vendorDetails]);
 
