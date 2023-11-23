@@ -11,8 +11,6 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
     return total.toFixed(2);
   };
 
-  console.log("agingSummary", agingSummary);
-
   return (
     <section className="px-4 py-2 flex flex-col gap-2 w-80 h-full 3xl:h-56 border rounded">
       <div>Aging Summary</div>
