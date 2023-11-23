@@ -20,7 +20,7 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
         <div className="w-full h-40 flex justify-center items-center">
           loading...
         </div>
-      ) : (
+      ) : agingSummary ? (
         <div className="bg-background p-2 rounded">
           <div className="flex gap-4 justify-between border-b-2">
             <p className="w-16 text-textColor-light">Current</p>
@@ -65,6 +65,33 @@ export const AgingSummary = ({ data, agingSummary, loading }) => {
           <div className="flex gap-4 justify-between border-b-2 font-bold">
             <p className="w-16 text-textColor">{`Total`}</p>
             <p>{` ${calculateTotal()}`}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-background p-2 rounded">
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">Current</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">0 - 30</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">31 - 60</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">61 - 90</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2">
+            <p className="w-16 text-textColor-light">{`> 90`}</p>
+            <p>. . .</p>
+          </div>
+          <div className="flex gap-4 justify-between border-b-2 font-bold">
+            <p className="w-16 text-textColor-light">{`Total`}</p>
+            <p>. . .</p>
           </div>
         </div>
       )}
