@@ -172,7 +172,10 @@ export const Invoice = () => {
         closePreview={closePreview}
         data={invoiceDetails}
       >
-        <InvoicePreview data={invoiceDetails} />
+        <InvoicePreview
+          allVendors={allVendors}
+          transactionDetails={invoiceDetails}
+        />
       </Preview>
       <Modal
         isOpen={showModal}
