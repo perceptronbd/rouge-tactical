@@ -20,11 +20,11 @@ const permitSchema = new mongoose.Schema({
     },
 
     renewalDuration: {
-      type: Number,
+      type: String,
       required: true,
     },
     renewalDeadline: {
-      type: Date,
+      type: String,
       required: true,
     },
     contactInfo: {
