@@ -146,13 +146,13 @@ const getPurchaseOrderOfSelectedVendor = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found" });
+      return res.status(404).json({ message: "No User found" });
     }
     if (!existingVendor) {
-      return res.status(404).json({ error: "No Vendor found" });
+      return res.status(404).json({ message: "No Vendor found" });
     }
     if (!existingPurchaseOrder) {
-      return res.status(404).json({ error: "No PO found for this vendor" });
+      return res.status(404).json({ message: "No PO found for this vendor" });
     }
 
     const formattedPurchaseOrder = existingPurchaseOrder.map((data) => ({
@@ -174,12 +174,9 @@ const getPurchaseOrderOfSelectedVendor = async (req, res) => {
       updateAt: data.updatedAt,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        purchaseOrderDataForSelectedVendor: formattedPurchaseOrder,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedPurchaseOrder,
     });
   } catch (error) {
     console.error("Error fetching PO list:", error);
@@ -191,18 +188,14 @@ const updatePurchaseOrder = async (req, res) => {
   const {
     purchaseOrderId,
     date,
+    vendor,
     orderNumber,
-    size,
     items,
     quantity,
-    price,
     totalAmount,
+    remainingAmount,
     depositAmount,
-    vendor,
-    substituteVendor,
-    deliveredItems,
     status,
-    createdBy,
   } = req.body;
 
   try {
@@ -212,7 +205,7 @@ const updatePurchaseOrder = async (req, res) => {
     });
 
     if (!existingPurchaseOrder) {
-      return res.status(404).json({ error: "No PO found" });
+      return res.status(404).json({ message: "No PO found" });
     }
 
     if (date != null && date !== "") {
@@ -236,26 +229,14 @@ const updatePurchaseOrder = async (req, res) => {
     if (depositAmount != null && depositAmount !== "") {
       existingPurchaseOrder.depositAmount = depositAmount;
     }
-    if (substituteVendor != null && substituteVendor !== "") {
-      existingPurchaseOrder.substituteVendor = substituteVendor;
+    if (remainingAmount != null && remainingAmount !== "") {
+      existingPurchaseOrder.remainingAmount = remainingAmount;
     }
     if (status != null && status !== "") {
       existingPurchaseOrder.status = status;
     }
-    if (size != null && size !== "") {
-      existingPurchaseOrder.size = size;
-    }
-    if (price != null && price !== "") {
-      existingPurchaseOrder.price = price;
-    }
-    if (deliveredItems != null && deliveredItems !== "") {
-      existingPurchaseOrder.deliveredItems = deliveredItems;
-    }
     if (date != null && date !== "") {
       existingPurchaseOrder.date = date;
-    }
-    if (createdBy != null && createdBy !== "") {
-      existingPurchaseOrder.createdBy = createdBy;
     }
 
     existingPurchaseOrder.updatedAt = new Date();
@@ -265,33 +246,49 @@ const updatePurchaseOrder = async (req, res) => {
     const formattedUpdatedPurchaseOrder = {
       purchaseOrderId: updatedPurchaseOrder._id,
       date: updatedPurchaseOrder.date,
-      date: updatedPurchaseOrder.date,
       orderNumber: updatedPurchaseOrder.orderNumber,
-      size: updatedPurchaseOrder.size,
-      item: updatedPurchaseOrder.items,
-      quantity: updatedPurchaseOrder.quantity,
-      price: updatedPurchaseOrder.price,
+      items: updatedPurchaseOrder.items,
       totalAmount: updatedPurchaseOrder.totalAmount,
       depositAmount: updatedPurchaseOrder.depositAmount,
+      remainingAmount: updatedPurchaseOrder.remainingAmount,
       vendor: updatedPurchaseOrder.vendor,
-      substituteVendor: updatedPurchaseOrder.substituteVendor,
-      deliveredItems: updatedPurchaseOrder.deliveredItems,
       status: updatedPurchaseOrder.status,
-      createdBy: updatedPurchaseOrder.createdBy,
       createdAt: updatedPurchaseOrder.createdAt,
       updateAt: updatedPurchaseOrder.updatedAt,
     };
 
     return res.status(200).json({
       code: 200,
-      data: {
-        userId: req.userId,
-        updatedPurchaseOrderData: formattedUpdatedPurchaseOrder,
-      },
+      userId: req.userId,
+      data: formattedUpdatedPurchaseOrder,
+      message: "Purchase Order updated successfully!",
     });
   } catch (error) {
     console.error("Error updating PO:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const deletePurchaseOrder = async (req, res) => {
+  const { purchaseOrderId } = req.body;
+
+  try {
+    // Find the invoice by ID and delete it
+    const deletedInvoice = await PurchaseOrder.findByIdAndDelete(
+      purchaseOrderId
+    );
+
+    if (!deletedInvoice) {
+      return res.status(404).json({ message: "PO not found" });
+    }
+
+    return res.status(200).json({
+      message: "Purchase Order deleted successfully!",
+      deletedInvoiceId: deletedInvoice._id,
+    });
+  } catch (error) {
+    console.error("Error deleting invoice:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -300,4 +297,5 @@ module.exports = {
   getAllPurchaseOrder,
   getPurchaseOrderOfSelectedVendor,
   updatePurchaseOrder,
+  deletePurchaseOrder,
 };

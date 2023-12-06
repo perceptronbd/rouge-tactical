@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { MdDeleteOutline, MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
-import { deleteInvoice, updateInvoice } from "../../api/universal/invoice";
+import { updatePurchase } from "../../api";
+import { deletePurchase } from "../../api/universal/purchase";
 import {
   Button,
   ContentModal,
@@ -122,7 +123,7 @@ export const PurchaseUpdateForm = () => {
   const onUpdate = async (e) => {
     e.preventDefault();
     try {
-      updateInvoice(values).then((res) => {
+      updatePurchase(values).then((res) => {
         console.log(res);
         const code = res.status;
         const message = res.data.message;
@@ -144,13 +145,16 @@ export const PurchaseUpdateForm = () => {
   const confirmDelete = (e) => {
     e.preventDefault();
     try {
-      deleteInvoice(values).then((res) => {
+      deletePurchase(values).then((res) => {
         console.log(res);
         const code = res.status;
         const message = res.data.message;
         if (code === 200) {
           openModal(message, false);
           closeConfirmDelete();
+          setTimeout(() => {
+            navigate("/purchase");
+          }, 1000);
         } else {
           openModal(message, true);
           closeConfirmDelete();

@@ -146,6 +146,9 @@ export const InvoiceUpdateForm = () => {
         if (code === 200) {
           openModal(message, false);
           closeConfirmDelete();
+          setTimeout(() => {
+            navigate("/invoice");
+          }, 1000);
         } else {
           openModal(message, true);
           closeConfirmDelete();

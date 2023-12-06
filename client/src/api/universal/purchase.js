@@ -17,7 +17,10 @@ export const createPurchase = async (data) => {
 export const updatePurchase = async (data) => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).put("/purchase/updateInvoice", data);
+    const res = await authURL(token).put(
+      "/purchaseOrder/updatePurchaseOrder",
+      data
+    );
     console.log("res:", res);
     return res;
   } catch (error) {
@@ -29,7 +32,10 @@ export const updatePurchase = async (data) => {
 export const deletePurchase = async (data) => {
   const token = sessionStorage.getItem("token");
   try {
-    const res = await authURL(token).put("/purchase/deleteInvoice", data);
+    const res = await authURL(token).put(
+      "/purchaseOrder/deletePurchaseOrder",
+      data
+    );
 
     return res;
   } catch (error) {

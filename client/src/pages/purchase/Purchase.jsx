@@ -15,7 +15,6 @@ import {
   Vendor,
 } from "../../components";
 import { useDataStates, useModal } from "../../hooks";
-import { vendorData } from "../../mock/vendor";
 import { PurchasePreview } from "./PurchasePreview";
 import { Table } from "./Table";
 import { vendorInputs } from "./vendorInputs";
@@ -110,7 +109,7 @@ export const Purchase = () => {
               value={selectedVendor}
               defaultValue={"View All"}
               onChange={handleVendorChange}
-              selectOpts={vendorData}
+              selectOpts={allVendors}
             />
 
             <Button
@@ -175,7 +174,10 @@ export const Purchase = () => {
         closePreview={closePreview}
         data={purchaseDetails}
       >
-        <PurchasePreview data={purchaseDetails} />
+        <PurchasePreview
+          allVendors={allVendors}
+          transactionDetails={purchaseDetails}
+        />
       </Preview>
       <Modal
         isOpen={showModal}
