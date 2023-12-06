@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { MdPostAdd } from "react-icons/md";
+import { AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai";
 import { BsPersonFillAdd } from "react-icons/bs";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdPostAdd } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
+import { createVendor, getAllInvoices } from "../../api";
 import {
+  AgingSummary,
   Button,
   ContentModal,
   Form,
   Modal,
+  Preview,
   SelectInput,
   Vendor,
-  AgingSummary,
-  Preview,
 } from "../../components";
+import { useDataStates, useModal } from "../../hooks";
+import { InvoicePreview } from "./InvoicePreview";
 import { Table } from "./Table";
 import { vendorInputs } from "./vendorInputs";
-import { InvoicePreview } from "./InvoicePreview";
-import { useModal, useDataStates } from "../../hooks";
-import { createVendor, getAllInvoices } from "../../api";
 
 export const Invoice = () => {
   const navaigate = useNavigate();
@@ -116,9 +117,8 @@ export const Invoice = () => {
               className={"w-10 m-0"}
               variant={"ghost"}
               onClick={openVendorForm}
-            >
-              +
-            </Button>
+              icon={AiOutlinePlus}
+            />
           </div>
           {loading ? (
             <div className="w-80 h-52 3xl:h-56 border rounded flex justify-center items-center">
@@ -157,7 +157,10 @@ export const Invoice = () => {
       </Button>
 
       {/* Pop up forms */}
-      <ContentModal isOpen={showVendorModal} closeModal={closeVendorModal}>
+      <ContentModal
+        isOpen={showVendorModal}
+        closeModal={closeVendorModal}
+      >
         <Form
           formTitle={"Add Vendor"}
           inputFields={vendorInputs}

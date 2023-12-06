@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { MdPostAdd } from "react-icons/md";
+import { AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai";
 import { BsPersonFillAdd } from "react-icons/bs";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdPostAdd } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import {
+  AgingSummary,
   Button,
   ContentModal,
   Form,
   Modal,
-  SelectInput,
-  Vendor,
-  AgingSummary,
-  UpdateForm,
   Preview,
+  SelectInput,
+  UpdateForm,
+  Vendor,
 } from "../../components";
-import { Table } from "./Table";
+import { useModal } from "../../hooks";
 import { purchaseData } from "../../mock/purchase";
 import { vendorData } from "../../mock/vendor";
-import { vendorInputs } from "./vendorInputs";
-import { purchaseInputs } from "./purchaseInputs";
 import { PurchasePreview } from "./PurchasePreview";
-import { useModal } from "../../hooks";
+import { Table } from "./Table";
+import { purchaseInputs } from "./purchaseInputs";
+import { vendorInputs } from "./vendorInputs";
 
 export const Purchase = () => {
   const navaigate = useNavigate();
@@ -167,9 +167,8 @@ export const Purchase = () => {
               className={"w-10 m-0"}
               variant={"ghost"}
               onClick={openVendorForm}
-            >
-              +
-            </Button>
+              icon={AiOutlinePlus}
+            />
           </div>
           {loading ? (
             <div className="w-80 h-52 3xl:h-56 border rounded flex justify-center items-center">
@@ -206,7 +205,10 @@ export const Purchase = () => {
       </Button>
 
       {/* Pop up forms */}
-      <ContentModal isOpen={showVendorModal} closeModal={closeVendorModal}>
+      <ContentModal
+        isOpen={showVendorModal}
+        closeModal={closeVendorModal}
+      >
         <Form
           formTitle={"Add Vendor"}
           inputFields={vendorInputs}
@@ -216,7 +218,10 @@ export const Purchase = () => {
         />
       </ContentModal>
 
-      <ContentModal isOpen={showForm} closeModal={closeForm}>
+      <ContentModal
+        isOpen={showForm}
+        closeModal={closeForm}
+      >
         <UpdateForm
           formTitle={"Update Purchase Order"}
           inputFields={purchaseInputs}
