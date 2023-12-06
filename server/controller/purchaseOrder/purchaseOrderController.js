@@ -10,17 +10,11 @@ const createPurchaseOrder = async (req, res) => {
   const {
     date,
     orderNumber,
-    size,
-    items,
-    quantity,
-    price,
-    totalAmount,
-    depositAmount,
     vendor,
-    substituteVendor,
-    deliveredItems,
-    status,
-    createdBy,
+    items,
+    remainingAmount,
+    totalAmount,
+    depositedAmount,
   } = req.body;
 
   try {
@@ -32,42 +26,36 @@ const createPurchaseOrder = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found" });
+      return res.status(404).json({ message: "No User found" });
     }
     if (!existingVendor) {
-      return res.status(404).json({ error: "No Vendor found" });
+      return res.status(404).json({ message: "No Vendor found" });
     }
 
     if (
+      !date ||
       !orderNumber ||
       !vendor ||
-      !price ||
-      !size ||
       !items ||
-      !quantity ||
+      !remainingAmount ||
       !totalAmount ||
-      !vendor ||
-      !createdBy
+      !depositedAmount
     ) {
       return res.status(400).json({
-        error: "All required fields must be provided for creating Invoice!",
+        message: "All required fields must be provided for creating Invoice!",
       });
     }
 
     const newPurchaseOrderData = {
       date: date,
       orderNumber: orderNumber,
-      size: size,
-      item: items,
-      quantity: quantity,
-      price: price,
-      totalAmount: totalAmount,
-      depositAmount: depositAmount,
       vendor: vendor,
-      substituteVendor: substituteVendor,
-      deliveredItems: deliveredItems,
-      status: status,
-      createdBy: createdBy,
+      vendorName: existingVendor.name,
+      items: items,
+      remainingAmount: remainingAmount,
+      totalAmount: totalAmount,
+      depositAmount: depositedAmount,
+      status: "open",
       createdAt: Date.now(),
     };
 
@@ -75,12 +63,10 @@ const createPurchaseOrder = async (req, res) => {
 
     await newPurchaseOrder.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        newPurchaseOrderData: newPurchaseOrder,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newPurchaseOrder,
+      message: "Purchase Order created successfully!",
     });
   } catch (error) {
     console.error("Error creating PO:", error);
@@ -98,12 +84,12 @@ const getAllPurchaseOrder = async (req, res) => {
     });
     const existingPurchaseOrder = await PurchaseOrder.find().sort({ date: -1 });
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     if (!existingPurchaseOrder) {
       return res.status(400).json({
-        error: "No PO found!",
+        message: "No PO found!",
       });
     }
 
@@ -111,27 +97,20 @@ const getAllPurchaseOrder = async (req, res) => {
       purchaseOrderId: data._id,
       date: data.date,
       orderNumber: data.orderNumber,
-      size: data.size,
-      item: data.items,
-      quantity: data.quantity,
-      price: data.price,
+      vendorId: data.vendor,
+      vendorName: data.vendorName,
+      items: data.items,
       totalAmount: data.totalAmount,
+      remainingAmount: data.remainingAmount,
       depositAmount: data.depositAmount,
-      vendor: data.vendor,
-      substituteVendor: data.substituteVendor,
-      deliveredItems: data.deliveredItems,
       status: data.status,
-      createdBy: data.createdBy,
       createdAt: data.createdAt,
       updateAt: data.updatedAt,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        purchaseOrderData: formattedPurchaseOrder,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedPurchaseOrder,
     });
   } catch (error) {
     console.error("Error fetching PO list:", error);
@@ -235,7 +214,7 @@ const updatePurchaseOrder = async (req, res) => {
     // if (item != null && item !== "") {
     //   existingPurchaseOrder.item = item;
     // }
-     if (items != null && items.length > 0) {
+    if (items != null && items.length > 0) {
       existingPurchaseOrder.items = items;
     }
     if (quantity != null && quantity !== "") {
