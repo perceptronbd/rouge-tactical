@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { SearchInput } from "../../components";
 import { formatDate } from "../../utils";
 
 export const Table = ({
   data,
   loading,
-  openForm,
   setPurchaseDetails,
   openPreview,
+  vendorData,
 }) => {
+  console.log("data", data);
+
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
-  const filteredData = data.filter((item) => {
-    return Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+  let filteredData = [];
+
+  if (Array.isArray(data)) {
+    filteredData = data.filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
     );
-  });
+  } else {
+    console.error("'data' is not an array.");
+  }
 
-  useEffect(() => {
-    console.log("purchase orders", data);
-  }, [data]);
+  const showPurchasePreview = (item) => {
+    openPreview();
+    setPurchaseDetails(item);
+  };
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
 
   const handleEdit = (item) => {
-    console.log(item);
-    openForm();
-    setPurchaseDetails(item);
-  };
-
-  const showInvoicePreview = (item) => {
-    openPreview();
-    setPurchaseDetails(item);
+    navigate("/purchase/update", { state: { item, vendorData } });
   };
 
   return (
@@ -42,7 +46,10 @@ export const Table = ({
       {
         <article className="rounded-lg bg-accent-tertiary-light">
           <div className="flex justify-end p-2">
-            <SearchInput value={searchQuery} onChange={handleSearch} />
+            <SearchInput
+              value={searchQuery}
+              onChange={handleSearch}
+            />
           </div>
           <div className="max-h-[250px] 3xl:max-h-[500px] overflow-y-auto rounded-b-lg bg-accent-tertiary">
             <table className="w-full border-collapse rt-sm:text-xs">
@@ -55,10 +62,10 @@ export const Table = ({
                     Vendor
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium whitespace-nowrap text-left">
-                    Order #
+                    PO #
                   </th>
-                  <th className="px-4 py-4 3xl:p-4 font-medium  text-left">
-                    Item
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-left">
+                    Items
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Quantity
@@ -72,7 +79,7 @@ export const Table = ({
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Total Remaining
                   </th>
-                  <th className="px-1 py-4 3xl:p-4 font-medium text-center">
+                  <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
                     Status
                   </th>
                   <th className="px-1 py-4 3xl:p-4 font-medium  text-center">
@@ -83,11 +90,11 @@ export const Table = ({
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-white">
+              <tbody className="text-white ">
                 {filteredData.length === 0 ? (
                   <tr className="text-center">
                     <td colSpan="11">
-                      <div className="flex justify-center items-center h-[150px] 3xl:h-[300px] font-bold text-xl text-foreground my-8 opacity-80 ">
+                      <div className="flex justify-center items-center font-bold text-xl text-foreground my-8 opacity-80 h-[150px] 3xl:h-[300px]">
                         No Data
                       </div>
                     </td>
@@ -114,38 +121,53 @@ export const Table = ({
                         {formatDate(item.date)}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.vendor}
+                        {item.vendorName}
                       </td>
                       <td className="px-1 pr-2 py-2 3xl:p-4 3xl:py-2 text-left">
                         <button
                           className="bg-accent-secondary rounded-md text-accent-primary w-full"
-                          onClick={() => showInvoicePreview(item)}
+                          onClick={() => showPurchasePreview(item)}
                         >
                           {item.orderNumber}
                         </button>
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-left">
-                        {item.item}
+                        {item.items.map((item, index) => (
+                          <span
+                            className="flex flex-col"
+                            key={index}
+                          >
+                            {item.item}
+                          </span>
+                        ))}
                       </td>
+
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.quantity}
+                        {item.items.map((item, index) => (
+                          <span
+                            className="flex flex-col"
+                            key={index}
+                          >
+                            {item.unitCost}
+                          </span>
+                        ))}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.totalAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.depositedAmount}
+                        {item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
-                        {item.totalAmount - item.depositedAmount}
+                        {item.totalAmount - item.depositAmount}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center">
                         {item.status === "close" ? "Closed" : "Open"}
                       </td>
                       <td className="px-1 py-2 3xl:p-4 3xl:py-2 text-center text-sm">
-                        {item.updatedAt === "NaN-NaN-NaN"
+                        {item.status === "open"
                           ? "- - -"
-                          : formatDate(item.updatedAt)}
+                          : formatDate(item.updateAt)}
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-right">
                         <button

@@ -46,6 +46,16 @@ const createPurchaseOrder = async (req, res) => {
       });
     }
 
+    const existingPO = await PurchaseOrder.findOne({
+      orderNumber: orderNumber,
+    });
+
+    if (existingPO) {
+      return res.status(400).json({
+        message: "A PO with the same order number already exists!",
+      });
+    }
+
     const newPurchaseOrderData = {
       date: date,
       orderNumber: orderNumber,
@@ -70,7 +80,7 @@ const createPurchaseOrder = async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating PO:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

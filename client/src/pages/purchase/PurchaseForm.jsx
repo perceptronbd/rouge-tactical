@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import { MdOutlineArrowBackIosNew, MdOutlinePlaylistAdd } from "react-icons/md";
-import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
-import { vendorData } from "../../mock/vendor";
-import { useNavigate } from "react-router-dom";
 import { BiSolidAddToQueue } from "react-icons/bi";
+import { MdOutlineArrowBackIosNew, MdOutlinePlaylistAdd } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createPurchase } from "../../api";
+import { Button, FormInput, Modal, SelectInput, Text } from "../../components";
+import { useModal } from "../../hooks";
 
 export const PurchaseForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [showModal, setShowModal] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const allVendors = location.state;
+
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
+
   const [values, setValues] = useState({
     date: "",
     orderNumber: "",
     vendor: "",
     items: [{ item: "", quantity: "", unitCost: "", subTotal: "" }],
+    remainingAmount: "",
     totalAmount: "",
     depositedAmount: "",
     status: "",
@@ -60,11 +65,16 @@ export const PurchaseForm = () => {
       .map((item) => parseFloat(item.subTotal))
       .filter((subtotal) => !isNaN(subtotal));
     const depositedAmount = parseFloat(updatedValues.depositedAmount);
-    const totalAmount =
+    const remainingAmount =
       (subTotals.length > 0
         ? subTotals.reduce((acc, subtotal) => acc + subtotal, 0)
         : 0) - (isNaN(depositedAmount) ? 0 : depositedAmount);
+    const totalAmount =
+      subTotals.length > 0
+        ? subTotals.reduce((acc, subtotal) => acc + subtotal, 0)
+        : 0;
 
+    updatedValues.remainingAmount = remainingAmount.toFixed(2);
     updatedValues.totalAmount = totalAmount.toFixed(2);
     setValues(updatedValues);
   };
@@ -74,12 +84,23 @@ export const PurchaseForm = () => {
     setAdditionalFields([...additionalFields, { id: additionalFields.length }]);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setShowModal(true);
-    setModalMessage("Item Added Successfully!");
-    setIsError(false);
-    console.log(values);
+    try {
+      console.log(values);
+      createPurchase(values).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -89,7 +110,7 @@ export const PurchaseForm = () => {
         className="bg-foreground h-full w-full p-4 flex flex-col justify-between rounded"
       >
         <div className="w-full flex justify-between items-start">
-          <Text variant={"h2"}>New Order</Text>
+          <Text variant={"h2"}>New Purchase Order</Text>
           <Button
             icon={MdOutlineArrowBackIosNew}
             className={"w-10 m-0"}
@@ -113,9 +134,9 @@ export const PurchaseForm = () => {
             <FormInput
               id="orderNumber"
               name="orderNumber"
-              label="Order Number"
+              label="PO Number"
               type="text"
-              placeholder="Order Number"
+              placeholder="PO Number"
               required={true}
               value={values.orderNumber}
               onChange={handleChange}
@@ -124,7 +145,7 @@ export const PurchaseForm = () => {
               id="vendor"
               name="vendor"
               label="Vendor"
-              selectOpts={vendorData}
+              selectOpts={allVendors}
               required={true}
               className={"col-span-2"}
               value={values.vendor}
@@ -154,15 +175,15 @@ export const PurchaseForm = () => {
                   placeholder="Item"
                   required={true}
                   value={values.items[field.id]?.item}
-                  className={"w-32 rt-sm:w-32"}
-                  inputClassName={"w-32 rt-sm:w-32"}
+                  className={"w-40 rt-sm:w-40"}
+                  inputClassName={"w-40 rt-sm:w-40"}
                   onChange={handleChange}
                 />
                 <FormInput
                   id={`quantity-${field.id}`}
                   name={`quantity-${field.id}`}
                   label="Quantity"
-                  type="text"
+                  type="number"
                   placeholder="Quantity"
                   required={true}
                   value={values.items[field.id]?.quantity}
@@ -197,17 +218,27 @@ export const PurchaseForm = () => {
               </div>
             </div>
           ))}
-
           <div>
             <FormInput
               id="depositedAmount"
               name="depositedAmount"
               label="Deposited Amount"
-              type="text"
+              type="number"
               placeholder="Deposited Amount"
               required={true}
               value={values.depositedAmount}
               onChange={handleChange}
+            />
+            <FormInput
+              id="remainingAmount"
+              name="remainingAmount"
+              label="Remaining Amount"
+              type="text"
+              placeholder="Remaining Amount"
+              required={true}
+              value={values.remainingAmount}
+              onChange={handleChange}
+              readOnly={true}
             />
             <FormInput
               id="totalAmount"
@@ -218,15 +249,19 @@ export const PurchaseForm = () => {
               required={true}
               value={values.totalAmount}
               onChange={handleChange}
+              readOnly={true}
             />
           </div>
         </section>
-        <Button icon={MdOutlinePlaylistAdd} className={"w-48 m-0"}>
+        <Button
+          icon={MdOutlinePlaylistAdd}
+          className={"w-48 m-0"}
+        >
           Add New
         </Button>
         <Modal
           isOpen={showModal}
-          setShowModal={setShowModal}
+          closeModal={closeModal}
           modalMessage={modalMessage}
           isError={isError}
         />
