@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { MdDeleteOutline, MdOutlineArrowBackIosNew } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import { deleteInvoice, updateInvoice } from "../../api/universal/invoice";
 import {
   Button,
   ContentModal,
@@ -8,10 +11,7 @@ import {
   SelectInput,
   Text,
 } from "../../components";
-import { useLocation, useNavigate } from "react-router-dom";
-import { BiMessageSquareEdit, BiSolidAddToQueue } from "react-icons/bi";
 import { useModal } from "../../hooks";
-import { deleteInvoice, updateInvoice } from "../../api/universal/invoice";
 import { formatDateToYYYYMMDD } from "../../utils";
 
 export const InvoiceUpdateForm = () => {
@@ -53,13 +53,10 @@ export const InvoiceUpdateForm = () => {
   useEffect(() => {
     if (invoiceData.items.length > 0) {
       const additionalFields = [];
-      for (let i = 0; i < invoiceData.items.length - 1; i++) {
-        additionalFields.push(invoiceData.items[i]);
+      for (let i = 0; i <= invoiceData.items.length - 1; i++) {
+        additionalFields.push({ id: i });
       }
-      setAdditionalFields([
-        ...additionalFields,
-        { id: additionalFields.length },
-      ]);
+      setAdditionalFields([...additionalFields]);
     }
   }, [invoiceData.items]);
 
@@ -339,7 +336,10 @@ export const InvoiceUpdateForm = () => {
           isOpen={showConfirmDelete}
           closeModal={closeConfirmDelete}
         >
-          <Button variant={"ghost"} onClick={confirmDelete}>
+          <Button
+            variant={"ghost"}
+            onClick={confirmDelete}
+          >
             Confirm Delete?
           </Button>
         </ContentModal>

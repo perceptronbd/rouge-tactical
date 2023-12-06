@@ -3,7 +3,6 @@ import { AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { MdPostAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
 import { createVendor, getAllInvoices } from "../../api";
 import {
   AgingSummary,
