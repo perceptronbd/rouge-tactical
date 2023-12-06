@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Components } from "./components/Components";
+import { useAuth } from "./contexts/AuthContext";
 import {
   EmployeeInfo,
   Home,
@@ -13,9 +15,8 @@ import {
   Production,
   Purchase,
   PurchaseForm,
+  PurchaseUpdateForm,
 } from "./pages";
-import { useAuth } from "./contexts/AuthContext";
-import { Components } from "./components/Components";
 
 function App() {
   const { user } = useAuth();
@@ -31,21 +32,68 @@ function App() {
       <Route
         path="/"
         element={
-          isAuthenticated ? <Home /> : <Navigate to={"/login"} replace />
+          isAuthenticated ? (
+            <Home />
+          ) : (
+            <Navigate
+              to={"/login"}
+              replace
+            />
+          )
         }
       >
-        <Route path="employee" element={<EmployeeInfo />} />
-        <Route path="components" element={<Components />} />
-        <Route path="orders" element={<Orders />} />
-        <Route path="invoice" element={<Invoice />} />
-        <Route path="invoice/new" element={<InvoiceForm />} />
-        <Route path="invoice/update" element={<InvoiceUpdateForm />} />
-        <Route path="purchase" element={<Purchase />} />
-        <Route path="purchase/new" element={<PurchaseForm />} />
-        <Route path="permits" element={<Permits />} />
-        <Route path="payments" element={<Payments />} />
-        <Route path="production" element={<Production />} />
-        <Route path="maintenance" element={<Maintenance />} />
+        <Route
+          path="employee"
+          element={<EmployeeInfo />}
+        />
+        <Route
+          path="components"
+          element={<Components />}
+        />
+        <Route
+          path="orders"
+          element={<Orders />}
+        />
+        <Route
+          path="invoice"
+          element={<Invoice />}
+        />
+        <Route
+          path="invoice/new"
+          element={<InvoiceForm />}
+        />
+        <Route
+          path="invoice/update"
+          element={<InvoiceUpdateForm />}
+        />
+        <Route
+          path="purchase"
+          element={<Purchase />}
+        />
+        <Route
+          path="purchase/new"
+          element={<PurchaseForm />}
+        />
+        <Route
+          path="purchase/update"
+          element={<PurchaseUpdateForm />}
+        />
+        <Route
+          path="permits"
+          element={<Permits />}
+        />
+        <Route
+          path="payments"
+          element={<Payments />}
+        />
+        <Route
+          path="production"
+          element={<Production />}
+        />
+        <Route
+          path="maintenance"
+          element={<Maintenance />}
+        />
       </Route>
     </Routes>
   );

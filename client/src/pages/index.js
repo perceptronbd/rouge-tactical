@@ -13,6 +13,7 @@ export { InvoiceUpdateForm } from "./invoice/InvoiceUpdateForm";
 //purchase
 export { Purchase } from "./purchase/Purchase";
 export { PurchaseForm } from "./purchase/PurchaseForm";
+export { PurchaseUpdateForm } from "./purchase/PurchaseUpdateForm";
 //permits
 export { Permits } from "./permits/Permits";
 //payments
