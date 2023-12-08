@@ -1,21 +1,25 @@
 import React, { useEffect } from "react";
+import { createProduction } from "../../api";
 import {
   Button,
   Container,
   ContentModal,
   Form,
+  Modal,
   UpdateForm,
 } from "../../components";
-import { Table } from "./Table";
-import { productionData } from "../../mock/production";
-import { productionInputs } from "./productionInputs";
-import { OnboardingDoc } from "./OnboardingDoc";
 import { useModal } from "../../hooks";
+import { productionData } from "../../mock/production";
+import { OnboardingDoc } from "./OnboardingDoc";
+import { Table } from "./Table";
+import { productionInputs } from "./productionInputs";
 
 export const Production = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [itemData, setItemData] = React.useState({});
 
+  const { showModal, isError, modalMessage, openModal, closeModal } =
+    useModal();
   const {
     showModal: showForm,
     openModal: openForm,
@@ -60,9 +64,23 @@ export const Production = () => {
     openForm();
   };
 
-  const handleSubmit = (e) => {
+  const handleAddItem = async (e) => {
     e.preventDefault();
-    console.log(itemData);
+    try {
+      console.log(itemData);
+      createProduction(itemData).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -74,32 +92,47 @@ export const Production = () => {
           openUpdateForm={openUpdateForm}
           setItemData={setItemData}
         />
-        <ContentModal isOpen={showUpdateForm} closeModal={closeUpdateForm}>
+        <ContentModal
+          isOpen={showUpdateForm}
+          closeModal={closeUpdateForm}
+        >
           <UpdateForm
             formTitle={"Update"}
             inputFields={productionInputs}
             data={itemData}
             handleChange={handleItemData}
-            onSubmit={handleSubmit}
+            onSubmit={handleAddItem}
           />
         </ContentModal>
-        <ContentModal isOpen={showForm} closeModal={closeForm}>
+        <ContentModal
+          isOpen={showForm}
+          closeModal={closeForm}
+        >
           <Form
             formTitle={"Add Item"}
             inputFields={productionInputs}
             handleChange={handleItemData}
-            onSubmit={handleSubmit}
+            onSubmit={handleAddItem}
           />
         </ContentModal>
       </section>
       <section className="w-full">
-        <Button className={"m-0"} onClick={handleOpenForm}>
+        <Button
+          className={"m-0"}
+          onClick={handleOpenForm}
+        >
           Add Item
         </Button>
       </section>
       <section className="w-full h-full">
         <OnboardingDoc role={"admin"} />
       </section>
+      <Modal
+        isOpen={showModal}
+        closeModal={closeModal}
+        modalMessage={modalMessage}
+        isError={isError}
+      />
     </Container>
   );
 };
