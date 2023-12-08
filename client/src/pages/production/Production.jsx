@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { createProduction } from "../../api";
+import {
+  createProduction,
+  deleteProduction,
+  getAllProductions,
+  updateProduction,
+} from "../../api";
 import {
   Button,
   Container,
@@ -9,14 +14,15 @@ import {
   UpdateForm,
 } from "../../components";
 import { useModal } from "../../hooks";
-import { productionData } from "../../mock/production";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { Table } from "./Table";
 import { productionInputs } from "./productionInputs";
 
 export const Production = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [itemData, setItemData] = React.useState({});
+
+  const [productionData, setProductionData] = React.useState([]);
 
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
@@ -32,10 +38,25 @@ export const Production = () => {
   } = useModal();
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  });
+    const fetchProduction = async () => {
+      try {
+        getAllProductions().then((res) => {
+          console.log(res);
+          const code = res.status;
+          const message = res.data.message;
+          if (code === 200) {
+            setProductionData(res.data.data);
+            setIsLoading(false);
+          } else {
+            console.log(message);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProduction();
+  }, []);
 
   const handleItemData = (e) => {
     const { name, value } = e.target;
@@ -83,6 +104,61 @@ export const Production = () => {
     }
   };
 
+  const handleDelet = async (e) => {
+    e.preventDefault();
+    try {
+      const productionId = itemData.productionId;
+
+      console.log(productionId);
+
+      deleteProduction(productionId).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+          getAllProductions().then((updatedRes) => {
+            if (updatedRes.status === 200) {
+              setProductionData(updatedRes.data.data);
+            } else {
+              console.log(updatedRes.data.message);
+            }
+          });
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(itemData);
+      updateProduction(itemData).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+          getAllProductions().then((updatedRes) => {
+            if (updatedRes.status === 200) {
+              setProductionData(updatedRes.data.data);
+            } else {
+              console.log(updatedRes.data.message);
+            }
+          });
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <section className="w-full h-[260px]">
@@ -101,7 +177,8 @@ export const Production = () => {
             inputFields={productionInputs}
             data={itemData}
             handleChange={handleItemData}
-            onSubmit={handleAddItem}
+            onSubmit={handleUpdate}
+            handleDelete={handleDelet}
           />
         </ContentModal>
         <ContentModal

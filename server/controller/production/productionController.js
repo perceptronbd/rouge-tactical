@@ -65,14 +65,14 @@ const getAllProductions = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     const existingProductions = await Production.find().sort({ date: -1 });
 
     if (!existingProductions) {
       return res.status(400).json({
-        error: "No Productions found!",
+        message: "No Productions found!",
       });
     }
 
@@ -87,16 +87,13 @@ const getAllProductions = async (req, res) => {
       missing: data.missing,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        productionData: formattedProductions,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedProductions,
     });
   } catch (error) {
     console.error("Error fetching production list:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 const updateProduction = async (req, res) => {
@@ -117,7 +114,7 @@ const updateProduction = async (req, res) => {
     });
 
     if (!existingProduction) {
-      return res.status(404).json({ error: "No Production found" });
+      return res.status(404).json({ message: "No Production found" });
     }
 
     if (status != null && status !== "") {
@@ -160,38 +157,35 @@ const updateProduction = async (req, res) => {
     };
 
     return res.status(200).json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        updatedProductionData: formattedUpdatedProduction,
-      },
+      userId: req.userId,
+      data: formattedUpdatedProduction,
+      message: "Production updated successfully",
     });
   } catch (error) {
     console.error("Error updating production:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 const deleteProduction = async (req, res) => {
   try {
     // Get the production ID from the request parameters
-    const { productionId } = req.body;
+    const { productionId } = req.params;
 
     // Find the production by its ID and remove it
     const deletedProduction = await Production.findByIdAndRemove(productionId);
 
     if (!deletedProduction) {
-      return res.status(404).json({ error: "Production not found" });
+      return res.status(404).json({ message: "Production not found" });
     }
 
     // If the production was successfully deleted, return a success response
     res.status(200).json({
-      code: 200,
       message: "Production deleted successfully",
     });
   } catch (error) {
     console.error("Error deleting production:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

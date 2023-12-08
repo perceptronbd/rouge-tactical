@@ -10,7 +10,12 @@ export {
   getAllInvoices,
   updateInvoice,
 } from "../api/universal/invoice";
-export { createProduction } from "../api/universal/production";
+export {
+  createProduction,
+  deleteProduction,
+  getAllProductions,
+  updateProduction,
+} from "../api/universal/production";
 export {
   createPurchase,
   getAllPurchases,
