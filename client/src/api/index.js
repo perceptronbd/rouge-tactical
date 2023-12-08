@@ -12,6 +12,7 @@ export {
 } from "../api/universal/invoice";
 export {
   createProduction,
+  deleteProduction,
   getAllProductions,
   updateProduction,
 } from "../api/universal/production";

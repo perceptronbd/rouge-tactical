@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   createProduction,
+  deleteProduction,
   getAllProductions,
   updateProduction,
 } from "../../api";
@@ -103,7 +104,34 @@ export const Production = () => {
     }
   };
 
-  const handleDelet = async (e) => {};
+  const handleDelet = async (e) => {
+    e.preventDefault();
+    try {
+      const productionId = itemData.productionId;
+
+      console.log(productionId);
+
+      deleteProduction(productionId).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+          getAllProductions().then((updatedRes) => {
+            if (updatedRes.status === 200) {
+              setProductionData(updatedRes.data.data);
+            } else {
+              console.log(updatedRes.data.message);
+            }
+          });
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();

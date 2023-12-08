@@ -170,7 +170,7 @@ const updateProduction = async (req, res) => {
 const deleteProduction = async (req, res) => {
   try {
     // Get the production ID from the request parameters
-    const { productionId } = req.body;
+    const { productionId } = req.params;
 
     // Find the production by its ID and remove it
     const deletedProduction = await Production.findByIdAndRemove(productionId);

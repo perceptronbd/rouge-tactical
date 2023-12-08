@@ -38,3 +38,16 @@ export const updateProduction = async (data) => {
     return error.response;
   }
 };
+
+export const deleteProduction = async (productionId) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).delete(
+      "/admin/production/deleteProduction/" + productionId
+    );
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
