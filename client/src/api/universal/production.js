@@ -13,3 +13,14 @@ export const createProduction = async (data) => {
     return error.response;
   }
 };
+
+export const getAllProductions = async () => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).get("/admin/production/getProduction");
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};

@@ -55,7 +55,7 @@ export const Purchase = () => {
     useModal();
 
   useEffect(() => {
-    const fetchInvoices = async () => {
+    const fetchPOs = async () => {
       try {
         getAllPurchases().then((res) => {
           const code = res.status;
@@ -70,7 +70,7 @@ export const Purchase = () => {
         console.log(error);
       }
     };
-    fetchInvoices();
+    fetchPOs();
   }, []);
 
   const openVendorForm = () => {

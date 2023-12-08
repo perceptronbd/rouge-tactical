@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { createProduction } from "../../api";
+import { createProduction, getAllProductions } from "../../api";
 import {
   Button,
   Container,
@@ -9,14 +9,15 @@ import {
   UpdateForm,
 } from "../../components";
 import { useModal } from "../../hooks";
-import { productionData } from "../../mock/production";
 import { OnboardingDoc } from "./OnboardingDoc";
 import { Table } from "./Table";
 import { productionInputs } from "./productionInputs";
 
 export const Production = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [itemData, setItemData] = React.useState({});
+
+  const [productionData, setProductionData] = React.useState([]);
 
   const { showModal, isError, modalMessage, openModal, closeModal } =
     useModal();
@@ -32,10 +33,25 @@ export const Production = () => {
   } = useModal();
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  });
+    const fetchProduction = async () => {
+      try {
+        getAllProductions().then((res) => {
+          console.log(res);
+          const code = res.status;
+          const message = res.data.message;
+          if (code === 200) {
+            setProductionData(res.data.data);
+            setIsLoading(false);
+          } else {
+            console.log(message);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProduction();
+  }, []);
 
   const handleItemData = (e) => {
     const { name, value } = e.target;
