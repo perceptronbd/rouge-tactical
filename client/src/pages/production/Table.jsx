@@ -1,6 +1,7 @@
 import React from "react";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { Text } from "../../components";
+import { cw } from "../../utils";
 
 export const Table = ({ data, loading, openUpdateForm, setItemData }) => {
   const COLORS = ["#9F97F7", "#0088FE", "#00C49F", "#FFB44F"];
@@ -75,10 +76,15 @@ export const Table = ({ data, loading, openUpdateForm, setItemData }) => {
                       </td>
                       <td className="px-4 py-2 3xl:p-4 3xl:py-2 text-center w-32">
                         <div
-                          className="text-white text-center font-medium rounded-md"
-                          style={{
-                            backgroundColor: COLORS[index % COLORS.length],
-                          }}
+                          className={cw(
+                            `text-white text-center font-medium rounded-md `,
+                            {
+                              "bg-purple-500": item.status === "Machining",
+                              "bg-blue-500": item.status === "Building",
+                              "bg-sky-500": item.status === "Coating",
+                              "bg-orange-500": item.status === "Assembly",
+                            }
+                          )}
                         >
                           {item.status}
                         </div>
@@ -112,7 +118,10 @@ export const Table = ({ data, loading, openUpdateForm, setItemData }) => {
         </article>
       ) : (
         <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
-          <Text h1 className={"text-textColor-light"}>
+          <Text
+            h1
+            className={"text-textColor-light"}
+          >
             No Such Data
           </Text>
         </div>
