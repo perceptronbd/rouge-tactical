@@ -95,6 +95,13 @@ export const Production = () => {
         const message = res.data.message;
         if (code === 200) {
           openModal(message, false);
+          getAllProductions().then((updatedRes) => {
+            if (updatedRes.status === 200) {
+              setProductionData(updatedRes.data.data);
+            } else {
+              console.log(updatedRes.data.message);
+            }
+          });
         } else {
           openModal(message, true);
         }
