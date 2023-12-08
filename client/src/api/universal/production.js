@@ -24,3 +24,17 @@ export const getAllProductions = async () => {
     return error.response;
   }
 };
+
+export const updateProduction = async (data) => {
+  const token = sessionStorage.getItem("token");
+  try {
+    const res = await authURL(token).put(
+      "/admin/production/updateProduction",
+      data
+    );
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};

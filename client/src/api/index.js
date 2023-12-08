@@ -13,6 +13,7 @@ export {
 export {
   createProduction,
   getAllProductions,
+  updateProduction,
 } from "../api/universal/production";
 export {
   createPurchase,

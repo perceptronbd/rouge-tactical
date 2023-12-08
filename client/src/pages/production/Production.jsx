@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { createProduction, getAllProductions } from "../../api";
+import {
+  createProduction,
+  getAllProductions,
+  updateProduction,
+} from "../../api";
 import {
   Button,
   Container,
@@ -99,6 +103,34 @@ export const Production = () => {
     }
   };
 
+  const handleDelet = async (e) => {};
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(itemData);
+      updateProduction(itemData).then((res) => {
+        console.log(res);
+        const code = res.status;
+        const message = res.data.message;
+        if (code === 200) {
+          openModal(message, false);
+          getAllProductions().then((updatedRes) => {
+            if (updatedRes.status === 200) {
+              setProductionData(updatedRes.data.data);
+            } else {
+              console.log(updatedRes.data.message);
+            }
+          });
+        } else {
+          openModal(message, true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <section className="w-full h-[260px]">
@@ -117,7 +149,8 @@ export const Production = () => {
             inputFields={productionInputs}
             data={itemData}
             handleChange={handleItemData}
-            onSubmit={handleAddItem}
+            onSubmit={handleUpdate}
+            handleDelete={handleDelet}
           />
         </ContentModal>
         <ContentModal
