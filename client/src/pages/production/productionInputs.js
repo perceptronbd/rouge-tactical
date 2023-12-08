@@ -12,6 +12,7 @@ export const productionInputs = [
     label: "Status",
     name: "status",
     required: true,
+    defaultValue: "Select Status",
     selectOpts: [
       { value: "Machining", name: "Machining" },
       { value: "Building", name: "Building" },
