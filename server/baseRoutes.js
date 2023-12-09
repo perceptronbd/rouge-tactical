@@ -33,7 +33,7 @@ const documentUploadRoutes = require("./route/document/documentUploadRoute");
 const productionDocumentUploadRoutes = require("./route/productionDocument/productionDocumentUploadRoute");
 
 //routes for sending email to employee
-const emailToAdminRoutes = require("./route/admin/email/emailToAdminRoute");
+const emailRoutes = require("./route/admin/email/emailRoute");
 
 //all routes for authentication only for both admin and employee
 router.use("/auth/", authRoutes);
@@ -52,7 +52,7 @@ router.use("/admin/order", adminOrderRoutes);
 router.use("/admin/payment", paymentRoutes);
 router.use("/admin/production", productionRoutes);
 router.use("/admin/maintenance", maintenanceRoutes);
-router.use("/admin/email", emailToAdminRoutes);
+router.use("/admin/email", emailRoutes);
 
 
 
