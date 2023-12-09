@@ -7,6 +7,7 @@ router.post("/sendPermitEmail",checkLogin, emailController.sendPermitMail);
 router.post("/setPermitEmailCredentials",checkLogin, emailController.setPermitEmailCredentials);
 router.post("/setAdminNotifyEmailCredentials",checkLogin, emailController.setAdminNotifyEmailCredentials);
 router.post("/sendNotifyAdminMail",checkLogin, emailController.sendNotifyAdminMail);
+router.post("/sendOrderListMail",checkLogin, emailController.sendOrderListMail);
 
 
 
