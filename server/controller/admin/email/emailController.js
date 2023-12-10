@@ -2,8 +2,8 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const User = require("../../../model/userModel");
 const PermitEmail = require("../../../model/permitEmailModel");
-const NotifyAdminEmail = require("../../../model/notifyAdminEmailModel");
-const Order = require("../../../model/orderModel")
+const MaintenanceEmail = require("../../../model/maintenanceEmailModel");
+const Order = require("../../../model/orderModel");
 
 const sendPermitMail = async (req, res) => {
   try {
@@ -17,17 +17,10 @@ const sendPermitMail = async (req, res) => {
       },
     });
 
-    // Get today's date as a string in the format "yyyy-mm-dd"
-    const today = new Date().toISOString().split("T")[0];
-    console.log(today);
-
-    // Find all notifications with renewalDeadline today and send = false
+    // Find all notifications with send = false
     const notifications = await PermitEmail.find({
-      renewalDeadline: today,
       send: false,
     });
-
-    console.log(notifications);
 
     // Process each notification
     for (const notification of notifications) {
@@ -48,36 +41,57 @@ const sendPermitMail = async (req, res) => {
 
       const workEmail = adminUser.workEmail;
       const name = adminUser.name;
-      const notes = notification.notes; // Get notes from the notification
-      const renewalDeadline = notification.renewalDeadline; // Get renewalDeadline from the notification
+      const notes = notification.notes;
+      const renewalDeadline = new Date(notification.renewalDeadline); // Assuming renewalDeadline is a Date object
+      const priorDeadline = notification.priorDeadline; // Assuming priorDeadline is in days
+      const permit = notification.permit;
 
-      // Send email
-      let info = await transporter.sendMail({
-        from: process.env.SENDER_EMAIL,
-        to: workEmail,
-        subject: "Notification from Rouge-Tactical",
-        html: `<table style="background-color:#f5f5f5;width:100%;max-width:600px;margin:0 auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333;">
-          <tr>
-            <td style="padding:20px;">
-              <h3 style="font-weight:600;margin-bottom:20px;">
-                <span style="color:rgb(0,176,224);margin-top:0">Rouge-Tactical</span>
-              </h3>
-              <p style="margin-bottom:10px;">Hello ${name},</p>
-              <p style="margin-bottom:10px;"><b>${notes}</b></p>
-              <p style="margin-bottom:10px;">This is your warning! Your deadline is ${renewalDeadline}</p>
+      // Calculate the target date by subtracting priorDeadline days from renewalDeadline
+      const targetDate = new Date(renewalDeadline);
+      targetDate.setDate(targetDate.getDate() - priorDeadline);
+
+      // Get today's date
+      const today = new Date();
+
+      // Check if the targetDate matches the current date (ignoring time)
+      if (
+        targetDate.getFullYear() === today.getFullYear() &&
+        targetDate.getMonth() === today.getMonth() &&
+        targetDate.getDate() === today.getDate()
+      ) {
+        // Send the email
+        let info = await transporter.sendMail({
+          from: process.env.SENDER_EMAIL,
+          to: workEmail,
+          subject: "Notification from Rouge-Tactical",
+          html: `<table style="background-color:#f5f5f5;width:100%;max-width:600px;margin:0 auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333;">
+            <tr>
+              <td style="padding:20px;">
+                <h3 style="font-weight:600;margin-bottom:20px;">
+                  <span style="color:rgb(0,176,224);margin-top:0">Rouge-Tactical</span>
+                </h3>
+                <h2 style="margin-bottom:10px;"><b> Permit Record </b></h2>
+                <p style="margin-bottom:10px;">Hello ${name},</p>
+                <p style="margin-bottom:10px;"><b>${notes}</b></p>
+                <p style="margin-bottom:10px;">   Permit :${permit}</p>
+                <p style="margin-bottom:10px;">   Renewal Deadline : ${
+                  renewalDeadline.toISOString().split("T")[0]
+                }</p>
           
-              <p style="text-align: center; margin-top: 50px; font-size: 12px;">Powered by &copy; PerceptronBD Ltd.</p>
-            </td>
-          </tr>
-        </table>`,
-      });
+                <p style="text-align: center; margin-top: 50px; font-size: 12px;">Powered by &copy; PerceptronBD Ltd.</p>
+              </td>
+            </tr>
+          </table>`,
+        });
 
-      // Update the notification to indicate the email was sent and set send to true
-      notification.send = true;
-      await notification.save();
+        notification.send = true;
+        await notification.save();
 
-      // Log the result
-      console.log(`Mail sent to ${workEmail} for admin ${name}`);
+        console.log(`Mail sent to ${workEmail} for admin ${name}`);
+      } else {
+        // Log that the email was not sent today
+        console.log(`Notification for admin ${name} was not sent today`);
+      }
     }
 
     res.json({ message: "Mail Sent" });
@@ -87,7 +101,7 @@ const sendPermitMail = async (req, res) => {
   }
 };
 
-const sendNotifyAdminMail = async (req, res) => {
+const sendMaintenanceEmail = async (req, res) => {
   try {
     // Create a transporter for sending emails
     let transporter = await nodemailer.createTransport({
@@ -99,17 +113,10 @@ const sendNotifyAdminMail = async (req, res) => {
       },
     });
 
-    // Get today's date as a string in the format "yyyy-mm-dd"
-    const today = new Date().toISOString().split("T")[0];
-    console.log(today);
-
-    // Find all notifications with renewalDeadline today and send = false
-    const notifications = await NotifyAdminEmail.find({
-      renewalDeadline: today,
+    // Find all notifications with send = false
+    const notifications = await MaintenanceEmail.find({
       send: false,
     });
-
-    console.log(notifications);
 
     // Process each notification
     for (const notification of notifications) {
@@ -130,36 +137,65 @@ const sendNotifyAdminMail = async (req, res) => {
 
       const workEmail = adminUser.workEmail;
       const name = adminUser.name;
-      const machine = notification.machine; 
-      const renewalDeadline = notification.renewalDeadline; 
+      const machine = notification.machine;
+      const condition = notification.condition;
+      const location = notification.location;
+      const assignedTo = notification.assignedTo;
+      const status = notification.status;
+      const notes = notification.notes;
+      const nextMaintenanceDate = notification.nextMaintenanceDate;
+      const priorDeadline = notification.priorDeadline;
 
-      // Send email
-      let info = await transporter.sendMail({
-        from: process.env.SENDER_EMAIL,
-        to: workEmail,
-        subject: "Notification from Rouge-Tactical",
-        html: `<table style="background-color:#f5f5f5;width:100%;max-width:600px;margin:0 auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333;">
-          <tr>
-            <td style="padding:20px;">
-              <h3 style="font-weight:600;margin-bottom:20px;">
-                <span style="color:rgb(0,176,224);margin-top:0">Rouge-Tactical</span>
-              </h3>
-              <p style="margin-bottom:10px;">Hello ${name},</p>
-              <p style="margin-bottom:10px;"><b>Machine: ${machine}</b></p>
-              <p style="margin-bottom:10px;">This is your warning! Your deadline is ${renewalDeadline}</p>
+      // Calculate the target date by subtracting priorDeadline days from renewalDeadline
+      const targetDate = new Date(nextMaintenanceDate);
+      targetDate.setDate(targetDate.getDate() - priorDeadline);
+
+      // Get today's date
+      const today = new Date();
+
+      // Check if the targetDate matches the current date (ignoring time)
+      if (
+        targetDate.getFullYear() === today.getFullYear() &&
+        targetDate.getMonth() === today.getMonth() &&
+        targetDate.getDate() === today.getDate()
+      ) {
+        // Send the email
+        let info = await transporter.sendMail({
+          from: process.env.SENDER_EMAIL,
+          to: workEmail,
+          subject: "Notification from Rouge-Tactical",
+          html: `<table style="background-color:#f5f5f5;width:100%;max-width:600px;margin:0 auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333;">
+            <tr>
+              <td style="padding:20px;">
+                <h3 style="font-weight:600;margin-bottom:20px;">
+                  <span style="color:rgb(0,176,224);margin-top:0">Rouge-Tactical</span>
+                </h3>
+                <h2 style="margin-bottom:10px;"><b> Maintenance Record :</b></h2>
+                <p style="margin-bottom:10px;">Hello ${name},</p>
+                <p style="margin-bottom:10px;"><b>${notes}</b></p>
+                <p style="margin-bottom:10px;">  Assigned To :${assignedTo}</p>
+                <p style="margin-bottom:10px;">  Machine :${machine}</p>
+                <p style="margin-bottom:10px;">  Location :${location}</p>
+                <p style="margin-bottom:10px;">  Condition :${condition}</p>
+                 <p style="margin-bottom:10px;"> Status :${status}</p>
+                <p style="margin-bottom:10px;">  Next Maintenance Date : ${
+                  nextMaintenanceDate.toISOString().split("T")[0]
+                }</p>
           
-              <p style="text-align: center; margin-top: 50px; font-size: 12px;">Powered by &copy; PerceptronBD Ltd.</p>
-            </td>
-          </tr>
-        </table>`,
-      });
+                <p style="text-align: center; margin-top: 50px; font-size: 12px;">Powered by &copy; PerceptronBD Ltd.</p>
+              </td>
+            </tr>
+          </table>`,
+        });
 
-      // Update the notification to indicate the email was sent and set send to true
-      notification.send = true;
-      await notification.save();
+        notification.send = true;
+        await notification.save();
 
-      // Log the result
-      console.log(`Mail sent to ${workEmail} for admin ${name}`);
+        console.log(`Mail sent to ${workEmail} for admin ${name}`);
+      } else {
+        // Log that the email was not sent today
+        console.log(`Notification for admin ${name} was not sent today`);
+      }
     }
 
     res.json({ message: "Mail Sent" });
@@ -170,7 +206,14 @@ const sendNotifyAdminMail = async (req, res) => {
 };
 
 const setPermitEmailCredentials = async (req, res) => {
-  const { adminID, permit, notes, renewalDeadline } = req.body;
+  const {
+    adminID,
+    permit,
+    notes,
+    expirationDate,
+    renewalDeadline,
+    priorDeadline,
+  } = req.body;
 
   try {
     console.log(adminID);
@@ -188,8 +231,10 @@ const setPermitEmailCredentials = async (req, res) => {
         userId: adminID,
       },
       userWorkEmail: userWorkEmail,
+      expirationDate: expirationDate,
       permit: permit,
       notes: notes,
+      priorDeadline: priorDeadline,
       renewalDeadline: renewalDeadline,
       send: false,
     };
@@ -204,7 +249,9 @@ const setPermitEmailCredentials = async (req, res) => {
         permit: permit,
         uerWorkEmail: userWorkEmail,
         notes: notes,
+        priorDeadline: priorDeadline,
         renewalDeadline: renewalDeadline,
+        expirationDate: expirationDate,
         send: false,
       },
     });
@@ -214,8 +261,17 @@ const setPermitEmailCredentials = async (req, res) => {
   }
 };
 
-const setAdminNotifyEmailCredentials = async (req, res) => {
-  const { adminID, machine, renewalDeadline } = req.body;
+const setMaintenanceEmailCredentials = async (req, res) => {
+  const {
+    adminID,
+    machine,
+    nextMaintenanceDate,
+    notes,
+    assignedTo,
+    condition,
+    location,
+    priorDeadline,
+  } = req.body;
 
   try {
     console.log(adminID);
@@ -228,27 +284,36 @@ const setAdminNotifyEmailCredentials = async (req, res) => {
       return res.status(404).json({ error: "No User found" });
     }
 
-    const notifyAdminEmailData = {
+    const maintenanceEmailData = {
       notifyAdmin: {
         userId: adminID,
       },
       userWorkEmail: userWorkEmail,
       machine: machine,
-      renewalDeadline: renewalDeadline,
+      nextMaintenanceDate: nextMaintenanceDate,
+      notes: notes,
+      assignedTo: assignedTo,
+      condition: condition,
+      location: location,
+      priorDeadline: priorDeadline,
       send: false,
     };
 
-    const notifyAdminEmail = new NotifyAdminEmail(notifyAdminEmailData);
+    const maintenanceEmail = new MaintenanceEmail(maintenanceEmailData);
 
-    await notifyAdminEmail.save();
+    await maintenanceEmail.save();
 
     res.json({
       code: 200,
       data: {
-        notifyAdminEmail: notifyAdminEmail,
-        uerWorkEmail: userWorkEmail,
+        userWorkEmail: userWorkEmail,
         machine: machine,
-        renewalDeadline: renewalDeadline,
+        nextMaintenanceDate: nextMaintenanceDate,
+        notes: notes,
+        assignedTo: assignedTo,
+        condition: condition,
+        location: location,
+        priorDeadline: priorDeadline,
         send: false,
       },
     });
@@ -258,11 +323,8 @@ const setAdminNotifyEmailCredentials = async (req, res) => {
   }
 };
 
-
-
 const sendOrderListMail = async (req, res) => {
   try {
-   
     let transporter = await nodemailer.createTransport({
       service: "gmail",
       port: 587,
@@ -283,7 +345,7 @@ const sendOrderListMail = async (req, res) => {
     const role = existingUser.role;
     const workEmail = existingUser.workEmail;
     const username = existingUser.name;
-    const userId = existingUser._id; 
+    const userId = existingUser._id;
 
     console.log(role, workEmail);
 
@@ -291,39 +353,37 @@ const sendOrderListMail = async (req, res) => {
       item: item,
       quantity: quantity,
       size: size,
-    }).populate('createdBy', 'name');
+    }).populate("createdBy", "name");
 
     if (matchingOrders.length === 0) {
-      
       console.log("No matching orders found.");
     } else {
-     
       console.log("Order List:");
       console.log(matchingOrders);
     }
 
-    
-    let orderTable = '<table style="border-collapse: collapse; width:100%; max-width:600px; margin:0 auto; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.4; color: #333;">';
-    orderTable += '<tr>';
+    let orderTable =
+      '<table style="border-collapse: collapse; width:100%; max-width:600px; margin:0 auto; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.4; color: #333;">';
+    orderTable += "<tr>";
     orderTable += '<th style="border: 1px solid #ddd; padding: 8px;">Item</th>';
     orderTable += '<th style="border: 1px solid #ddd; padding: 8px;">Size</th>';
-    orderTable += '<th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>';
-    orderTable += '<th style="border: 1px solid #ddd; padding: 8px;">Created By</th>';
-    orderTable += '</tr>';
+    orderTable +=
+      '<th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>';
+    orderTable +=
+      '<th style="border: 1px solid #ddd; padding: 8px;">Created By</th>';
+    orderTable += "</tr>";
 
-    
     matchingOrders.forEach((order) => {
-      orderTable += '<tr>';
+      orderTable += "<tr>";
       orderTable += `<td style="border: 1px solid #ddd; padding: 8px;">${order.item}</td>`;
       orderTable += `<td style="border: 1px solid #ddd; padding: 8px;">${order.size}</td>`;
       orderTable += `<td style="border: 1px solid #ddd; padding: 8px;">${order.quantity}</td>`;
       orderTable += `<td style="border: 1px solid #ddd; padding: 8px;">${order.createdBy.name}</td>`;
-      orderTable += '</tr>';
+      orderTable += "</tr>";
     });
 
-    orderTable += '</table>';
+    orderTable += "</table>";
 
-   
     let info = await transporter.sendMail({
       from: process.env.SENDER_EMAIL,
       to: workEmail,
@@ -335,7 +395,7 @@ const sendOrderListMail = async (req, res) => {
                 <span style="color:rgb(0,176,224);margin-top:0">Rouge-Tactical</span>
               </h3>
               <p style="margin-bottom:10px;">Hello Admin, ${username},</p>
-              <p style="margin-bottom:10px;"><b>Matching Order List:</b></p>
+              <p style="margin-bottom:10px;"><b> Order List:</b></p>
               ${orderTable}
               <p style="text-align: center; margin-top: 50px; font-size: 12px;">Powered by &copy; PerceptronBD Ltd.</p>
             </td>
@@ -361,8 +421,8 @@ const sendOrderListMail = async (req, res) => {
 
 module.exports = {
   sendPermitMail,
-  sendNotifyAdminMail,
+  sendMaintenanceEmail,
   setPermitEmailCredentials,
-  setAdminNotifyEmailCredentials,
-  sendOrderListMail
+  setMaintenanceEmailCredentials,
+  sendOrderListMail,
 };

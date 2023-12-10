@@ -24,6 +24,12 @@ const permitEmailSchema = new mongoose.Schema({
     type: String,
   },
   renewalDeadline: {
+    type: Date,
+  },
+  expirationDate: {
+    type: String,
+  },
+  priorDeadline: {
     type: String,
   },
   send: {
