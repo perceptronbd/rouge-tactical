@@ -36,6 +36,34 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
   }
 };
 
+const getAllExistingAdminData = async (req, res) => {
+  try {
+    
+    const existingAdmins = await User.find({ role: 'admin' });
+
+    if (existingAdmins.length === 0) {
+      return res.status(404).json({ error: "No Admin User found" });
+    }
+
+    const formattedAdmins = existingAdmins.map((data) => ({
+      userId: data._id,
+      name: data.name,
+      workEmail: data.workEmail,
+      phone: data.phone,
+      role: data.role,
+    
+    }));
+
+    res.status(200).json({
+      data: formattedAdmins,
+    });
+  } catch (error) {
+    console.error("Error fetching admin users data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 const addEmployee = async (req, res) => {
   const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -234,4 +262,5 @@ module.exports = {
   addEmployee,
   updateEmployee,
   deleteEmployee,
+  getAllExistingAdminData
 };
