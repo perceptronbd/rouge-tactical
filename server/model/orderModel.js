@@ -72,7 +72,7 @@ const orderSchema = new Schema({
   purchaseOrdered: {
     type: Boolean,
     default: false,
-    required: true,
+    required: true, 
   },
   ordered: {
     type: Boolean,
