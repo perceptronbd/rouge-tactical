@@ -15,6 +15,7 @@ import {
 } from "./pages";
 import { useAuth } from "./contexts/AuthContext";
 import { Components } from "./components/Components";
+import Settings from "./pages/settings/Settings";
 
 function App() {
   const { user } = useAuth();
@@ -44,6 +45,7 @@ function App() {
         <Route path="payments" element={<Payments />} />
         <Route path="production" element={<Production />} />
         <Route path="maintenance" element={<Maintenance />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   );

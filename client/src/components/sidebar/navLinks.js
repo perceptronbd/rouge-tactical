@@ -8,8 +8,9 @@ import {
   MdOutlinePayments,
   MdProductionQuantityLimits,
   MdOutlineSell,
-  MdOutlineSettingsApplications,
 } from "react-icons/md";
+import { IoMdSettings } from "react-icons/io";
+import { FaWrench } from "react-icons/fa6";
 
 export const navLinks = [
   { title: "Home", path: "/employee", Icon: TbHome2 },
@@ -26,6 +27,11 @@ export const navLinks = [
   {
     title: "Maintenance",
     path: "/maintenance",
-    Icon: MdOutlineSettingsApplications,
+    Icon: FaWrench,
+  },
+  {
+    title: "Settings",
+    path: "/settings",
+    Icon: IoMdSettings,
   },
 ];
