@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { AiFillPrinter, AiOutlineDownload } from "react-icons/ai";
-import { Button, Checkbox, ContentModal, Text } from "../../components";
-import { AddDocForm } from "./AddDocForm";
+import { Button, Checkbox, Text } from "../../components";
 
 const checkboxLabel = [
   { id: 1, label: "Final Assembly" },
@@ -15,7 +14,6 @@ const checkboxLabel = [
 
 export const OnboardingDoc = ({ role }) => {
   const [isChecked, setIsChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleCheckboxChange = () => {
     let checked = false;
@@ -25,10 +23,6 @@ export const OnboardingDoc = ({ role }) => {
       }
     }
     setIsChecked(checked);
-  };
-
-  const handleAddDoc = () => {
-    setShowModal(true);
   };
 
   return (
@@ -64,7 +58,7 @@ export const OnboardingDoc = ({ role }) => {
         >
           Download
         </Button>
-        {role === "admin" && (
+        {/* {role === "admin" && (
           <Button
             className={"mb-0 w-10"}
             variant={"highlight"}
@@ -72,11 +66,11 @@ export const OnboardingDoc = ({ role }) => {
           >
             +
           </Button>
-        )}
+        )} */}
       </div>
-      <ContentModal isOpen={showModal} setShowModal={setShowModal}>
+      {/* <ContentModal isOpen={showModal} setShowModal={setShowModal}>
         <AddDocForm />
-      </ContentModal>
+      </ContentModal> */}
     </article>
   );
 };
