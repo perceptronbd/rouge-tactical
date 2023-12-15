@@ -1,4 +1,6 @@
+import { toast } from "sonner";
 import { Button, FormInput, SelectInput } from "../../components";
+import { useState } from "react";
 
 // Mock data
 const selectOpts = [
@@ -10,11 +12,51 @@ const selectOpts = [
 ];
 
 export default function Notification() {
-  const handleNewItemRequest = () => {};
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
 
-  const handlePermitNotification = () => {};
+  const handleNewItemRequest = (e) => {
+    e.preventDefault();
+    setLoading1(true);
+    try {
+      // TODO: API call
+      toast.success("Updated successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading1(false);
+    }
+  };
 
-  const handleMachineNotification = () => {};
+  const handlePermitNotification = (e) => {
+    e.preventDefault();
+    setLoading2(true);
+    try {
+      // TODO: API call
+      toast.success("Updated successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading2(false);
+    }
+  };
+
+  const handleMachineNotification = (e) => {
+    e.preventDefault();
+    setLoading3(true);
+    try {
+      // TODO: API call
+      toast.success("Updated successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading3(false);
+    }
+  };
 
   return (
     <div className="bg-foreground h-full w-full">
@@ -30,7 +72,10 @@ export default function Notification() {
               defaultValue="Select Admin"
               selectOpts={selectOpts}
             />
-            <Button className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8">
+            <Button
+              loading={loading1}
+              className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8"
+            >
               Save
             </Button>
           </fieldset>
@@ -56,7 +101,10 @@ export default function Notification() {
               label="Alert Prior Deadline (Days)"
               placeholder="Alert Prior Deadline (Days)"
             />
-            <Button className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8">
+            <Button
+              loading={loading2}
+              className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8"
+            >
               Save
             </Button>
           </fieldset>
@@ -83,7 +131,10 @@ export default function Notification() {
               label="Alert Prior Deadline (Days)"
               placeholder="Alert Prior Deadline (Days)"
             />
-            <Button className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8">
+            <Button
+              loading={loading3}
+              className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8"
+            >
               Save
             </Button>
           </fieldset>

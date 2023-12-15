@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, FormInput } from "../../components";
+import { toast } from "sonner";
 
 export default function CompanyInfo() {
   const [loginFile, setLoginFile] = useState();
@@ -12,8 +13,10 @@ export default function CompanyInfo() {
     e.preventDefault();
     setLoading(true);
     try {
+      toast.success("Updated successfully.");
     } catch (err) {
       console.log(err);
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }

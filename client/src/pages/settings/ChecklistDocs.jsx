@@ -2,12 +2,32 @@ import { useState } from "react";
 import { Button, DocInput } from "../../components";
 import { checklistDocs } from "../../mock/checklistDocs";
 import { FaTrash } from "react-icons/fa6";
+import { toast } from "sonner";
 
 export default function ChecklistDocs() {
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      toast.success("Uploaded successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    try {
+      toast.success("Deleted successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <div className="h-full w-full pt-5">
@@ -24,7 +44,10 @@ export default function ChecklistDocs() {
               onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
-          <Button className="mt-3 w-full bg-black text-accent-primary">
+          <Button
+            loading={loading}
+            className="mt-3 w-full bg-black text-accent-primary"
+          >
             Upload
           </Button>
         </form>
