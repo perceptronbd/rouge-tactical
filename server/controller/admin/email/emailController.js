@@ -3,11 +3,11 @@ require("dotenv").config();
 const User = require("../../../model/userModel");
 const PermitEmail = require("../../../model/permitEmailModel");
 const MaintenanceEmail = require("../../../model/maintenanceEmailModel");
+const OrderEmail = require("../../../model/orderEmailModel");
 const Order = require("../../../model/orderModel");
 
 const sendPermitMail = async (req, res) => {
   try {
-    // Create a transporter for sending emails
     let transporter = await nodemailer.createTransport({
       service: "gmail",
       port: 587,
@@ -17,12 +17,10 @@ const sendPermitMail = async (req, res) => {
       },
     });
 
-    // Find all notifications with send = false
     const notifications = await PermitEmail.find({
       send: false,
     });
 
-    // Process each notification
     for (const notification of notifications) {
       const userId = notification.notifyAdmin.userId;
       if (!userId) {
@@ -42,8 +40,8 @@ const sendPermitMail = async (req, res) => {
       const workEmail = adminUser.workEmail;
       const name = adminUser.name;
       const notes = notification.notes;
-      const renewalDeadline = new Date(notification.renewalDeadline); // Assuming renewalDeadline is a Date object
-      const priorDeadline = notification.priorDeadline; // Assuming priorDeadline is in days
+      const renewalDeadline = new Date(notification.renewalDeadline);
+      const priorDeadline = notification.priorDeadline;
       const permit = notification.permit;
 
       // Calculate the target date by subtracting priorDeadline days from renewalDeadline
@@ -53,13 +51,12 @@ const sendPermitMail = async (req, res) => {
       // Get today's date
       const today = new Date();
 
-      // Check if the targetDate matches the current date (ignoring time)
+      // Check if the targetDate matches the current date
       if (
         targetDate.getFullYear() === today.getFullYear() &&
         targetDate.getMonth() === today.getMonth() &&
         targetDate.getDate() === today.getDate()
       ) {
-        // Send the email
         let info = await transporter.sendMail({
           from: process.env.SENDER_EMAIL,
           to: workEmail,
@@ -89,7 +86,6 @@ const sendPermitMail = async (req, res) => {
 
         console.log(`Mail sent to ${workEmail} for admin ${name}`);
       } else {
-        // Log that the email was not sent today
         console.log(`Notification for admin ${name} was not sent today`);
       }
     }
@@ -103,7 +99,6 @@ const sendPermitMail = async (req, res) => {
 
 const sendMaintenanceEmail = async (req, res) => {
   try {
-    // Create a transporter for sending emails
     let transporter = await nodemailer.createTransport({
       service: "gmail",
       port: 587,
@@ -113,12 +108,10 @@ const sendMaintenanceEmail = async (req, res) => {
       },
     });
 
-    // Find all notifications with send = false
     const notifications = await MaintenanceEmail.find({
       send: false,
     });
 
-    // Process each notification
     for (const notification of notifications) {
       const userId = notification.notifyAdmin.userId;
       if (!userId) {
@@ -153,7 +146,7 @@ const sendMaintenanceEmail = async (req, res) => {
       // Get today's date
       const today = new Date();
 
-      // Check if the targetDate matches the current date (ignoring time)
+      // Check if the targetDate matches the current date
       if (
         targetDate.getFullYear() === today.getFullYear() &&
         targetDate.getMonth() === today.getMonth() &&
@@ -193,7 +186,6 @@ const sendMaintenanceEmail = async (req, res) => {
 
         console.log(`Mail sent to ${workEmail} for admin ${name}`);
       } else {
-        // Log that the email was not sent today
         console.log(`Notification for admin ${name} was not sent today`);
       }
     }
@@ -323,6 +315,46 @@ const setMaintenanceEmailCredentials = async (req, res) => {
   }
 };
 
+const setRecipientAdmin = async (req, res) => {
+  const { selectedAdminID } = req.body;
+
+  try {
+    console.log(selectedAdminID);
+    const existingAdmin = await User.findOne({ _id: selectedAdminID });
+
+    if (!existingAdmin) {
+      return res.status(404).json({
+        code: 404,
+        message: "Admin not found",
+      });
+    }
+
+    const adminName = existingAdmin.name;
+    console.log(adminName);
+
+    await OrderEmail.deleteMany({});
+
+    const newOrderEmail = new OrderEmail({
+      selectedAdminID,
+      adminName,
+    });
+
+    await newOrderEmail.save();
+
+    res.json({
+      code: 200,
+      message: "New Admin has been added as RECIPIENT ",
+      data: {
+        selectedAdminID: selectedAdminID,
+        selectAdminName: adminName,
+      },
+    });
+  } catch (error) {
+    console.error("Error in setting admin:", error);
+    res.status(500).json({ code: 500, error: "Internal server error" });
+  }
+};
+
 const sendOrderListMail = async (req, res) => {
   try {
     let transporter = await nodemailer.createTransport({
@@ -334,20 +366,24 @@ const sendOrderListMail = async (req, res) => {
       },
     });
 
-    const { to, item, size, quantity } = req.body;
+    const { item, size, quantity } = req.body;
 
     const existingUser = await User.findOne({ _id: req.userId });
+    const OrderEmailInfo = await OrderEmail.find({});
+    console.log(OrderEmailInfo);
+    const selectedAdminID = OrderEmailInfo[0].selectedAdminID;
+
+    const selectedAdminInfo = await User.findOne({ _id: selectedAdminID });
+    console.log(selectedAdminInfo);
+    const selectedAdminWorkEmail = selectedAdminInfo.workEmail;
+    console.log(selectedAdminWorkEmail);
 
     if (!existingUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const role = existingUser.role;
-    const workEmail = existingUser.workEmail;
-    const username = existingUser.name;
-    const userId = existingUser._id;
-
-    console.log(role, workEmail);
+    const username = selectedAdminInfo.name;
+    const userId = selectedAdminInfo._id;
 
     const matchingOrders = await Order.find({
       item: item,
@@ -386,7 +422,7 @@ const sendOrderListMail = async (req, res) => {
 
     let info = await transporter.sendMail({
       from: process.env.SENDER_EMAIL,
-      to: workEmail,
+      to: selectedAdminWorkEmail,
       subject: "Notification from Rouge-Tactical",
       html: `<table style="background-color:#f5f5f5;width:100%;max-width:600px;margin:0 auto;font-family:Arial, sans-serif;font-size:16px;line-height:1.4;color:#333;">
           <tr>
@@ -403,13 +439,13 @@ const sendOrderListMail = async (req, res) => {
         </table>`,
     });
 
-    console.log(`Mail send to ${workEmail} for admin ${username}`);
+    console.log(`Mail send to ${selectedAdminWorkEmail} for admin ${username}`);
     res.json({
       code: 200,
       data: {
         user_id: userId,
         username: username,
-        email: to,
+        email: selectedAdminWorkEmail,
       },
       message: "Mail Sent To Admin",
     });
@@ -424,5 +460,6 @@ module.exports = {
   sendMaintenanceEmail,
   setPermitEmailCredentials,
   setMaintenanceEmailCredentials,
+  setRecipientAdmin,
   sendOrderListMail,
 };

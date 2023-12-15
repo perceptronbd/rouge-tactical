@@ -6,7 +6,8 @@ const { checkLogin } = require("../../../middleware/token/checkLogin");
 router.post("/sendPermitEmail",checkLogin, emailController.sendPermitMail);
 router.post("/setPermitEmailCredentials",checkLogin, emailController.setPermitEmailCredentials);
 router.post("/setMaintenanceEmailCredentials",checkLogin, emailController.setMaintenanceEmailCredentials);
-router.post("/sendMaintenanceEmail",checkLogin, emailController.sendMaintenanceEmail);
+router.post("/sendMaintenanceEmail", checkLogin, emailController.sendMaintenanceEmail);
+router.post("/setRecipientAdmin",checkLogin, emailController.setRecipientAdmin);
 router.post("/sendOrderListMail",checkLogin, emailController.sendOrderListMail);
 
 
