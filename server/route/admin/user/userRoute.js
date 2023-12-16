@@ -8,6 +8,11 @@ router.get(
   checkLogin,
   userController.getProfileDataOfAllExistingUser
 );
+router.get(
+  "/getAllExistingAdminData",
+  checkLogin,
+  userController.getAllExistingAdminData
+);
 router.post("/addEmployee", checkLogin, userController.addEmployee);
 router.put(
   "/updateEmployee/:userId",
