@@ -18,23 +18,32 @@ const createVendor = async (req, res) => {
   } = req.body;
 
   try {
+    // Check if the email or name already exists in the database
+    const existingVendor = await Vendor.findOne({
+      $or: [{ name: name }, { email: email }],
+    });
+
+    if (existingVendor) {
+      return res.status(400).json({
+        message: "Vendor with the same name or email already exists!",
+      });
+    }
+
     const existingUser = await User.findOne({
       _id: req.userId,
-
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found" });
+      return res.status(404).json({ message: "No User found" });
     }
 
     if (!name || !contact || !phone || !email || !address) {
       return res.status(400).json({
-        error: "All required fields must be provided for creating Vendor!",
+        message: "All required fields must be provided for creating Vendor!",
       });
     }
 
     const newVendorData = {
-
       name: name,
       contact: contact,
       phone: phone,
@@ -62,16 +71,14 @@ const createVendor = async (req, res) => {
 
     await newVendor.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        newVendorData: newVendor,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newVendor,
+      message: "Vendor created successfully!",
     });
   } catch (error) {
     console.error("Error creating vendor:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -82,21 +89,20 @@ const getAllVendor = async (req, res) => {
   try {
     const existingUser = await User.findOne({
       _id: req.userId,
- 
     });
     const existingVendor = await Vendor.find().sort({ date: -1 });
     if (!existingUser) {
-      return res.status(404).json({ error: "No User found!" });
+      return res.status(404).json({ message: "No User found!" });
     }
 
     if (!existingVendor) {
       return res.status(400).json({
-        error: "No Vendor found!",
+        message: "No Vendor found!",
       });
     }
 
     const formattedVendors = existingVendor.map((data) => ({
-      vendorId : data._id,
+      id: data._id,
       name: data.name,
       contact: data.contact,
       phone: data.phone,
@@ -107,20 +113,17 @@ const getAllVendor = async (req, res) => {
       invoices: data.invoices,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        vendorData: formattedVendors,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedVendors,
     });
   } catch (error) {
     console.error("Error fetching vendor list:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 module.exports = {
   createVendor,
-  getAllVendor
+  getAllVendor,
 };
