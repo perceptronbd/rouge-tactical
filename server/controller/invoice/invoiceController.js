@@ -328,11 +328,8 @@ const updateProduction = async (req, res) => {
     };
 
     return res.status(200).json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        updatedProductionData: formattedUpdatedProduction,
-      },
+      userId: req.userId,
+      updatedProductionData: formattedUpdatedProduction,
     });
   } catch (error) {
     console.error("Error updating production:", error);
