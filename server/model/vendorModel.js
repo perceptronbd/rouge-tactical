@@ -15,6 +15,7 @@ const vendorSchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   contact: {
     type: String,

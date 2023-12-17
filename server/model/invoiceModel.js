@@ -4,11 +4,6 @@ const Schema = mongoose.Schema;
 const Vendor = require("./vendorModel");
 
 const invoiceSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-    auto: true,
-    required: true,
-  },
   date: {
     type: Date,
     required: true,
@@ -16,23 +11,24 @@ const invoiceSchema = new Schema({
   invoiceNumber: {
     type: String,
     required: true,
+    unique: true,
   },
   vendor: {
     type: Schema.Types.ObjectId,
     ref: Vendor,
     required: true,
   },
-  // item: {
-  //   type: String,
-  //   required: true,
-  // },
+  vendorName: {
+    type: String,
+    required: true,
+  },
   items: [
     {
       item: {
         type: String,
         required: true,
       },
-      cost: {
+      unitCost: {
         type: String,
         required: true,
       },
@@ -40,9 +36,13 @@ const invoiceSchema = new Schema({
         type: String,
         required: true,
       },
-    }
+      subTotal: {
+        type: String,
+        required: true,
+      },
+    },
   ],
-  quantity: {
+  remainingAmount: {
     type: String,
     required: true,
   },
