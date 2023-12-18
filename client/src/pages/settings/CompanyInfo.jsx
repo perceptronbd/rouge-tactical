@@ -106,6 +106,7 @@ export default function CompanyInfo() {
             placeholder="Address"
             name="address"
             loading={loading}
+            required
             onChange={(e) => e.target.value}
             className={"my-3"}
           />

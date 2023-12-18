@@ -70,6 +70,7 @@ export default function Notification() {
               placeholder="Notify Admin"
               label="Notify Admin"
               defaultValue="Select Admin"
+              required
               selectOpts={selectOpts}
             />
             <Button
@@ -88,18 +89,21 @@ export default function Notification() {
             <SelectInput
               placeholder="Permit"
               label="Permit"
+              required
               defaultValue="Select Permit"
               selectOpts={selectOpts}
             />
             <SelectInput
               placeholder="Notify Admin"
               label="Notify Admin"
+              required
               defaultValue="Select Admin"
               selectOpts={selectOpts}
             />
             <FormInput
               label="Alert Prior Deadline (Days)"
               placeholder="Alert Prior Deadline (Days)"
+              required
             />
             <Button
               loading={loading2}
@@ -118,21 +122,25 @@ export default function Notification() {
             <SelectInput
               placeholder="Machine"
               label="Machine"
+              required
               defaultValue="Select Machine"
               selectOpts={selectOpts}
             />
             <SelectInput
               placeholder="Notify Admin"
               label="Notify Admin"
+              required
               defaultValue="Select Admin"
               selectOpts={selectOpts}
             />
             <FormInput
               label="Alert Prior Deadline (Days)"
               placeholder="Alert Prior Deadline (Days)"
+              required
             />
             <Button
               loading={loading3}
+              
               className="mt-3 float-right bg-black text-accent-primary w-[150px] h-8"
             >
               Save

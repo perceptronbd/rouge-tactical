@@ -41,6 +41,7 @@ export default function OnboardingDocs() {
               file={file}
               label={"Upload Document"}
               id={"document"}
+              required
               onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
