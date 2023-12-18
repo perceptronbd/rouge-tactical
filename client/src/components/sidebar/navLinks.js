@@ -2,12 +2,13 @@ import {
   TbHome2,
   TbPackage,
   TbFileInvoice,
-  TbLockAccess,TbSettings 
+  TbLockAccess, TbSettings
 } from "react-icons/tb";
+import { HiOutlineWrenchScrewdriver } from "react-icons/hi2"
 import {
   MdOutlinePayments,
   MdProductionQuantityLimits,
-  MdOutlineSell,MdOutlineAdminPanelSettings 
+  MdOutlineSell,
 } from "react-icons/md";
 
 export const navLinks = [
@@ -25,11 +26,11 @@ export const navLinks = [
   {
     title: "Maintenance",
     path: "/maintenance",
-    Icon: TbSettings,
+    Icon: HiOutlineWrenchScrewdriver,
   },
   {
     title: "Settings",
     path: "/settings",
-    Icon: MdOutlineAdminPanelSettings ,
+    Icon: TbSettings ,
   },
 ];
