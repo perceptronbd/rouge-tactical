@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const createUser = async (req, res) => {
-  const SECRET_KEY = process.env.SECRET_KEY;
+  // const SECRET_KEY = process.env.SECRET_KEY;
 
   try {
     const {
@@ -54,20 +54,7 @@ const createUser = async (req, res) => {
       console.log("newUser", newUser);
 
       res.status(200).json({
-        data: {
-          userId: newUser._id,
-          name: newUser.name,
-          personalEmail: newUser.personalEmail,
-          workEmail: newUser.workEmail,
-          preferredEmail: newUser.preferredEmail,
-          phone: newUser.phone,
-          DOB: newUser.DOB,
-          position: newUser.position,
-          role: newUser.role,
-          emergencyContact: newUser.emergencyContact,
-          startDate: newUser.startDate,
-          endDate: newUser.endDate,
-        },
+        data: newUser,
         message: "User registered successfully",
       });
     }

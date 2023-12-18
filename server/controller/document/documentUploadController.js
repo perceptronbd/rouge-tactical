@@ -1,6 +1,6 @@
-const Doc = require('../../model/docModel');
-const fs = require('fs');
-const path = require('path'); // Import the 'path' module
+const Doc = require("../../model/docModel");
+const fs = require("fs");
+const path = require("path"); // Import the 'path' module
 
 exports.uploadFile = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ exports.uploadFile = async (req, res) => {
     const userId = req.params.userId; // Assuming you have a URL parameter named userId
 
     // Define the upload folder based on the user ID
-    const uploadPath = path.join(__dirname, '../../uploads/employee/', userId);
+    const uploadPath = path.join(__dirname, "../../uploads/employee/", userId);
 
     // Create the directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
@@ -23,7 +23,7 @@ exports.uploadFile = async (req, res) => {
 
     // Check if a file with the same originalname already exists in the 'userId' folder
     const filesInFolder = fs.readdirSync(uploadPath);
-    const fileWithSameName = filesInFolder.find(file => {
+    const fileWithSameName = filesInFolder.find((file) => {
       const existingFilename = path.join(uploadPath, file);
       return fs.existsSync(existingFilename) && file === filename;
     });
@@ -45,14 +45,14 @@ exports.uploadFile = async (req, res) => {
       uploadedBy: {
         user: userId,
       },
-      filePath: fullFilePath, 
+      filePath: fullFilePath,
     });
 
     await newDoc.save();
 
-    res.status(201).json({ message: 'File uploaded successfully' });
+    res.status(200).json({ message: "File uploaded successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

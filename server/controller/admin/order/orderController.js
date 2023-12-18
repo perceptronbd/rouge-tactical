@@ -15,7 +15,7 @@ const createOrder = async (req, res) => {
     //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
-    needed
+    needed,
   } = req.body;
 
   try {
@@ -34,8 +34,7 @@ const createOrder = async (req, res) => {
       !depositAmount ||
       !deliveredItems ||
       !vendor ||
-      !needed 
-
+      !needed
     ) {
       return res.status(400).json({
         error: "All required fields must be provided for creating Order!",
@@ -54,8 +53,7 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      createdBy: req.userId
-    
+      createdBy: req.userId,
     };
 
     if (substituteVendor !== "") {
@@ -66,12 +64,9 @@ const createOrder = async (req, res) => {
 
     await newOrder.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        orderedData: newOrder,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newOrder,
     });
   } catch (error) {
     console.error("Error creating order:", error);
@@ -119,23 +114,19 @@ const getAllOrder = async (req, res) => {
       ordered: data.ordered,
       requested: data.requested,
       approvedRequest: data.approvedRequest,
-      createdAt : data.createdAt
+      createdAt: data.createdAt,
     }));
 
     // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        existingOrders: formattedOrders,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedOrders,
     });
   } catch (error) {
     console.error("Error fetching employee order :", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 const editOrder = async (req, res) => {
   console.log(req.userId);
@@ -154,20 +145,25 @@ const editOrder = async (req, res) => {
         .status(404)
         .json({ error: "Admin with such credential doesn't exist!" });
     }
-    
 
     if (!Array.isArray(editRecords)) {
-      return res.status(400).json({ message: 'Invalid data format. Expecting an array.' });
+      return res
+        .status(400)
+        .json({ message: "Invalid data format. Expecting an array." });
     }
 
     const updatedRecords = [];
 
     for (const record of editRecords) {
       const id = record.id;
-      const updatedRecord = await Order.findOneAndUpdate({ _id: id }, record, { new: true });
+      const updatedRecord = await Order.findOneAndUpdate({ _id: id }, record, {
+        new: true,
+      });
 
       if (!updatedRecord) {
-        return res.status(404).json({ message: `Record with id ${id} not found` });
+        return res
+          .status(404)
+          .json({ message: `Record with id ${id} not found` });
       }
 
       updatedRecords.push({
@@ -193,14 +189,9 @@ const editOrder = async (req, res) => {
       });
     }
 
-
-    
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        editedOrder: updatedRecords,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: updatedRecords,
     });
   } catch (error) {
     console.error("Error editing order :", error);
@@ -211,5 +202,5 @@ const editOrder = async (req, res) => {
 module.exports = {
   createOrder,
   getAllOrder,
-  editOrder
+  editOrder,
 };

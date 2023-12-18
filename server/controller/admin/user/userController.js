@@ -28,6 +28,7 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
       endDate: data.endDate,
     }));
     res.status(200).json({
+      userId: req.userId,
       data: formattedUsers,
     });
   } catch (error) {
@@ -38,8 +39,7 @@ const getProfileDataOfAllExistingUser = async (req, res) => {
 
 const getAllExistingAdminData = async (req, res) => {
   try {
-    
-    const existingAdmins = await User.find({ role: 'admin' });
+    const existingAdmins = await User.find({ role: "admin" });
 
     if (existingAdmins.length === 0) {
       return res.status(404).json({ error: "No Admin User found" });
@@ -51,10 +51,10 @@ const getAllExistingAdminData = async (req, res) => {
       workEmail: data.workEmail,
       phone: data.phone,
       role: data.role,
-    
     }));
 
     res.status(200).json({
+      userId: req.userId,
       data: formattedAdmins,
     });
   } catch (error) {
@@ -62,7 +62,6 @@ const getAllExistingAdminData = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 const addEmployee = async (req, res) => {
   const SECRET_KEY = process.env.SECRET_KEY;
@@ -136,21 +135,8 @@ const addEmployee = async (req, res) => {
       console.log(newEmployee);
 
       res.status(200).json({
-        data: {
-          userId: newEmployee._id,
-          name: newEmployee.name,
-          workEmail: newEmployee.email,
-          personalEmail: newEmployee.personalEmail,
-          preferredEmail: newEmployee.preferredEmail,
-          phone: newEmployee.phone,
-          DOB: newEmployee.DOB,
-          position: newEmployee.position,
-          role: newEmployee.role,
-          emergencyContact: newEmployee.emergencyContact,
-          address: address,
-          startDate: newEmployee.startDate,
-          endDate: newEmployee.endDate,
-        },
+        userId: req.userId,
+        data: newEmployee,
         message: "New Employee added successfully",
       });
     }
@@ -229,6 +215,7 @@ const updateEmployee = async (req, res) => {
     const updatedUser = await existingUser.save();
 
     return res.status(200).json({
+      userId: req.userId,
       data: updatedUser,
       message: "User updated successfully",
     });
@@ -262,5 +249,5 @@ module.exports = {
   addEmployee,
   updateEmployee,
   deleteEmployee,
-  getAllExistingAdminData
+  getAllExistingAdminData,
 };

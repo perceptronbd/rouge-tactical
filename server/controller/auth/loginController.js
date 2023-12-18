@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
 
           return res.status(200).json({
             token: accessToken,
-            userData: existingUser,
+            data: existingUser,
             message: "User logged In successfully",
           });
         }

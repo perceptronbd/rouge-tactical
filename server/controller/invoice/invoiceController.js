@@ -172,12 +172,9 @@ const getInvoiceOfSelectedVendor = async (req, res) => {
       updateAt: data.updatedAt,
     }));
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        invoiceDataForSelectedVendor: formattedInvoice,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedInvoice,
     });
   } catch (error) {
     console.error("Error fetching invoice list:", error);
@@ -329,7 +326,7 @@ const updateProduction = async (req, res) => {
 
     return res.status(200).json({
       userId: req.userId,
-      updatedProductionData: formattedUpdatedProduction,
+      data: formattedUpdatedProduction,
     });
   } catch (error) {
     console.error("Error updating production:", error);
@@ -350,7 +347,7 @@ const deleteInvoice = async (req, res) => {
 
     return res.status(200).json({
       message: "Invoice deleted successfully!",
-      deletedInvoiceId: deletedInvoice._id,
+      data: `Deleted Invoice ID : ${deletedInvoice._id}`,
     });
   } catch (error) {
     console.error("Error deleting invoice:", error);
