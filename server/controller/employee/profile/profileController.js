@@ -30,6 +30,7 @@ const getProfileDataOfLoggedInEmployee = async (req, res) => {
 
     // console.log(formattedUsers);
     res.status(200).json({
+      userId: req.userId,
       data: formattedUsers,
     });
   } catch (error) {
@@ -62,7 +63,10 @@ const togglePreferredEmail = async (req, res) => {
     // Save the updated user model
     const updatedUser = await user.save();
 
-    res.status(200).json(updatedUser);
+    res.status(200).json({
+      userId: req.userId,
+      data: updatedUser,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

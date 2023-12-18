@@ -284,7 +284,7 @@ const deletePurchaseOrder = async (req, res) => {
 
     return res.status(200).json({
       message: "Purchase Order deleted successfully!",
-      deletedInvoiceId: deletedInvoice._id,
+      data: `Deleted purchase order ID : ${deletedInvoice._id}`,
     });
   } catch (error) {
     console.error("Error deleting invoice:", error);

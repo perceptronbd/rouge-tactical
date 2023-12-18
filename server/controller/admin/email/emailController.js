@@ -90,7 +90,7 @@ const sendPermitMail = async (req, res) => {
       }
     }
 
-    res.json({ message: "Mail Sent" });
+    res.status(200).json({ message: "Mail Sent" });
   } catch (error) {
     console.error("Error occurred while sending email:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -190,7 +190,7 @@ const sendMaintenanceEmail = async (req, res) => {
       }
     }
 
-    res.json({ message: "Mail Sent" });
+    res.status(200).json({ message: "Mail Sent" });
   } catch (error) {
     console.error("Error occurred while sending email:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -235,8 +235,7 @@ const setPermitEmailCredentials = async (req, res) => {
 
     await permitEmail.save();
 
-    res.json({
-      code: 200,
+    res.status(200).json({
       data: {
         permit: permit,
         uerWorkEmail: userWorkEmail,
@@ -295,8 +294,7 @@ const setMaintenanceEmailCredentials = async (req, res) => {
 
     await maintenanceEmail.save();
 
-    res.json({
-      code: 200,
+    res.status(200).json({
       data: {
         userWorkEmail: userWorkEmail,
         machine: machine,
@@ -341,8 +339,7 @@ const setRecipientAdmin = async (req, res) => {
 
     await newOrderEmail.save();
 
-    res.json({
-      code: 200,
+    res.status(200).json({
       message: "New Admin has been added as RECIPIENT ",
       data: {
         selectedAdminID: selectedAdminID,
@@ -440,8 +437,7 @@ const sendOrderListMail = async (req, res) => {
     });
 
     console.log(`Mail send to ${selectedAdminWorkEmail} for admin ${username}`);
-    res.json({
-      code: 200,
+    res.status(200).json({
       data: {
         user_id: userId,
         username: username,

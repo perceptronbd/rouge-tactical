@@ -15,9 +15,7 @@ const createOrder = async (req, res) => {
     //get vendor ID but display name in frontend
     vendor,
     substituteVendor,
-    needed
-  
-   
+    needed,
   } = req.body;
 
   try {
@@ -36,8 +34,7 @@ const createOrder = async (req, res) => {
       !depositAmount ||
       !deliveredItems ||
       !vendor ||
-      !needed 
-
+      !needed
     ) {
       return res.status(400).json({
         error: "All required fields must be provided for creating Order!",
@@ -56,8 +53,7 @@ const createOrder = async (req, res) => {
       vendor: req.userId,
       date: Date.now(),
       needed: needed,
-      createdBy: req.userId
-
+      createdBy: req.userId,
     };
 
     if (substituteVendor !== "") {
@@ -68,12 +64,9 @@ const createOrder = async (req, res) => {
 
     await newOrder.save();
 
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        orderedData: newOrder,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: newOrder,
     });
   } catch (error) {
     console.error("Error creating order:", error);
@@ -121,16 +114,13 @@ const getAllOrder = async (req, res) => {
       ordered: data.ordered,
       requested: data.requested,
       approvedRequest: data.approvedRequest,
-      createdAt : data.createdAt
+      createdAt: data.createdAt,
     }));
 
     // console.log(formattedUsers);
-    res.json({
-      code: 200,
-      data: {
-        userId: req.userId,
-        existingOrders: formattedOrders,
-      },
+    res.status(200).json({
+      userId: req.userId,
+      data: formattedOrders,
     });
   } catch (error) {
     console.error("Error fetching employee order :", error);
@@ -141,5 +131,4 @@ const getAllOrder = async (req, res) => {
 module.exports = {
   createOrder,
   getAllOrder,
-
 };
