@@ -2,15 +2,13 @@ import {
   TbHome2,
   TbPackage,
   TbFileInvoice,
-  TbLockAccess,
+  TbLockAccess,TbSettings 
 } from "react-icons/tb";
 import {
   MdOutlinePayments,
   MdProductionQuantityLimits,
-  MdOutlineSell,
+  MdOutlineSell,MdOutlineAdminPanelSettings 
 } from "react-icons/md";
-import { IoMdSettings } from "react-icons/io";
-import { FaWrench } from "react-icons/fa6";
 
 export const navLinks = [
   { title: "Home", path: "/employee", Icon: TbHome2 },
@@ -27,11 +25,11 @@ export const navLinks = [
   {
     title: "Maintenance",
     path: "/maintenance",
-    Icon: FaWrench,
+    Icon: TbSettings,
   },
   {
     title: "Settings",
     path: "/settings",
-    Icon: IoMdSettings,
+    Icon: MdOutlineAdminPanelSettings ,
   },
 ];
